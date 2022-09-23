@@ -37,7 +37,7 @@ section div{
 }
 
 input{
-    margin-top: 8px;
+    margin-bottom: 8px;
     height: 25px;
     width: 60%;
 }
@@ -47,10 +47,22 @@ input{
 }
 
 .container form{
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.field_name{
+    display: flex;
+    width: 60%;
+    font-size: 15px;
+    color: rgb(70,73,75);
+
+}
+.field_name label{
+
 }
 
 .container_gender{
@@ -77,7 +89,7 @@ input{
     color: rgb(70,73,75);
 }
 .genders label{
-    margin-top: 5px;
+    margin-bottom: 9px;
     margin-left: 3px;
     font-size: 14px;
 }

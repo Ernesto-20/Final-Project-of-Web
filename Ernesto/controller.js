@@ -1,13 +1,13 @@
 
-names = document.getElementById('name')
-last_name = document.getElementById('last_name')
-address = document.getElementById('address')
-identification = document.getElementById('identification')
-submit = document.getElementById('submit')
+const names = document.getElementById('name')
+const last_name = document.getElementById('last_name')
+const address = document.getElementById('address')
+const identification = document.getElementById('identification')
+const submit = document.getElementById('submit')
 
-male_option = document.getElementById('male')
-female_option = document.getElementById('female')
-undefined_option = document.getElementById('undefined')
+const male_option = document.getElementById('male')
+const female_option = document.getElementById('female')
+const undefined_option = document.getElementById('undefined')
 
 female_option.checked = true
 

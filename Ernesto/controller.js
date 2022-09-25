@@ -1,13 +1,13 @@
 
-names = document.getElementById('name')
-last_name = document.getElementById('last_name')
-address = document.getElementById('address')
-identification = document.getElementById('identification')
-submit = document.getElementById('submit')
+const names = document.getElementById('name')
+const last_name = document.getElementById('last_name')
+const address = document.getElementById('address')
+const identification = document.getElementById('identification')
+const submit = document.getElementById('submit')
 
-male_option = document.getElementById('male')
-female_option = document.getElementById('female')
-undefined_option = document.getElementById('undefined')
+const male_option = document.getElementById('male')
+const female_option = document.getElementById('female')
+const undefined_option = document.getElementById('undefined')
 
 female_option.checked = true
 
@@ -33,15 +33,22 @@ undefined_option.onclick = function (){
 
 
 submit.onclick = function (){
+    validation();
+    
+}
 
+
+function validation(){
     if(contains_number(names.value)){
         alert('El nombre del estudiante no debe de contener números')
     }else if(contains_number(last_name.value)){
         alert('El apellido del estudiante no debe de contener números')
     }else if(contains_lyrics(identification.value)){
         alert('El carnet del estudiante no debe de contener letas alfabéticas')
+    }else if(identification.length != 11){
+        alert('El carnet del estudiante debe de contener 11 caracteres')
     }
-    
+
 }
 
 function contains_number(txt){
@@ -55,7 +62,7 @@ function contains_number(txt){
 
 function contains_lyrics(txt){
     for (i=0; i<txt.length; i++){
-        if(isNaN(txt[i]))
+        if(isNaN(txt[i]) || txt[i]==' ')
             return true
     }
 

@@ -1,0 +1,111 @@
+*{
+    font-family:  Tahoma,'Segoe UI', Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+.title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4baba4;
+}
+h1{
+    font-size: 1.5em;
+    font-weight: normal;
+    color: rgb(70,73,75)
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 80vh;
+}
+
+section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    text-align: center;
+}
+
+section div{
+    width: 100%;
+}
+
+input{
+    margin-bottom: 8px;
+    height: 25px;
+    width: 60%;
+}
+
+.container{
+    background-color: lightgray;
+}
+
+.container form{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.field_name{
+    display: flex;
+    width: 60%;
+    font-size: 15px;
+    color: rgb(70,73,75);
+
+}
+.field_name label{
+
+}
+
+.container_gender{
+    display: flex;
+    flex-direction: column;
+}
+
+.sub_title h5{
+    margin: 15px 0px 5px 17%;
+    /* padding-left: 15%; */
+    font-style: none;
+    font-weight: normal;
+    
+}
+
+.sub_title{
+    text-align: left;
+}
+
+.genders{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(70,73,75);
+}
+.genders label{
+    margin-bottom: 9px;
+    margin-left: 3px;
+    font-size: 14px;
+}
+.genders input{
+    width: 20px;
+    margin-left: 15px;
+}
+
+.actions{
+    display: flex;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.actions input{
+    width: 35%;
+    margin: 5px;
+}

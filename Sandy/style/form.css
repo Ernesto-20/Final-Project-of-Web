@@ -1,0 +1,93 @@
+body {
+  /* font: 1em Tahoma; */
+  /* width: 200px;
+  padding: 0; 
+  margin : 0 auto; */
+}
+
+main{
+ margin-top: 2em;
+ margin-bottom: 2em;
+ margin-left: auto;
+ margin-right: auto;
+ padding-top: 2em;
+ padding-left: 2em;
+ padding-right: 1em;
+ width: 200px;
+ border-style: solid;
+ border-width: 0.1px;
+ border-radius: 8px;
+ border-color: rgb(215, 214, 214);
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#title{
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+#form-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input-container{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+input:focus{
+  
+  outline-color: #1a73e8;
+}
+/* Este es nuestro diseño para los campos no válidos */
+input:invalid{
+  /* border-color: rgb(255, 3, 3); */
+  border-width: 0.1px;
+  border-radius: 3px;
+  border-color: rgb(215, 214, 214);
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+/* input:focus:invalid {
+  outline: none;
+} */
+  
+#btn-flex-container{
+  justify-content: right;
+}
+
+select{
+  border-width: 0.1px;
+  border-radius: 3px;
+  border-color: rgb(215, 214, 214);
+  padding-top: 3px;
+  padding-bottom: 3px;
+  outline-color: #1a73e8
+}
+
+button{
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  background-color: #1a73e8;
+}
+/* Este es el diseño para nuestros mensajes de error */
+.error {
+  width : 100%;
+  padding: 0;
+
+  font-size: 80%;
+  color: red;
+  border-radius: 0 0 5px 5px;
+
+  box-sizing: border-box;
+}
+
+.error.active {
+  padding: 0.3em;
+}

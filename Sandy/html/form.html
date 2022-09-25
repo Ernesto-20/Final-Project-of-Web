@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/form.css">
+    <title>Crear Usuario</title>
+</head>
+<body>
+    <main>
+        <div id="title">
+            <span>Crea un nuevo usuario</span>
+    
+        </div>
+        <div id="form-container">
+            <form action="#" method="post">
+                <div id="name-flex-container" class="form-input-container">
+                    <label for="name">Nombre *</label>
+                    <input type="text" name="name" id="input_name" required autofocus autocomplete="on">
+                    
+                    <div id="name-error-msg">
+                        <span class="error"></span>
+                    </div>
+                </div>
+                <div id="pass-flex-container">
+                    <div class="form-input-container">
+                        <label for="pass">Contraseña *</label>
+                        <input type="password" name="pass" id="input_pass" required autocomplete="on" minlength="8">
+
+                    </div>
+                    
+                </div>
+                <div class="form-input-container">
+                    <label for="pass_conf">Confirme su contraseña *</label>
+                    <input type="password" name="pass_conf" id="input_pass_conf" required>
+                    <div id="pass-error-msg">
+                        <span class="error"></span>
+                    </div>
+                        
+                </div>
+                <div id="access-flex-container" class="form-input-container">
+                    <label for="acces_level">Nivel de acceso *</label>
+                    <select name="access_level" id="acces_level" required>
+                        <option value=""></option>
+                        <option value="user">Usuario</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+
+                    <div id="access-error-msg">
+                        <span class="error"></span>
+                    </div>
+
+                </div>
+                <div id="btn-flex-container" class="form-input-container">
+                    <button type="submit" id="send">Enviar</button>
+                    <button type="reset" id="cancel">Cancelar</button>
+
+                </div>
+            </form>
+    
+        </div>
+
+    </main>
+    <script async src="../js/form.js"></script>
+</body>
+</html>

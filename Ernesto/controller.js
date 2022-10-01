@@ -41,7 +41,10 @@ submit.onclick = function (){
         alert('El apellido del estudiante no debe de contener números')
     }else if(contains_lyrics(identification.value)){
         alert('El carnet del estudiante no debe de contener letas alfabéticas')
+    }else if( !(female_option.checked || male_option.checked ||undefined_option.checked)){
+        alert('Especifique el genero')
     }
+
 }
 
 

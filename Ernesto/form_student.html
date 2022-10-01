@@ -8,55 +8,52 @@
     <title>Estudiante</title>
 </head>
 <body>
-    <main>
-            <section>
-            <div class="title">
-                <h1>Nuevo Estudiante</h1>
+    <form action="#" method="post">
+        <legend>Nuevo Estudiante</legend>
+
+        <div class="content">
+            <div class="element">
+                <label for="names">Nombre:</label>
+                <input type="text" id="name" name="names" required>
             </div>
             
-            <div class="container">
-                <form action="">
-                    <div class="field_name">
-                    <label for="names">Nombre</label>
-                    </div>
-                    <input type="text" id="name" name="names" required>
-                    <div class="field_name">
-                    <label for="last_name">Apellidos</label>
-                    </div>
-                    <input type="text" id="last_name" name="last_name" required>
-                    <div class="field_name">
-                    <label for="Direccion">Dirección</label>
-                    </div>
-                    <input type="text" name="Direccion" id="address">
-                    <div class="field_name">
-                    <label for="identification">Carné de Identidad</label>
-                    </div>
-                    <input type="text" name="identification" id="identification" required>
-                    
-                    <div class="container_gender">
-                        <div class="sub_title">
-                            <h5>Género</h3>
-                        </div>
-                        <div class="genders">
-                            <input type="radio" name="Female" id="female">
-                            <label for="Female">Femenino</label>
-                            
-                            <input type="radio" name="Male" id="male">
-                            <label for="Male">Masculino</label>
-                            
-                            <input type="radio" name="Undefined" id="undefined">
-                            <label for="Undefined">Indefinido</label>
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <input type="submit" id="submit">
-                        <input type="reset">
-                    </div>
-                </form>
+            <div class="element">
+                <label for="last_name">Apellidos:</label>
+                <input type="text" id="last_name" name="last_name" required>
             </div>
-        </section>
-    </main>
+            
+            <div class="element">
+                <label for="Direccion">Dirección:</label>
+                <input type="text" name="Direccion" id="address">
+            </div>
+            
+            <div class="element">
+                <label for="identification">CI:</label>
+                <input type="text" name="identification" id="identification" required>
+            </div>
+            
+            <div class="container_gender">
+                <div class="subtitle">
+                    <h5>Género</h3>
+                </div>
+                <div class="genders">
+                    <input type="radio" name="Female" id="female" class="gender">
+                    <label for="Female">Femenino</label>
+                    
+                    <input type="radio" name="Male" id="male" class="gender">
+                    <label for="Male">Masculino</label>
+                    
+                    <input type="radio" name="Undefined" id="undefined" class="gender">
+                    <label for="Undefined">Indefinido</label>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="submit" id="submit">
+                <input type="reset">
+            </div>
+        </div>
+    </form>
     <script src="controller.js"></script>
 </body>
 </html>

@@ -1,40 +1,14 @@
 *{
-    font-family:  Tahoma,'Segoe UI', Geneva, Verdana, sans-serif;
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.title{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #4baba4;
-}
-h1{
-    font-size: 1.5em;
-    font-weight: normal;
-    color: rgb(70,73,75)
+body{
+    font-family:  Tahoma,'Segoe UI', Geneva, Verdana, sans-serif;
+    background-color: #EEEEEE;
 }
 
-main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 80vh;
-}
-
-section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    text-align: center;
-}
-
-section div{
-    width: 100%;
-}
 
 input{
     margin-bottom: 8px;
@@ -42,27 +16,51 @@ input{
     width: 60%;
 }
 
-.container{
-    background-color: lightgray;
+legend{
+    color: #FFFFFF;
+    background-color: #28948d;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    padding: 0.8rem 0;
+    font-size: 1.2em;
 }
 
-.container form{
-    padding-top: 20px;
+form{
+    width: 60%;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: white;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 0px 0px 5px 5px;
 }
 
-.field_name{
+.content{
+    width: 100%;
+    padding-top: 10px;
+}
+
+.element{
     display: flex;
-    width: 60%;
-    font-size: 15px;
-    color: rgb(70,73,75);
-
+    justify-content: right;
+    width: 70%;
+    align-items: center;
+    margin: auto;
+    padding-right: 15%;
+    padding-top: 5px;
 }
-.field_name label{
 
+.element label{
+    padding-right: 3px;
+}
+
+input{
+    border: 1px solid #777777;
+    border-radius: 5px;
 }
 
 .container_gender{
@@ -70,16 +68,14 @@ input{
     flex-direction: column;
 }
 
-.sub_title h5{
-    margin: 15px 0px 5px 17%;
-    /* padding-left: 15%; */
-    font-style: none;
-    font-weight: normal;
-    
+.subtitle{
+    text-align: left;
 }
 
-.sub_title{
-    text-align: left;
+.subtitle h5{
+    margin: 15px 0px 5px 17%;
+    font-style: none;
+    font-weight: normal;
 }
 
 .genders{
@@ -87,25 +83,49 @@ input{
     align-items: center;
     justify-content: center;
     color: rgb(70,73,75);
+    width: 70%;
+    margin: auto;
+    /* background-color: #eeeaea; */
+    border-radius: 3px;
+    
 }
 .genders label{
     margin-bottom: 9px;
     margin-left: 3px;
-    font-size: 14px;
+    font-size: 0.9em; 
 }
 .genders input{
     width: 20px;
     margin-left: 15px;
+    background-color: blue;
 }
 
 .actions{
     display: flex;
-    margin-top: 15px;
+    margin-top: 10px;
     align-items: center;
     justify-content: center;
+    padding-bottom: 5px;
+
 }
 
 .actions input{
     width: 35%;
     margin: 5px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.actions input:hover{
+    background-color: #28948d;
+    color: white;
+    transition: 0.7s;
+}
+
+input:hover{
+    border-color: #28948d;
+}
+
+input:focus{
+    border-color: #28948d;
 }

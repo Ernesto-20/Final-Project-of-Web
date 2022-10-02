@@ -3,7 +3,7 @@ submit = document.getElementById('submit')
 
 submit.onclick = function (){
     if(contains_number(subject.value)){
-        alert('El nombre de la asignatura no debe de contener números')
+        alert('El nombre de la asignatura no debe contener números')
     }    
 }
 

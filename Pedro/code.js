@@ -1,5 +1,5 @@
-subject = document.getElementById('subject')
-submit = document.getElementById('submit')
+const subject = document.getElementById('subject')
+const submit = document.getElementById('submit')
 
 submit.onclick = function (){
     if(contains_number(subject.value)){
@@ -8,8 +8,9 @@ submit.onclick = function (){
 }
 
 function contains_number(txt){
-     for (i=0; i<txt.length; i++)
+    let check = fasle
+     for (let i=0; i<txt.length && !check; i++)
         if(!isNaN(txt[i]))
-            return true
-    return false
+            check = true
+    return check
 }

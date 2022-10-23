@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="Estudiante" showEffect="fade" modal="true"
+		widgetVar="manageStudentDialog" responsive="true">
+		<p:outputPanel id="manage-student-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty manageStudentBean.selectedStudent}">
+				<p:panelGrid layout="grid" columns="1">
+					<h:panelGroup>
+						<div class="p-field">
+							<p:outputLabel for="@next">Identificación</p:outputLabel>
+							<p:inputText id="idNum" required="true"
+								value="#{manageStudentBean.selectedStudent.idNum}"
+								maxlength="11">
+								<p:keyFilter mask="num" />
+							</p:inputText>
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Nombre</p:outputLabel>
+							<p:inputText id="firstName" required="true" 
+								value="#{manageStudentBean.selectedStudent.firstName}" />
+							<p:message for="@previous" ></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Apellidos</p:outputLabel>
+							<p:inputText id="lastName" required="true"
+								value="#{manageStudentBean.selectedStudent.lastName}" />
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Estado Actual</p:outputLabel>
+							<p:inputText id="statusID" required="true"
+								value="#{manageStudentBean.selectedStudent.statusID}"
+								maxlength="11">
+								<p:keyFilter mask="num" />
+							</p:inputText>
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Municipio</p:outputLabel>
+							<p:inputText id="municipality" required="true"
+								value="#{manageStudentBean.selectedStudent.municipality}">
+							</p:inputText>
+							<p:message for="@previous"></p:message>
+						</div>
+						<div class="p-field">
+							<p:outputLabel for="@next">Género</p:outputLabel>
+							<p:selectOneRadio id="gender" required="true"
+								value="#{manageStudentBean.selectedStudent.gender}" unselectable="true">
+									<f:selectItem itemLabel="Masculino" itemValue="M"/>
+          							<f:selectItem itemLabel="Femenino" itemValue="F"/>
+							</p:selectOneRadio>
+							<p:message for="@previous"></p:message>
+						</div>
+						
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:outputPanel>
+
+		<f:facet name="footer">
+			<p:commandButton value="Salvar" icon="pi pi-check"
+				actionListener="#{manageStudentBean.saveStudent}"
+				update="manage-student-content" process="manage-student-content @this" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('manageStudentDialog').hide()" class="ui-button-secondary" />
+		</f:facet>
+	</p:dialog>
+</ui:composition>

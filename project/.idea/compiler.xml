@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+<<<<<<< HEAD
         <module name="Project" />
         <module name="project" />
+=======
+        <module name="final-project" />
+>>>>>>> f4727c712e37bc5058453b6a9db96872a1e2565b
       </profile>
     </annotationProcessing>
   </component>

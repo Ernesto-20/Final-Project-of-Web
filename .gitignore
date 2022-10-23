@@ -1,0 +1,5 @@
+# ignore .idea
+Project/.idea
+
+# ignore target
+Project/target

@@ -17,6 +17,11 @@
         <div class="layout-menu">
                 <div class="menu-category">Administración</div>
                 <div class="menu-items">
+                    <h:link outcome="/pages/init-course/selection-student.xhtml">
+                        Iniciar nuevo curso
+                    </h:link>
+                </div>
+                <div class="menu-items">
                     <h:link outcome="/pages/security/users/user-list.xhtml">
                         Gestionar usuarios
                     </h:link>
@@ -25,25 +30,37 @@
                 <div class="menu-items">
                     <p:outputPanel >
                         <a tabindex="0" class="submenu-link">
-                            Menu_Item_1
+                            Estudiantes
                         </a>
                         <div class="submenu">
                             <ul>
                                 <li><h:link >
-                                    Submenu_item_1_1
-                                </h:link></li>
-                                <li><h:link>
-                                    Submenu_item_1_2
-                                </h:link></li>
-                                <li><h:link>
-                                    Submenu_item_1_3
+                                    Nuevo Estudiante
                                 </h:link></li>
                             </ul>
                         </div>
                     </p:outputPanel>
                     <p:outputPanel >
                         <a tabindex="0" class="submenu-link">
-                            Menu_Item_2
+                            Asignaturas
+                        </a>
+                        <div class="submenu">
+                            <ul>
+                                <li><h:link >
+                                    Submenu_item_2_1
+                                </h:link></li>
+                                <li><h:link>
+                                    Submenu_item_2_2
+                                </h:link></li>
+                                <li><h:link>
+                                    Submenu_item_2_2
+                                </h:link></li>
+                            </ul>
+                        </div>
+                    </p:outputPanel>
+                    <p:outputPanel >
+                        <a tabindex="0" class="submenu-link">
+                            Escalafón
                         </a>
                         <div class="submenu">
                             <ul>

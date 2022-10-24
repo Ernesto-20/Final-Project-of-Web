@@ -3,3 +3,6 @@ Project/.idea
 
 # ignore target
 Project/target
+
+# ignore First release -html,css,js-
+First release -html,css,js-

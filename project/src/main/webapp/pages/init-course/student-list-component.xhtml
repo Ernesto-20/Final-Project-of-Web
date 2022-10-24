@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <h:form id="form">
+        <div >
+            <p:toolbar>
+                <p:toolbarGroup>
+
+                    <p:commandButton value="Nuevo" icon="pi pi-plus"
+                                     actionListener="#{manageUserBean.openNew}"
+                                     oncomplete="PF('manageUserDialog').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":form:manage-user-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton value="Export" icon="pi pi-upload"
+                                     styleClass="ui-button-help" ajax="false">
+                        <p:dataExporter type="pdf" target="dt-users" fileName="users" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:dataTable id="dt-users" widgetVar="dtUsers" var="student"
+                          reflow="true" paginator="true"
+                         rows="10" paginatorPosition="bottom">
+                <p:column headerText="Estudiante" sortBy="#{user.username}" filterBy="#{user.username}">
+                    <h:outputText value="#{student.username}" />
+                </p:column>
+            </p:dataTable>
+        </div>
+    </h:form>
+
+
+</ui:composition>

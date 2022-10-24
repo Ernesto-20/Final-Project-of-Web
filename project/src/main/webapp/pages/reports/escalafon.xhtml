@@ -37,17 +37,17 @@
                             </p:selectOneMenu>
                         </p:toolbarGroup>
                     </p:toolbar>
-                    <p:dataTable id="dt-users" widgetVar="dtUsers" var="user"
+                    <p:dataTable id="dt-students" widgetVar="dtStudents" var="student"
                                  value="#{manageUserBean.users}" reflow="true"
                                  rows="10">
                         <p:column headerText="No. Escalafón">
                             <h:outputText value="-" />
                         </p:column>
                         <p:column headerText="Nombre">
-                            <h:outputText value="#{user.username}" />
+                            <h:outputText value="#{student.username}" />
                         </p:column>
                         <p:column headerText="Apellidos">
-                            <h:outputText value="#{user.fullName}" />
+                            <h:outputText value="#{student.fullName}" />
                         </p:column>
                         <p:column headerText="Promedio">
                             <h:outputText value="-" />

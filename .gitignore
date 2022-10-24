@@ -1,5 +1,9 @@
 # ignore .idea
-Project/.idea
+project/.idea
 
 # ignore target
-Project/target
+project/target
+
+.idea
+project/.classpath
+project/.project

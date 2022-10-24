@@ -8,7 +8,7 @@
 		widgetVar="manageStudentDialog" responsive="true">
 		<p:outputPanel id="manage-student-content" class="ui-fluid">
 			<p:outputPanel rendered="#{not empty manageStudentBean.selectedStudent}">
-				<p:panelGrid layout="grid" columns="1">
+				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
 						<div class="p-field">
 							<p:outputLabel for="@next">Identificación</p:outputLabel>
@@ -31,19 +31,20 @@
 								value="#{manageStudentBean.selectedStudent.lastName}" />
 							<p:message for="@previous"></p:message>
 						</div>
+					</h:panelGroup>
+					<h:panelGroup>
 						<div class="p-field">
-							<p:outputLabel for="@next">Estado Actual</p:outputLabel>
-							<p:inputText id="statusID" required="true"
-								value="#{manageStudentBean.selectedStudent.statusID}"
-								maxlength="11">
-								<p:keyFilter mask="num" />
+							<p:outputLabel for="@next">Dirección</p:outputLabel>
+							<p:inputText id="municipality" required="true"
+								value="#{manageStudentBean.selectedStudent.municipality}">
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next">Municipio</p:outputLabel>
-							<p:inputText id="municipality" required="true"
-								value="#{manageStudentBean.selectedStudent.municipality}">
+							<p:outputLabel for="@next">Estado Actual</p:outputLabel>
+							<p:inputText id="statusID" required="true"
+								value="#{manageStudentBean.selectedStudent.statusID}"
+								>
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>

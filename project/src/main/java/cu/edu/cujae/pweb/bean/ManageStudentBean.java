@@ -1,6 +1,5 @@
 package cu.edu.cujae.pweb.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -80,7 +79,7 @@ public class ManageStudentBean {
     	try {
     		this.students.remove(this.selectedStudent);
             this.selectedStudent = null;
-            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_removed");
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_removed");
             PrimeFaces.current().ajax().update("form:dt-students");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
 		} catch (Exception e) {
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");

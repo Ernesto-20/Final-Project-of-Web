@@ -1,8 +1,6 @@
-package cu.edu.cujae.db_subject1.dto;
+package cu.edu.cujae.pweb.dto;
 
-import cu.edu.cujae.db_subject1.utils.IDTO;
-
-public class DropOutDTO implements IDTO {
+public class DropOutDTO {
 
     private Integer id;
     private String cause;

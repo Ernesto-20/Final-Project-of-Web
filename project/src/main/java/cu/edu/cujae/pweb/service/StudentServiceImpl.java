@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import cu.edu.cujae.pweb.dto.StudentDto;
 
 /* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podr� inyectarse en otro lugar usando
+
  * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
  */
 @Service

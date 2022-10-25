@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="Asignatura" showEffect="fade" modal="true"
+		widgetVar="manageSubjectDialog" responsive="true">
+		<p:outputPanel id="manage-subject-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty manageSubjectBean.selectedSubject}">
+				<p:panelGrid layout="grid" columns="1">
+					<h:panelGroup>
+						<div class="p-field">
+							<p:outputLabel for="@next">Nombre de la asignatura</p:outputLabel>
+							<p:inputText id="name" required="true" 
+								value="#{manageSubjectBean.selectedSubject.name}" />
+							<p:message for="@previous" ></p:message>
+						</div>
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:outputPanel>
+
+		<f:facet name="footer">
+			<p:commandButton value="Salvar" icon="pi pi-check"
+				actionListener="#{manageSubjectBean.saveSubject}"
+				update="manage-subject-content" process="manage-subject-content @this" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('manageSubjectDialog').hide()" class="ui-button-secondary" />
+		</f:facet>
+	</p:dialog>
+</ui:composition>

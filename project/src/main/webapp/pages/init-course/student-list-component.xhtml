@@ -3,15 +3,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-        <div id="form2" class="card crud-demo">
+        <div id="form2" class="crud-demo">
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="Nuevo" icon="pi pi-plus"
+                    <p:commandButton value="Ingresar Estudiante" icon="pi pi-plus"
                                      actionListener="#{manageStudentBean.openNew}"
                                      update=":form:panelView:manage-student-content"
                                      oncomplete="PF('manageStudentDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
-                        <p:resetInput target="form:panelView:manage-student-content" />
+                        <p:resetInput target=":form:panelView:manage-student-content" />
                     </p:commandButton>
                 </p:toolbarGroup>
             </p:toolbar>
@@ -57,13 +57,13 @@
 
                 <p:column exportable="false">
                     <p:commandButton icon="pi pi-pencil" action="#{manageStudentBean.openForEdit}"
-                                     update=":form:manage-student-content"
+                                     update=":form:panelView:manage-student-content"
                                      oncomplete="PF('manageStudentDialog').show()"
                                      styleClass="edit-button rounded-button ui-button-success"
                                      process="@this">
                         <f:setPropertyActionListener value="#{student}"
                                                      target="#{manageStudentBean.selectedStudent}" />
-                        <p:resetInput target=":form:manage-student-content" />
+                        <p:resetInput target=":form:panelView:manage-student-content" />
                     </p:commandButton>
                     <p:commandButton class="ui-button-warning rounded-button"
                                      icon="pi pi-trash" process="@this"

@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/pages/template/layout.xhtml">
+        <ui:define name="title">
+            Lista de Asignaturas
+        </ui:define>
+        <ui:define name="layout">
+            <h:form id="form">
+                <div class="card crud-demo">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <h:outputText value="Vista de Datos" />
+                        </p:toolbarGroup>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Editar Asignatura" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 45%; border: 1px solid #DDDDDD;">
+                            <h:outputText value="Asignaturas según el curso y año establecidos" />
+                            <div>
+                                <p:selectOneMenu id="course-select" value="#{selectOneMenuView.selectedOption}">
+                                    <f:selectItem itemLabel="Curso" itemValue=""/>
+                                    <f:selectItem itemLabel="Option1" itemValue="Option1"/>
+                                    <f:selectItem itemLabel="Option2" itemValue="Option2"/>
+                                    <f:selectItem itemLabel="Option3" itemValue="Option3"/>
+                                </p:selectOneMenu>
+                                <p:selectOneMenu id="year-select" value="#{selectOneMenuView.selectedOption}">
+                                    <f:selectItem itemLabel="Año" itemValue=""/>
+                                    <f:selectItem itemLabel="Option1" itemValue="Option1"/>
+                                    <f:selectItem itemLabel="Option2" itemValue="Option2"/>
+                                    <f:selectItem itemLabel="Option3" itemValue="Option3"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <p:dataTable id="dt-subjects" widgetVar="dtSubjects" var="subject"
+                                         value="#{manageUserBean.users}" reflow="true"
+                                         rows="10">
+                                <p:column headerText="">
+                                    <h:outputText value="1" />
+                                </p:column>
+                                <p:column headerText="Asignatura">
+                                    <h:outputText value="Asignatura" />
+                                </p:column>
+                                <p:column headerText="Horas">
+                                    <h:outputText value="Horas" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <div style="width: 45%; border: 1px solid #DDDDDD;">
+                            <h:outputText value="Asignaturas según el curso y año establecidos" />
+                            <div style="display: flex;">
+                                <p:commandButton value="Guardar Cambios" />
+                                <p:selectOneMenu id="group-select" value="#{selectOneMenuView.selectedOption}">
+                                    <f:selectItem itemLabel="Grupo" itemValue=""/>
+                                    <f:selectItem itemLabel="Option1" itemValue="Option1"/>
+                                    <f:selectItem itemLabel="Option2" itemValue="Option2"/>
+                                    <f:selectItem itemLabel="Option3" itemValue="Option3"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <p:dataTable id="dt-students" widgetVar="dtStudents" var="student"
+                                         value="#{manageUserBean.users}" reflow="true"
+                                         rows="10">
+                                <p:column headerText="">
+                                    <h:outputText value="1" />
+                                </p:column>
+                                <p:column headerText="Asignatura">
+                                    <h:outputText value="Asignatura" />
+                                </p:column>
+                                <p:column headerText="Horas">
+                                    <h:outputText value="Horas" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -28,13 +28,15 @@
 							styleClass="ui-button-success" style="margin-right: .5rem">
 							<p:resetInput target=":form:manage-student-content" />
 						</p:commandButton>
-						<p:commandButton value="Dar baja" 
-							styleClass="ui-button-secondary" ajax="false" style="margin-right: .5rem">
-<!-- 							<h:link outcome="/pages/init-course/selection-student.xhtml"> -->
+						<p:commandButton value="Dar baja"
+							 actionListener="#{manageStudentBean.openNew}"
+							 update=":form:student-dropout-content"
+							 oncomplete="PF('studentDropoutDialog').show()"
+							 styleClass="ui-button-secondary" style="margin-right: .5rem">
+							 <p:resetInput target=":form:student-dropout-content" />
 						</p:commandButton>
 						<p:commandButton value="Ver baja" 
 							styleClass="ui-button-secondary" ajax="false" style="margin-right: .5rem">
-<!-- 							<h:link outcome="/pages/init-course/selection-student.xhtml"> -->
 						</p:commandButton>
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
@@ -118,6 +120,7 @@
 
 				<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
 				<ui:include src="student-form.xhtml"></ui:include>
+				<ui:include src="student_dropout_form.xhtml"></ui:include>
 
 				<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
 				su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->

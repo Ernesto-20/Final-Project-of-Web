@@ -9,6 +9,7 @@ public class SubjectDTO {
     public SubjectDTO() {
         super();
     }
+
     public SubjectDTO(String id, String name, boolean newRecord) {
         super();
         this.id = id;
@@ -39,4 +40,5 @@ public class SubjectDTO {
     public void setNewRecord(boolean newRecord) {
         this.newRecord = newRecord;
     }
+
 }

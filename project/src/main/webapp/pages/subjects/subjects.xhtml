@@ -45,6 +45,24 @@
                                 <p:column headerText="Horas">
                                     <h:outputText value="#{subject.hoursLong}" />
                                 </p:column>
+                                <p:column exportable="false">
+                                    <p:commandButton icon="pi pi-pencil" action="#{manageSubjectInCourseWithNameBean.openForEdit}"
+                                                     update=":form:manage-subject-content"
+                                                     oncomplete="PF('manageSubjectDialog').show()"
+                                                     styleClass="edit-button rounded-button ui-button-success"
+                                                     process="@this">
+                                        <f:setPropertyActionListener value="#{subject}"
+                                                                     target="#{manageSubjectInCourseWithNameBean.selectedSubject}" />
+                                        <p:resetInput target=":form:manage-subject-content" />
+                                    </p:commandButton>
+                                    <p:commandButton class="ui-button-warning rounded-button"
+                                                     icon="pi pi-trash" process="@this"
+                                                     action="#{manageSubjectInCourseWithNameBean.deleteSubject}" >
+                                        <f:setPropertyActionListener value="#{subject}"
+                                                                     target="#{manageSubjectInCourseWithNameBean.selectedSubject}" />
+                                        <p:confirm header="Confirmar" message="Está seguro de eliminar la asignatura?" icon="pi pi-exclamation-triangle"/>
+                                    </p:commandButton>
+                                </p:column>
                             </p:dataTable>
                         </div>
                         <div style="width: 45%; border: 1px solid #DDDDDD;">
@@ -67,6 +85,19 @@
                                     <h:outputText value="-" />
                                 </p:column>
                             </p:dataTable>
+
+                            <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+                            <ui:include src="subjects_forms.xhtml"></ui:include>
+
+                            <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+                            su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
+                            <p:confirmDialog global="true" showEffect="fade" width="300">
+                                <p:commandButton value="Si" type="button"
+                                                 styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                <p:commandButton value="No" type="button"
+                                                 styleClass="ui-confirmdialog-no ui-button-secondary"
+                                                 icon="pi pi-times" />
+                            </p:confirmDialog>
                         </div>
                     </div>
                 </div>

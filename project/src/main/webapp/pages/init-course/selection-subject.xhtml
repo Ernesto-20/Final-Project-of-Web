@@ -11,7 +11,13 @@
     <ui:define name="layout">
         <h:form id="form">
             <p:panelGrid id="panelGridId" columns="1" layout="grid">
-                <ui:include src="./subject-list-component.xhtml"></ui:include>
+                <f:facet name="Nuevo curso universitario">
+                    <p:graphicImage name="demo/images/misc/kobe.png"/>
+                </f:facet>
+                <p:panel id="panelLeft">
+                    <ui:include src="./subject-list-component.xhtml"></ui:include>
+                </p:panel>
+
             </p:panelGrid>
         </h:form>
     </ui:define>

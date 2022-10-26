@@ -1,5 +1,6 @@
 package cu.edu.cujae.pweb.service;
 
+import cu.edu.cujae.pweb.dto.SubjectDTO;
 import cu.edu.cujae.pweb.dto.SubjectInCourseDTO;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService{
     @Override
     public List<SubjectInCourseDTO> getSubjectsInCourse() {
         List<SubjectInCourseDTO> subjectsInCourse = new ArrayList<>();
+
         subjectsInCourse.add(new SubjectInCourseDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), 24, false));
         subjectsInCourse.add(new SubjectInCourseDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), 48, false));
         subjectsInCourse.add(new SubjectInCourseDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), 72, false));

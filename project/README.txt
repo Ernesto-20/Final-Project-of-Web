@@ -12,3 +12,14 @@ Daniel Fernández Lorenzo
     pages/reports/escalafon.xhtml
     ManageStudentEscalafonBean.java
     ManageSubjectInCourseWithNameBean.java
+
+Pedro Luis Gutiérrez Díaz
+    pages/init-course/year-tab-view.xhtml
+    pages/init-course/subject-list-component.xhtml
+    pages/init-course/subject-in-course-list-component.xhtml
+    pages/init-course/subject-in-course-form.xhtml
+    pages/init-course/selection-subject.xhtml
+    ManageSubjectBean
+    ManageSubjectInCourseBean
+    SelectBooleanView de primefaces para los checkbox
+    

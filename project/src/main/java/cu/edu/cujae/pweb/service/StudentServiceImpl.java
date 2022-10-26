@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.pweb.dto.StudentDto;
 
-/* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podrá inyectarse en otro lugar usando
+
+/* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podrï¿½ inyectarse en otro lugar usando
+
  * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
  */
 @Service
@@ -17,8 +19,7 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Override
 	public List<StudentDto> getStudents() {
-		
-		
+
 		List<StudentDto> students = new ArrayList<>();
 		students.add(new StudentDto(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "123455", "Arnaldo", "Rojas Fuentes", "M", "Regla","Promovido", false));
 		students.add(new StudentDto(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "123455", "Perseo" , "Suarez Tamyo", "M", "Regla", "Promovido", false));

@@ -11,9 +11,8 @@
     <ui:define name="layout">
         <h:form id="form">
             <div class="card">
-                <h5 class="p-mt-0">Curso Universitario 2022-2023</h5>
-
-                <p:tabView class="panelView">
+                <h5 class="p-mt-0">Curso Universitario <p:outputLabel style="font-size:20px;" value="#{manageSelectionStudentBean.newCourse.course}"></p:outputLabel></h5>
+                <p:tabView id="panelView">
                     <p:tab title="Grupo: 1">
                         <ui:include src="./student-list-component.xhtml"></ui:include>
                     </p:tab>

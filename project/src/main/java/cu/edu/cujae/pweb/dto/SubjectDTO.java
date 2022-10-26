@@ -2,33 +2,27 @@ package cu.edu.cujae.pweb.dto;
 
 public class SubjectDTO {
 
-    private Integer id;
-    private boolean newRecord;
+    private String id;
     private String name;
+    private boolean newRecord;
 
     public SubjectDTO() {
         super();
     }
-    public SubjectDTO(Integer id, String name) {
+
+    public SubjectDTO(String id, String name, boolean newRecord) {
+        super();
         this.id = id;
-        this.newRecord = newRecord;
         this.name = name;
+        this.newRecord = newRecord;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public boolean isNewRecord() {
-        return newRecord;
-    }
-
-    public void setNewRecord(boolean newRecord) {
-        this.newRecord = newRecord;
     }
 
     public String getName() {
@@ -37,6 +31,14 @@ public class SubjectDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isNewRecord() {
+        return newRecord;
+    }
+
+    public void setNewRecord(boolean newRecord) {
+        this.newRecord = newRecord;
     }
 
 }

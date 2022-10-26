@@ -3,22 +3,21 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-    
         <div id="form2" class="crud-demo">
             <p:toolbar>
                 <p:toolbarGroup>
 
                     <p:commandButton value="Nuevo" icon="pi pi-plus"
-                                     actionListener="#{manageUserBean.openNew}"
-                                     oncomplete="PF('manageUserDialog').show()"
+                                     actionListener="#{manageStudentBean.openNew}"
+                                     oncomplete="PF('manageStudentDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
-                        <p:resetInput target=":form:manage-user-content" />
+                        <p:resetInput target=":form:manage-student-content" />
                     </p:commandButton>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
                     <p:commandButton value="Export" icon="pi pi-upload"
                                      styleClass="ui-button-help" ajax="false">
-                        <p:dataExporter type="pdf" target="dt-users" fileName="users" />
+                        <p:dataExporter type="pdf" target="dt-students" fileName="students" />
                     </p:commandButton>
                 </p:toolbarGroup>
             </p:toolbar>

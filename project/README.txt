@@ -22,4 +22,10 @@ Pedro Luis Gutiérrez Díaz
     ManageSubjectBean
     ManageSubjectInCourseBean
     SelectBooleanView de primefaces para los checkbox
+
+Sandy Comas Becerra
+    pages/student/student-list.xhtml
+    pages/student/student-form.xhtml
+    ManageStudentBean.java
+    StudentBean.java
     

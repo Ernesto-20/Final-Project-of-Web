@@ -1,8 +1,6 @@
-package cu.edu.cujae.db_subject1.dto;
+package cu.edu.cujae.pweb.dto;
 
-import cu.edu.cujae.db_subject1.utils.IDTO;
-
-public class CourseDTO implements IDTO {
+public class CourseDTO {
 
     private Integer id;
     private int start;

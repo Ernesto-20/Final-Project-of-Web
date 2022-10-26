@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog header="Dar de Baja" showEffect="fade" modal="true"
+              widgetVar="studentDropoutDialog" responsive="true">
+        <p:outputPanel id="student-dropout-content" class="ui-fluid">
+            <p:selectOneMenu id="dropount-cause-select" value="#{selectOneMenuView.selectedOption}" style="width: 300px;">
+                <f:selectItem itemLabel="Seleccione causa de la baja" itemValue=""/>
+                <f:selectItem itemLabel="Option1" itemValue="Option1"/>
+                <f:selectItem itemLabel="Option2" itemValue="Option2"/>
+                <f:selectItem itemLabel="Option3" itemValue="Option3"/>
+            </p:selectOneMenu>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Dar Baja" icon="pi pi-check" />
+        </f:facet>
+    </p:dialog>
+</ui:composition>

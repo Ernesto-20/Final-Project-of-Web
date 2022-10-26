@@ -1,42 +1,46 @@
-package cu.edu.cujae.db_subject1.dto;
+package cu.edu.cujae.pweb.dto;
 
-import cu.edu.cujae.db_subject1.utils.IDTO;
+public class SubjectInCourseDTO {
 
-public class SubjectInCourseDTO implements IDTO {
-
-    private int subjectId;
-    private int courseId;
-    private int yearId;
+    private String subjectId;
+    private String courseId;
+    private String yearId;
     private int hoursLong;
+    private boolean newRecord;
 
-    public SubjectInCourseDTO(int subjectId, int courseId, int yearId, int hoursLong) {
+    public SubjectInCourseDTO() {
+        super();
+    }
+    public SubjectInCourseDTO(String subjectId, String courseId, String yearId, int hoursLong, boolean newRecord) {
+        super();
         this.subjectId = subjectId;
         this.courseId = courseId;
         this.yearId = yearId;
         this.hoursLong = hoursLong;
+        this.newRecord = newRecord;
     }
 
-    public int getSubjectId() {
+    public String getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(int subjectId) {
+    public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
     }
 
-    public int getCourseId() {
+    public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
 
-    public int getYearId() {
+    public String getYearId() {
         return yearId;
     }
 
-    public void setYearId(int yearId) {
+    public void setYearId(String yearId) {
         this.yearId = yearId;
     }
 
@@ -46,6 +50,14 @@ public class SubjectInCourseDTO implements IDTO {
 
     public void setHoursLong(int hoursLong) {
         this.hoursLong = hoursLong;
+    }
+
+    public boolean isNewRecord() {
+        return newRecord;
+    }
+
+    public void setNewRecord(boolean newRecord) {
+        this.newRecord = newRecord;
     }
 
 }

@@ -1,6 +1,6 @@
 package cu.edu.cujae.pweb.dto;
 
-public class StudentDto {
+public class StudentDTO {
 
 	private String id;
 	private String idNum;
@@ -11,11 +11,11 @@ public class StudentDto {
 	private String statusID;
 	private boolean newRecord;
 	
-	public StudentDto() {
+	public StudentDTO() {
 		super(); // TODO Auto-generated constructor stub
 	}
 	
-	public StudentDto(String id, String idNum, String firstName, String lastName, String gender, String municipality,
+	public StudentDTO(String id, String idNum, String firstName, String lastName, String gender, String municipality,
 			String statusID, boolean newRecord) {
 		super();
 		this.id = id;

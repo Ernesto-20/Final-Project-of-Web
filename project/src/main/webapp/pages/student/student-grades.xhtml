@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="Notas del Estudiante" showEffect="fade" modal="true"
+		widgetVar="gradesStudentDialog" responsive="true">
+		<p:outputPanel id="grades-student-content" class="ui-fluid">
+			<p:outputPanel rendered="#{not empty manageStudentBean.selectedStudent}">
+				<p:panelGrid layout="grid" columns="1">
+					<h:panelGroup>
+						<p:dataTable id="dt-students-grades" widgetVar="dtStudentsGrades" var="student"
+							value="#{manageStudentBean.students}" reflow="true" paginator="true"
+							rows="10" paginatorPosition="bottom">
+								<f:facet name="header">
+								<div class="products-table-header">
+									<span style="font-weight: bold">Notas</span> <span
+										class="filter-container ui-input-icon-left"> <i
+										class="pi pi-search"></i> <p:inputText id="globalFilter"
+										onkeyup="PF('dtStudentsGrades').filter()" placeholder="Buscar" />
+									</span>
+
+								</div>
+								</f:facet>
+					
+							<p:column headerText="Asignatura" sortBy="#{student.idNum}"
+								filterBy="#{student.idNum}">
+								<h:outputText value="#{student.idNum}" />
+								</p:column>
+							<p:column headerText="Nota" sortBy="#{student.firstName}" filterBy="#{student.firstName}">
+								<h:outputText value="#{student.firstName}" />
+							</p:column>
+							</p:dataTable>
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:outputPanel>
+
+		<f:facet name="footer">
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('gradeStudentDialog').hide()" class="ui-button-secondary" />
+		</f:facet>
+	</p:dialog>
+</ui:composition>

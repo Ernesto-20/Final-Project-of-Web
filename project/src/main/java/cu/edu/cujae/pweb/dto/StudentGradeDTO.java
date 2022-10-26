@@ -1,23 +1,37 @@
-package cu.edu.cujae.db_subject1.dto;
+package cu.edu.cujae.pweb.dto;
 
-import cu.edu.cujae.db_subject1.utils.IDTO;
 
-public class StudentGradeDTO implements IDTO {
+public class StudentGradeDTO {
 
+	private String id;
     private int studentId;
     private int gradeValue;
     private int subjectId;
     private int courseId;
     private int yearId;
+    private boolean newRecord;
 
-    public StudentGradeDTO(int studentId, int gradeValue, int subjectId, int courseId, int yearId) {
-        this.studentId = studentId;
+    public StudentGradeDTO() {
+		super(); // TODO Auto-generated constructor stub
+	}
+    
+    public StudentGradeDTO(String id, int studentId, int gradeValue, int subjectId, int courseId, int yearId, boolean newRecord) {
+    	super();
+		this.id = id;
+    	this.studentId = studentId;
         this.gradeValue = gradeValue;
         this.subjectId = subjectId;
         this.courseId = courseId;
         this.yearId = yearId;
+        this.newRecord = newRecord;
     }
 
+    public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
     public int getStudentId() {
         return studentId;
     }
@@ -57,4 +71,10 @@ public class StudentGradeDTO implements IDTO {
     public void setYearId(int yearId) {
         this.yearId = yearId;
     }
+    public boolean isNewRecord() {
+		return newRecord;
+	}
+	public void setNewRecord(boolean newRecord) {
+		this.newRecord = newRecord;
+	}
 }

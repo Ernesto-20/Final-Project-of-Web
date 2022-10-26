@@ -112,6 +112,11 @@
 								target="#{manageStudentBean.selectedStudent}" />
 							<p:confirm header="Confirmar" message="Está seguro de eliminar al estudiante?" icon="pi pi-exclamation-triangle"/>
 						</p:commandButton>
+						<p:commandButton class="ui-button-warning rounded-button"
+							icon="pi pi-book" process="@this" 
+							update=":form:manage-student-content"
+							oncomplete="PF('manageStudentDialog').show()">
+						</p:commandButton>
 					</p:column>
 
 				</p:dataTable>

@@ -13,7 +13,7 @@ import cu.edu.cujae.pweb.dto.StudentDTO;
  * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
  */
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentGradeServiceImpl implements StudentService{
 	
 	@Override
 	public List<StudentDTO> getStudents() {

@@ -12,7 +12,7 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.pweb.dto.StudentGradeDTO;
 import cu.edu.cujae.pweb.service.StudentService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
@@ -20,11 +20,11 @@ import cu.edu.cujae.pweb.utils.JsfUtils;
 @Component //Le indica a spring es un componete registrado
 @ManagedBean
 @ViewScoped //Este es el alcance utilizado para trabajar con Ajax
-public class ManageStudentBean {
+public class ManageStudentGradeBean {
 	
-	private StudentDTO studentDTO;
-	private StudentDTO selectedStudent;
-	private List<StudentDTO> students;
+	private StudentGradeDTO studentGradeDto;
+	private StudentGradeDTO selectedStudentGrade;
+	private List<StudentGradeDTO> studentGrades;
 
 	
 	/* @Autowired es la manera para inyectar una dependencia/clase anotada con @service en spring
@@ -34,7 +34,7 @@ public class ManageStudentBean {
 	private StudentService studentService;
 		
 	
-	public ManageStudentBean() {
+	public ManageStudentGradeBean() {
 		
 	}
 	
@@ -42,13 +42,13 @@ public class ManageStudentBean {
 	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
 	@PostConstruct
     public void init() {
-	    students = students == null ? studentService.getStudents() : students;
+	    studentGrades = studentGrades == null ? studentService.getStudents() : studentGrades;
 		
     }
 	
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
-        this.selectedStudent = new StudentDTO();
+        this.selectedStudentGrade = new StudentGradeDTO();
     }
 	
 	//Se ejecuta al dar clic en el button con el lapicito
@@ -59,11 +59,11 @@ public class ManageStudentBean {
 	
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
 	public void saveStudent() {
-        if (this.selectedStudent.getId() == null) {
-            this.selectedStudent.setId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-            this.selectedStudent.setNewRecord(true);
+        if (this.selectedStudentGrade.getId() == null) {
+            this.selectedStudentGrade.setId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
+            this.selectedStudentGrade.setNewRecord(true);
             
-            this.students.add(this.selectedStudent);
+            this.studentGrades.add(this.selectedStudentGrade);
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_added"); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
         }
         else {
@@ -71,44 +71,44 @@ public class ManageStudentBean {
         }
 
         PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");//Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
-        PrimeFaces.current().ajax().update("form:dt-students");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+        PrimeFaces.current().ajax().update("form:dt-studentGrades");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     }
 
 	//Permite eliminar un usuario
     public void deleteStudent() {
     	try {
-    		this.students.remove(this.selectedStudent);
-            this.selectedStudent = null;
+    		this.studentGrades.remove(this.selectedStudentGrade);
+            this.selectedStudentGrade = null;
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_removed");
-            PrimeFaces.current().ajax().update("form:dt-students");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+            PrimeFaces.current().ajax().update("form:dt-studentGrades");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
 		} catch (Exception e) {
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
 		}
         
     }
 
-	public StudentDTO getStudentDto() {
-		return studentDTO;
+	public StudentGradeDTO getStudentGradeDTO() {
+		return studentGradeDto;
 	}
 
-	public void setStudentDto(StudentDTO studentDTO) {
-		this.studentDTO = studentDTO;
+	public void setStudentGradeDTO(StudentGradeDTO studentGradeDto) {
+		this.studentGradeDto = studentGradeDto;
 	}
 
-	public StudentDTO getSelectedStudent() {
-		return selectedStudent;
+	public StudentGradeDTO getSelectedStudent() {
+		return selectedStudentGrade;
 	}
 
-	public void setSelectedStudent(StudentDTO selectedStudent) {
-		this.selectedStudent = selectedStudent;
+	public void setSelectedStudent(StudentGradeDTO selectedStudentGrade) {
+		this.selectedStudentGrade = selectedStudentGrade;
 	}
 
-	public List<StudentDTO> getStudents() {
-		return students;
+	public List<StudentGradeDTO> getStudents() {
+		return studentGrades;
 	}
 
-	public void setStudents(List<StudentDTO> students) {
-		this.students = students;
+	public void setStudents(List<StudentGradeDTO> studentGrades) {
+		this.studentGrades = studentGrades;
 	}
 
 

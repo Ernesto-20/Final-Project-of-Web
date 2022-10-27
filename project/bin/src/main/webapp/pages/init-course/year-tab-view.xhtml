@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title">
+        Inicio de Curso
+    </ui:define>
+    <ui:define name="layout">
+        <h:form id="form">
+            <div class="card">
+                <p:tabView id="panelView">
+                    <p:tab title="Año: 1">
+                        <ui:include src="./subject-in-course-list-component.xhtml"></ui:include>
+                    </p:tab>
+                    <p:tab title="Año: 2">
+
+                    </p:tab>
+                    <p:tab title="Año: 3">
+
+                    </p:tab>
+                    <p:tab title="Año: 4">
+
+                    </p:tab>
+                </p:tabView>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

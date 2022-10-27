@@ -1,6 +1,5 @@
 package cu.edu.cujae.pweb.service;
 
-import cu.edu.cujae.pweb.dto.StudentDto;
 import cu.edu.cujae.pweb.dto.SubjectInCourseWithNameDTO;
 
 import java.util.List;

@@ -6,8 +6,11 @@ import javax.faces.bean.ManagedBean;
 public class CourseBean {
     private String course;
 
-    public CourseBean() {
+    public CourseBean(String course) {
+        this.course = course;
     }
+     public CourseBean() {
+     }
 
     public String getCourse() {
         return course;

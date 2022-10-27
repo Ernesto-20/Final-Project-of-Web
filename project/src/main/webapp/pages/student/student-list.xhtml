@@ -38,6 +38,13 @@
 						<p:commandButton value="Ver baja" 
 							styleClass="ui-button-secondary" ajax="false" style="margin-right: .5rem">
 						</p:commandButton>
+						
+						 <p:selectOneMenu id="course" value="#{manageCourseBean.courses2}" style="margin-right: .5rem">
+                   			 <f:selectItems value="#{manageCourseBean.courses2}"/>
+                		</p:selectOneMenu>
+                		 <p:selectOneMenu id="year" value="#{manageYearBean.years2}" style="margin-right: .5rem">
+                   			 <f:selectItems value="#{manageYearBean.years2}"/>
+                		</p:selectOneMenu>
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 					    <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target

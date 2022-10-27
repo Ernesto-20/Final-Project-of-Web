@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog header="Asignatura" showEffect="fade" modal="true"
+              widgetVar="manageSubjectDialog" responsive="true">
+        <p:outputPanel id="manage-subject-content" class="ui-fluid">
+                    <h3>#{manageSubjectInCourseWithNameBean.selectedSubject.name}</h3>
+                    <div class="p-field">
+                        <p:outputLabel for="@next">Cantidad de Horas</p:outputLabel>
+                        <p:inputText id="idNum" required="true"
+                                     value="#{manageSubjectInCourseWithNameBean.selectedSubject.hoursLong}"
+                                     maxlength="3">
+                            <p:keyFilter mask="num" />
+                        </p:inputText>
+                        <p:message for="@previous"></p:message>
+                    </div>
+        </p:outputPanel>
+        <f:facet name="footer">
+            <p:commandButton value="Salvar" icon="pi pi-check"
+                             actionListener="#{manageSubjectInCourseWithNameBean.saveSubject}"
+                             update="manage-subject-content" process="manage-subject-content @this" />
+            <p:commandButton value="Cancelar" icon="pi pi-times"
+                             onclick="PF('manageSubjectDialog').hide()" class="ui-button-secondary" />
+        </f:facet>
+    </p:dialog>
+</ui:composition>

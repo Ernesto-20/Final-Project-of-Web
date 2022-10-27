@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/pages/template/layout.xhtml">
+        <ui:define name="title">
+            Lista de Asignaturas
+        </ui:define>
+        <ui:define name="layout">
+            <h:form id="form">
+                <div class="card crud-demo">
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <h:outputText value="Vista de Datos" />
+                        </p:toolbarGroup>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Editar Asignatura" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 45%; border: 1px solid #DDDDDD;">
+                            <h:outputText value="Asignaturas según el curso y año establecidos" style="display: block; margin: 0.5rem;"/>
+                            <div>
+                                <p:selectOneMenu id="course-select" value="#{selectOneMenuView.selectedOption}">
+                                    <f:selectItem itemLabel="Curso" itemValue=""/>
+                                    <f:selectItem itemLabel="2019-2020" itemValue="2019-2020"/>
+                                    <f:selectItem itemLabel="2020-2021" itemValue="2020-2021"/>
+                                    <f:selectItem itemLabel="2021-2022" itemValue="2021-2022"/>
+                                </p:selectOneMenu>
+                                <p:selectOneMenu id="year-select" value="#{selectOneMenuView.selectedOption}">
+                                    <f:selectItem itemLabel="Año" itemValue=""/>
+                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                    <f:selectItem itemLabel="3" itemValue="3"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <p:dataTable id="dt-subjects" widgetVar="dtSubjects" var="subject"
+                                         value="#{manageSubjectInCourseWithNameBean.subjects}" reflow="true"
+                                         rows="10">
+                                <p:column headerText="Asignatura">
+                                    <h:outputText value="#{subject.name}" />
+                                </p:column>
+                                <p:column headerText="Horas">
+                                    <h:outputText value="#{subject.hoursLong}" />
+                                </p:column>
+                                <p:column exportable="false">
+                                    <p:commandButton icon="pi pi-pencil" action="#{manageSubjectInCourseWithNameBean.openForEdit}"
+                                                     update=":form:manage-subject-content"
+                                                     oncomplete="PF('manageSubjectDialog').show()"
+                                                     styleClass="edit-button rounded-button ui-button-success"
+                                                     process="@this">
+                                        <f:setPropertyActionListener value="#{subject}"
+                                                                     target="#{manageSubjectInCourseWithNameBean.selectedSubject}" />
+                                        <p:resetInput target=":form:manage-subject-content" />
+                                    </p:commandButton>
+                                    <p:commandButton class="ui-button-warning rounded-button"
+                                                     icon="pi pi-trash" process="@this"
+                                                     action="#{manageSubjectInCourseWithNameBean.deleteSubject}" >
+                                        <f:setPropertyActionListener value="#{subject}"
+                                                                     target="#{manageSubjectInCourseWithNameBean.selectedSubject}" />
+                                        <p:confirm header="Confirmar" message="Está seguro de eliminar la asignatura?" icon="pi pi-exclamation-triangle"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <div style="width: 45%; border: 1px solid #DDDDDD;">
+                            <h:outputText value="Establezca o modifique las notas de los estudiantes" style="display: block; margin: 0.5rem;" />
+                            <div style="display: flex;">
+                                <p:selectOneMenu id="group-select" value="#{selectOneMenuView.selectedOption}">
+                                    <f:selectItem itemLabel="Grupo" itemValue=""/>
+                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                    <f:selectItem itemLabel="3" itemValue="3"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <p:dataTable id="dt-students" widgetVar="dtStudents" var="student"
+                                         value="#{manageStudentBean.students}" reflow="true"
+                                         rows="10">
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{student.lastName}" />
+                                </p:column>
+                                <p:column headerText="Nota">
+                                    <h:outputText value="-" />
+                                </p:column>
+                            </p:dataTable>
+
+                            <!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+                            <ui:include src="subjects_forms.xhtml"></ui:include>
+
+                            <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+                            su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
+                            <p:confirmDialog global="true" showEffect="fade" width="300">
+                                <p:commandButton value="Si" type="button"
+                                                 styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                <p:commandButton value="No" type="button"
+                                                 styleClass="ui-confirmdialog-no ui-button-secondary"
+                                                 icon="pi pi-times" />
+                            </p:confirmDialog>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

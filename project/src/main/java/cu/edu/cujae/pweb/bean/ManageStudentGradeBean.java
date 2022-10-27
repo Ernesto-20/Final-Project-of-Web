@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cu.edu.cujae.pweb.dto.StudentGradeDTO;
-import cu.edu.cujae.pweb.service.StudentService;
+import cu.edu.cujae.pweb.service.StudentGradeService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
 
@@ -31,7 +31,7 @@ public class ManageStudentGradeBean {
 	 * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
 	 */
 	@Autowired
-	private StudentService studentService;
+	private StudentGradeService studentGradeService;
 		
 	
 	public ManageStudentGradeBean() {
@@ -42,7 +42,7 @@ public class ManageStudentGradeBean {
 	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
 	@PostConstruct
     public void init() {
-	    studentGrades = studentGrades == null ? studentService.getStudents() : studentGrades;
+	    studentGrades = studentGrades == null ? studentGradeService.getStudentGrades() : studentGrades;
 		
     }
 	

@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="form2" class="crud-demo">
+
+        <ui:include src="subject-in-course-form.xhtml"></ui:include>
+
+        <p:dataTable id="dt-subjectsInCourse" widgetVar="dtSubjectsInCourse" var="subjectInCourse"
+                     value="#{manageSubjectInCourseBean.subjectsInCourse}" reflow="true" paginator="true"
+                     rows="10" paginatorPosition="bottom">
+            <f:facet name="header">
+                <div class="products-table-header">
+                    <span style="font-weight: bold">Asignaturas del año</span>
+                    <span class="filter-container ui-input-icon-left"><i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjectsInCourse').filter()" placeholder="Buscar" />
+							</span>
+                </div>
+            </f:facet>
+
+            <p:column exportable="false">
+                <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
+            </p:column>
+
+            <p:column headerText="Asignatura asignada" sortBy="#{subject.subjectInCourse.subjectId}"
+                      filterBy="#{subjectInCourse.subjectId}">
+                <h:outputText value="#{subjectInCourse.subjectId}" />
+            </p:column>
+
+            <p:column headerText="Horas" sortBy="#{subjectInCourse.hoursLong}" filterBy="#{subjectInCourse.hoursLong}">
+                <h:outputText value="#{subjectInCourse.hoursLong}" />
+            </p:column>
+
+            <p:column exportable="false">
+                <p:commandButton icon="pi pi-pencil" action="#{manageSubjectInCourseBean.openForEdit}"
+                                 update=":form:panelView:manage-subjectInCourse-content"
+                                 oncomplete="PF('manageSubjectInCourseDialog').show()"
+                                 styleClass="edit-button rounded-button ui-button-success"
+                                 process="@this">
+                    <f:setPropertyActionListener value="#{subjectInCourse}"
+                                                 target="#{manageSubjectInCourseBean.selectedSubjectInCourse}" />
+                    <p:resetInput target=":form:panelView:manage-subjectInCourse-content" />
+                </p:commandButton>
+                <p:commandButton class="ui-button-warning rounded-button"
+                                 icon="pi pi-trash" process="@this"
+                                 action="#{manageSubjectInCourseBean.deleteSubjectInCourse}" >
+                    <f:setPropertyActionListener value="#{subjectInCourse}"
+                                                 target="#{manageSubjectInCourseBean.selectedSubjectInCourse}" />
+                    <p:confirm header="Confirmar" message="Está seguro de eliminar la asignatura?" icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+
+        <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Si" type="button"
+                             styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+            <p:commandButton value="No" type="button"
+                             styleClass="ui-confirmdialog-no ui-button-secondary"
+                             icon="pi pi-times" />
+        </p:confirmDialog>
+    </div>
+
+
+</ui:composition>

@@ -4,12 +4,12 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="title">
+<ui:composition template="/pages/init-course/init-course-template.xhtml">
+    <ui:define name="selection-list-title">
         Nuevo Curso Universitario
     </ui:define>
-    <ui:define name="layout">
-        <h:form id="form">
+    <ui:define name="selection-list-content">
+        <h:form id="form5">
             <p:panelGrid id="panelGridId" columns="1" layout="grid">
                 <f:facet name="Nuevo curso universitario">
                     <p:graphicImage name="demo/images/misc/kobe.png"/>

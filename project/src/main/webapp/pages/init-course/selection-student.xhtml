@@ -4,14 +4,13 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="title">
-        Inicio de Curso
+<ui:composition template="/pages/init-course/init-course-template.xhtml">
+    <ui:define name="selection-list-title">
+        Nueva Matricula
     </ui:define>
-    <ui:define name="layout">
+    <ui:define name="selection-list-content">
         <h:form id="form">
-            <div class="card">
-                <h5 class="p-mt-0">Curso Universitario <p:outputLabel style="font-size:20px;" value="#{manageSelectionStudentBean.newCourse.course}"></p:outputLabel></h5>
+            <div>
                 <p:tabView id="panelView">
                     <p:tab title="Grupo: 1">
                         <ui:include src="./student-list-component.xhtml"></ui:include>

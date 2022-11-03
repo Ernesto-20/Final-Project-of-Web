@@ -47,7 +47,7 @@ public class ManageSubjectBean {
 
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
-        this.selectedSubject = new SubjectDTO();
+		this.selectedSubject = new SubjectDTO();
     }
 
 	//Se ejecuta al dar clic en el button con el lapicito
@@ -59,27 +59,35 @@ public class ManageSubjectBean {
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
 	public void saveSubject() {
         if (this.selectedSubject.getId() == null) {
-            this.selectedSubject.setId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-            this.selectedSubject.setNewRecord(true);
 
-            this.subjects.add(this.selectedSubject);
+			//register subject
+			subjectService.createSubject(this.selectedSubject);
+
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_added"); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
-        }
+		}
         else {
+			//register subject
+			subjectService.updateSubject(this.selectedSubject);
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_edited");
         }
 
+		//load datatable again with new values
+		subjects = subjectService.getSubjects();
         PrimeFaces.current().executeScript("PF('manageSubjectDialog').hide()");//Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
         PrimeFaces.current().ajax().update("form:dt-subjects");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
-    }
+	}
 
-	//Permite eliminar un usuario
+	//Permite eliminar una asignatura
     public void deleteSubject() {
     	try {
-    		this.subjects.remove(this.selectedSubject);
-            this.selectedSubject = null;
-            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_removed");
-            PrimeFaces.current().ajax().update("form:dt-subjects");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
+			//delete subject
+			subjectService.deleteSubject(this.selectedSubject.getId());
+			this.selectedSubject = null;
+			
+			//load datatable again with new values
+			subjects = subjectService.getSubjects();
+    		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_deleted");
+			PrimeFaces.current().ajax().update("form:dt-subjects");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
 		} catch (Exception e) {
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
 		}

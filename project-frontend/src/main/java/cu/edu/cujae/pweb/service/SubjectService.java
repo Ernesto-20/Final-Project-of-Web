@@ -6,8 +6,8 @@ import cu.edu.cujae.pweb.dto.SubjectDTO;
 
 public interface SubjectService {
     List<SubjectDTO> getSubjects();
-    SubjectDTO getSubjectById(String subjectId);
+    SubjectDTO getSubjectById(Integer subjectId);
     void createSubject(SubjectDTO subject);
     void updateSubject(SubjectDTO subject);
-    void deleteSubject(String id);
+    void deleteSubject(Integer id);
 }

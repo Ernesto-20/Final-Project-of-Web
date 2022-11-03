@@ -1,13 +1,18 @@
 package cu.edu.cujae.pweb.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+import cu.edu.cujae.pweb.utils.ApiRestMapper;
+import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.pweb.dto.SubjectDTO;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriTemplate;
 
 /* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podr� inyectarse en otro lugar usando
  * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
@@ -15,41 +20,59 @@ import cu.edu.cujae.pweb.dto.SubjectDTO;
 @Service
 public class SubjectServiceImpl implements SubjectService{
 
+    @Autowired
+    private RestService restService;
+
     @Override
     public List<SubjectDTO> getSubjects() {
-        List<SubjectDTO> subjects = new ArrayList<>();
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "C", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "PW", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "MH", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "MD", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "IA", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "SI", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "DS", false));
-
-        return subjects;
+        List<SubjectDTO> subjectList = new ArrayList<SubjectDTO>();
+        try {
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            ApiRestMapper<SubjectDTO> apiRestMapper = new ApiRestMapper<>();
+            String response = (String)restService.GET("/api/v1/subjects", params, String.class).getBody();
+            subjectList = apiRestMapper.mapList(response, SubjectDTO.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return subjectList;
     }
 
     @Override
-    public SubjectDTO getSubjectById(String userId) {
-        return getSubjects().stream().filter(r -> r.getId().equals(userId)).findFirst().get();
+    public SubjectDTO getSubjectById(Integer subjectId) {
+        SubjectDTO subject = null;
+
+        try {
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            ApiRestMapper<SubjectDTO> apiRestMapper = new ApiRestMapper<>();
+
+            UriTemplate template = new UriTemplate("/api/v1/subjects/{subjectId}");
+            String uri = template.expand(subjectId.toString()).toString();
+            String response = (String)restService.GET(uri, params, String.class).getBody();
+            subject = apiRestMapper.mapOne(response, SubjectDTO.class);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return subject;
     }
 
     @Override
     public void createSubject(SubjectDTO subjectDTO) {
-        // TODO Auto-generated method stub
+        restService.POST("/api/v1/subjects", subjectDTO, String.class).getBody();
 
     }
 
     @Override
     public void updateSubject(SubjectDTO subjectDTO) {
-        // TODO Auto-generated method stub
-
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        restService.PUT("/api/v1/subjects", params, subjectDTO, String.class).getBody();
     }
 
     @Override
-    public void deleteSubject(String id) {
-        // TODO Auto-generated method stub
-
+    public void deleteSubject(Integer subjectId) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        UriTemplate template = new UriTemplate("/api/v1/subjects/{subjectId}");
+        String uri = template.expand(subjectId.toString()).toString();
+        restService.DELETE(uri, params, String.class, null).getBody();
     }
 
 }

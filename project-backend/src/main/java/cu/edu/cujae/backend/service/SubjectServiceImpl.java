@@ -1,18 +1,14 @@
 package cu.edu.cujae.backend.service;
 
 import cu.edu.cujae.backend.core.dto.SubjectDTO;
-import cu.edu.cujae.backend.core.service.RoleService;
 import cu.edu.cujae.backend.core.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 /* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podr� inyectarse en otro lugar usando
  * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
@@ -25,33 +21,75 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<SubjectDTO> getSubjects() throws SQLException {
-        List<SubjectDTO> subjects = new ArrayList<>();
-       /*subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "C", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "PW", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "MH", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "MD", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "IA", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "SI", false));
-        subjects.add(new SubjectDTO(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9), "DS", false));
-        */
+        LinkedList<SubjectDTO> subjects = new LinkedList<>();
+        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
+            String function = "{?= call select_all_subject()}";
+
+            CallableStatement preparedFunction = conn.prepareCall(function);
+            preparedFunction.registerOutParameter(1, Types.OTHER);
+            preparedFunction.execute();
+            ResultSet resultSet = (ResultSet) preparedFunction.getObject(1);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                subjects.add(new SubjectDTO(id, name));
+            }
+            resultSet.close();
+            preparedFunction.close();
+        }
+
         return subjects;
     }
 
     @Override
-    public SubjectDTO getSubjectById(String userId) throws SQLException {
-        return getSubjects().stream().filter(r -> r.getId().equals(userId)).findFirst().get();
+    public SubjectDTO getSubjectById(Integer id) throws SQLException {
+        SubjectDTO subjectDTO = null;
+        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
+            String function = "{?= call find_subjectbyid(?)}";
+
+            CallableStatement preparedFunction = conn.prepareCall(function);
+            preparedFunction.setInt(2, id);
+            preparedFunction.registerOutParameter(1, Types.OTHER);
+            preparedFunction.execute();
+            ResultSet resultSet = (ResultSet) preparedFunction.getObject(1);
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                subjectDTO = new SubjectDTO(id, name);
+            }
+            resultSet.close();
+            preparedFunction.close();
+        }
+        return subjectDTO;
     }
 
     @Override
     public void createSubject(SubjectDTO subjectDTO) throws SQLException {
-        // TODO Auto-generated method stub
-
+        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            String function = "{ call subject_insert(?)}";
+            CallableStatement preparedFunction = null;
+            preparedFunction = conn.prepareCall(function);
+            preparedFunction.setString(1, subjectDTO.getName());
+            preparedFunction.execute();
+            preparedFunction.close();
+        }
     }
 
     @Override
     public void updateSubject(SubjectDTO subjectDTO) throws SQLException {
-        // TODO Auto-generated method stub
+        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            String function = "{ call subject_update(?, ?)}";
+            CallableStatement preparedFunction = null;
 
+            preparedFunction = conn.prepareCall(function);
+            preparedFunction.setInt(1, subjectDTO.getId());
+            preparedFunction.setString(2, subjectDTO.getName());
+            preparedFunction.execute();
+
+            preparedFunction.close();
+
+        }
     }
 
     @Override

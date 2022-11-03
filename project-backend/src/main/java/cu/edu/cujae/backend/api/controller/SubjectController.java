@@ -24,7 +24,7 @@ public class SubjectController {
 	
 	@GetMapping("/{id}")
     public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable String id) throws SQLException {
-        SubjectDTO subject = subjectService.getSubjectById(id);
+        SubjectDTO subject = subjectService.getSubjectById(Integer.parseInt(id));
         return ResponseEntity.ok(subject);
     }
 	
@@ -41,8 +41,8 @@ public class SubjectController {
     }
 	
 	@DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) throws SQLException {
-        subjectService.deleteSubject(id);
+    public ResponseEntity<String> delete(@PathVariable String id) throws SQLException {
+        subjectService.deleteSubject(Integer.parseInt(id));
         return ResponseEntity.ok("Subject Deleted");
     }
 }

@@ -4,17 +4,15 @@ public class SubjectDTO {
 
     private Integer id;
     private String name;
-    private boolean newRecord;
 
     public SubjectDTO() {
         super();
     }
 
-    public SubjectDTO(Integer id, String name, boolean newRecord) {
+    public SubjectDTO(Integer id, String name) {
         super();
         this.id = id;
         this.name = name;
-        this.newRecord = newRecord;
     }
 
     public Integer getId() {
@@ -31,14 +29,6 @@ public class SubjectDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isNewRecord() {
-        return newRecord;
-    }
-
-    public void setNewRecord(boolean newRecord) {
-        this.newRecord = newRecord;
     }
 
 }

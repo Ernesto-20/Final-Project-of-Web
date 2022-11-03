@@ -1,4 +1,4 @@
-package cu.edu.cujae.pweb.service;
+package cu.edu.cujae.pweb.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
-import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.backend.core.dto.StudentDTO;
 
 /* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podr� inyectarse en otro lugar usando
 
@@ -41,10 +41,10 @@ public class StudentServiceImpl implements StudentService{
 		List<StudentDTO> students = null;
 		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
+//		ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
 		
-		String response = (String)restService.GET("/api/v1/students", params, String.class).getBody();
-		students = apiRestMapper.mapList(response, StudentDTO.class);
+//		String response = (String)restService.GET("/api/v1/students", params, String.class).getBody();
+//		students = apiRestMapper.mapList(response, StudentDTO.class);
 		
 		return students;
 	}
@@ -54,13 +54,13 @@ public class StudentServiceImpl implements StudentService{
 		StudentDTO student = null;
 		
 		try {
-			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-			ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
+//			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+//			ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
 			
-			UriTemplate template = new UriTemplate("/api/v1/students/{studentId}");
-			String uri = template.expand("studentId", studentId).toString();
-			String response = (String)restService.GET(uri, params, String.class).getBody();
-			student = apiRestMapper.mapOne(response, StudentDTO.class);
+//			UriTemplate template = new UriTemplate("/api/v1/students/{studentId}");
+//			String uri = template.expand("studentId", studentId).toString();
+//			String response = (String)restService.GET(uri, params, String.class).getBody();
+//			student = apiRestMapper.mapOne(response, StudentDTO.class);
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -74,12 +74,12 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public void createStudent(StudentDTO student) {
 		// TODO Auto-generated method stub
-		restService.POST("/api/v1/students", student, String.class, null).getBody();
+//		restService.POST("/api/v1/students", student, String.class, null).getBody();
 	}
 
 	@Override
 	public void updateStudent(StudentDTO student) {
-		restService.PUT("/api/v1/students", student, String.class, null).getBody();
+//		restService.PUT("/api/v1/students", student, String.class, null).getBody();
 		
 		// TODO Auto-generated method stub
 		

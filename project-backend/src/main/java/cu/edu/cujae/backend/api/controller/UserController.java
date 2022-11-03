@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cu.edu.cujae.backend.core.dto.UserDto;
+import cu.edu.cujae.backend.core.dto.UserDTO;
 import cu.edu.cujae.backend.core.service.UserService;
 
 @RestController
@@ -25,25 +25,25 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping("")
-    public ResponseEntity<List<UserDto>> getUsers() throws SQLException {
-		List<UserDto> userList = userService.listUsers();
+    public ResponseEntity<List<UserDTO>> getUsers() throws SQLException {
+		List<UserDTO> userList = userService.listUsers();
         return ResponseEntity.ok(userList);
     }
 	
 	@GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable String id) throws SQLException {
-		UserDto user = userService.getUserById(id);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable String id) throws SQLException {
+		UserDTO user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 	
 	@PostMapping("")
-    public ResponseEntity<String> create(@RequestBody UserDto user) throws SQLException {
+    public ResponseEntity<String> create(@RequestBody UserDTO user) throws SQLException {
 		userService.createUser(user);
         return ResponseEntity.ok("User Created");
     }
 	
 	@PutMapping("")
-    public ResponseEntity<String> update(@RequestBody UserDto user) throws SQLException {
+    public ResponseEntity<String> update(@RequestBody UserDTO user) throws SQLException {
 		userService.updateUser(user);
         return ResponseEntity.ok("User Updated");
     }

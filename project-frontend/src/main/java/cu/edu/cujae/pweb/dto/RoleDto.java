@@ -1,9 +1,14 @@
 package cu.edu.cujae.pweb.dto;
 
 public class RoleDto {
+	
 	private Long id;
 	private String roleName;
 	private String description;
+	
+	public RoleDto() {
+
+	}
 	
 	public RoleDto(Long id, String roleName, String description) {
 		super();

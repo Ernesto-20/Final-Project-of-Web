@@ -1,12 +1,11 @@
 package cu.edu.cujae.pweb.utils;
 
-import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class JsfUtils {
 	public static void addMessage(String componentId, Severity severity, String summary) {

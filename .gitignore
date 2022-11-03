@@ -1,13 +1,22 @@
 # ignore .idea
-Project/.idea
+project-frontend/.idea
+project-backend/.idea
 
 # ignore target
-Project/target
+project-frontend/target/
+project-backend/target/
 
 # ignore First release -html,css,js-
-First release -html,css,js-
-project/target
+First release -html,css,js-/
 
-.idea
-project/.classpath
-project/.project
+project-frontend/.classpath
+project-frontend/.project
+project-backend/.classpath
+project-backend/.project
+
+project-frontend/bin/
+project-backend/bin/
+
+project-backend/.settings
+project-backend/.mvn
+

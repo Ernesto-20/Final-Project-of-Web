@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title">
+        Inicio de Curso
+    </ui:define>
+    <ui:define name="layout">
+        <p:card>
+            <f:facet name="header">
+                <div class="p-d-flex p-jc-between p-ai-center" style="border-bottom-style: solid; border-color: rgb(90,92,95);">
+                    <div>
+                        <h3 style="color: rgb(90,92,95); padding: 10px 25px 0px 25px;">
+                            <ui:insert name="selection-list-title"></ui:insert>
+                        </h3>
+                    </div>
+                    <p:linkButton outcome="/pages/init-course/selection-student.xhtml" value="Continuar"
+                                  style="margin-right:20px;">
+                    </p:linkButton>
+                </div>
+            </f:facet>
+            <ui:insert name="selection-list-content"></ui:insert>
+        </p:card>
+    </ui:define>
+</ui:composition>
+</html>

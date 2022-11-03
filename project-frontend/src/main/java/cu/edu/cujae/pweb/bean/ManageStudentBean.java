@@ -60,8 +60,7 @@ public class ManageStudentBean {
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
 	public void saveStudent() {
         if (this.selectedStudent.getId() == null) {
-            this.selectedStudent.setId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-            this.selectedStudent.setNewRecord(true);
+            this.selectedStudent.setId(Integer.valueOf(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9)));
             
             this.students.add(this.selectedStudent);
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_added"); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added

@@ -1,14 +1,15 @@
-package cu.edu.cujae.pweb.service;
+package cu.edu.cujae.backend.core.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.backend.core.dto.StudentDTO;
 
 public interface StudentService {
-	List<StudentDTO> getStudents();
-	StudentDTO getStudentById(String studentId);
-	StudentDTO getStudentByIdNum(String studentIdNum);
-	void createStudent(StudentDTO student);
-	void updateStudent(StudentDTO student);
-	void deleteStudent(String studentId);
+	List<StudentDTO> getStudents() throws SQLException;
+	StudentDTO getStudentById(Integer studentId) throws SQLException;
+	StudentDTO getStudentByIdNum(String studentIdNum) throws SQLException;
+	void createStudent(StudentDTO student) throws SQLException;
+	void updateStudent(StudentDTO student) throws SQLException;
+	void deleteStudent(Integer studentId) throws SQLException;
 }

@@ -29,4 +29,13 @@ Sandy Comas Becerra
     ManageStudentBean.java
     ManageStudentGradeBean.java
     StudentBean.java
+    StudentDTO.java
+    StudentController.java
+    StudentService.java
+    StudentServiceImpl.java
+    StudentBean.java
+    StudentGradeDTO.java
+    StudentGradeController.java
+    StudentGradeService.java
+    StudentGradeServiceImpl.java
 

@@ -9,14 +9,13 @@ public class StudentDTO {
 	private String gender;
 	private String municipality;
 	private Integer statusID;
-	private boolean newRecord;
 	
 	public StudentDTO() {
 		super(); // TODO Auto-generated constructor stub
 	}
 	
 	public StudentDTO(Integer id, String idNum, String firstName, String lastName, String gender, String municipality,
-			Integer statusID, boolean newRecord) {
+			Integer statusID) {
 		super();
 		this.id = id;
 		this.idNum = idNum;
@@ -25,7 +24,6 @@ public class StudentDTO {
 		this.gender = gender;
 		this.municipality = municipality;
 		this.statusID = statusID;
-		this.newRecord = newRecord;
 	}
 	
 	public Integer getId() {
@@ -69,11 +67,5 @@ public class StudentDTO {
 	}
 	public void setStatusID(Integer statusID) {
 		this.statusID = statusID;
-	}
-	public boolean isNewRecord() {
-		return newRecord;
-	}
-	public void setNewRecord(boolean newRecord) {
-		this.newRecord = newRecord;
 	}
 }

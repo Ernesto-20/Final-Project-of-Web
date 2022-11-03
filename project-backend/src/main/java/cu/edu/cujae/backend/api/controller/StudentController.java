@@ -14,43 +14,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cu.edu.cujae.backend.core.dto.StudentDto;
+import cu.edu.cujae.backend.core.dto.StudentDTO;
 import cu.edu.cujae.backend.core.service.StudentService;
 
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
-	
-	@Autowired
-	private StudentService studentService;
-	
-	@GetMapping("")
-    public ResponseEntity<List<StudentDto>> getStudents() throws SQLException {
-		List<StudentDto> studentList = studentService.listStudents();
+
+    @Autowired
+    private StudentService studentService;
+
+    @GetMapping("")
+    public ResponseEntity<List<StudentDTO>> getStudents() throws SQLException {
+        List<StudentDTO> studentList = studentService.getStudents();
         return ResponseEntity.ok(studentList);
     }
-	
-	@GetMapping("/{id}")
-    public ResponseEntity<StudentDto> getStudentById(@PathVariable String id) throws SQLException {
-		StudentDto student = studentService.getStudentById(id);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable String id) throws SQLException {
+        StudentDTO student = studentService.getStudentById(Integer.parseInt(id));
         return ResponseEntity.ok(student);
     }
-	
-	@PostMapping("")
-    public ResponseEntity<String> create(@RequestBody StudentDto student) throws SQLException {
-		studentService.createStudent(student);
+
+    @GetMapping("/idnum/{idNum}")
+    public ResponseEntity<StudentDTO> getStudentByIdNum(@PathVariable String idNum) throws SQLException {
+        StudentDTO student = studentService.getStudentByIdNum(idNum);
+        return ResponseEntity.ok(student);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<String> create(@RequestBody StudentDTO student) throws SQLException {
+        studentService.createStudent(student);
         return ResponseEntity.ok("Student Created");
     }
-	
-	@PutMapping("")
-    public ResponseEntity<String> update(@RequestBody StudentDto student) throws SQLException {
-		studentService.updateStudent(student);
+
+    @PutMapping("")
+    public ResponseEntity<String> update(@RequestBody StudentDTO student) throws SQLException {
+        studentService.updateStudent(student);
         return ResponseEntity.ok("Student Updated");
     }
-	
-	@DeleteMapping("/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable String id) throws SQLException {
-		studentService.deleteStudent(id);
+        studentService.deleteStudent(Integer.parseInt(id));
         return ResponseEntity.ok("Student deleted");
     }
 }

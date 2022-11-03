@@ -10,7 +10,7 @@ public class StudentBean {
 	private String lastName;
 	private String gender;
 	private String municipality;
-	private String statusID;
+	private Integer statusID;
 	
 	public StudentBean() {
 		// TODO Auto-generated constructor stub
@@ -46,10 +46,10 @@ public class StudentBean {
 	public void setMunicipality(String municipality) {
 		this.municipality = municipality;
 	}
-	public String getStatusID() {
+	public Integer getStatusID() {
 		return statusID;
 	}
-	public void setStatusID(String statusID) {
+	public void setStatusID(Integer statusID) {
 		this.statusID = statusID;
 	}
 	

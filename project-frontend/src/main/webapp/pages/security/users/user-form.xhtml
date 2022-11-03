@@ -44,12 +44,12 @@
 					</h:panelGroup>
 					<h:panelGroup>
 					    <div class="p-field">
-							<p:outputLabel for="@next">Roles</p:outputLabel>
+							<p:outputLabel for="@next" rendered="#{empty manageUserBean.selectedUser.id}">Roles</p:outputLabel>
 							<p:selectCheckboxMenu id="multiple" required="true"
 								value="#{manageUserBean.selectedRoles}" label="Seleccione"
 								style="min-width: 15rem" multiple="true" filter="true"
 								filterMatchMode="startsWith" panelStyle="width: 30rem"
-								scrollHeight="250">
+								scrollHeight="250" rendered="#{empty manageUserBean.selectedUser.id}">
 								<f:selectItems value="#{manageUserBean.roles}" var="role"
 									itemLabel="#{role.description}" itemValue="#{role.id}" />
 							</p:selectCheckboxMenu>

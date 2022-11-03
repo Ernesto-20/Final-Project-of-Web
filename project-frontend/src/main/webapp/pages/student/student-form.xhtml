@@ -7,7 +7,7 @@
 	<p:dialog header="Estudiante" showEffect="fade" modal="true"
 		widgetVar="manageStudentDialog" responsive="true">
 		<p:outputPanel id="manage-student-content" class="ui-fluid">
-			<p:outputPanel rendered="#{not empty manageStudentBean.selectedStudent}">
+			<p:outputPanel rendered="#{true}">
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
 						<div class="p-field">
@@ -68,6 +68,7 @@
 				actionListener="#{manageStudentBean.saveStudent}"
 				update="manage-student-content" process="manage-student-content @this" />
 			<p:commandButton value="Cancelar" icon="pi pi-times"
+				action="#{manageStudentBean.cancel}"
 				onclick="PF('manageStudentDialog').hide()" class="ui-button-secondary" />
 		</f:facet>
 	</p:dialog>

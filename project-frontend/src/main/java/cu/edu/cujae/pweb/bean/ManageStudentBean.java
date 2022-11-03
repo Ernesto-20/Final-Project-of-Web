@@ -35,24 +35,26 @@ public class ManageStudentBean {
 		
 	
 	public ManageStudentBean() {
-		
+		selectedStudent = new StudentDTO();
 	}
 	
 
 	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
 	@PostConstruct
     public void init() {
-	    students = students == null ? studentService.getStudents() : students;
-		
+		students = studentService.getStudents();
     }
 	
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
+		System.out.print("Crear");
         this.selectedStudent = new StudentDTO();
+//        this.selectedStudent = new StudentDTO();
     }
 	
 	//Se ejecuta al dar clic en el button con el lapicito
 	public void openForEdit() {
+		System.out.print("Editar");
 //		List<RoleDto> roles = this.selectedUser.getRoles();
 //		this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
 	}
@@ -60,24 +62,46 @@ public class ManageStudentBean {
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
 	public void saveStudent() {
         if (this.selectedStudent.getId() == null) {
-            this.selectedStudent.setId(Integer.valueOf(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9)));
             
-            this.students.add(this.selectedStudent);
+        	System.out.print("Crear");
+          //register student
+            studentService.createStudent(this.selectedStudent);
+            
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_added"); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
         }
         else {
+        	System.out.print("Cambiar");
+        	//register student
+        	studentService.updateStudent(this.selectedStudent);
+        	
+        	this.selectedStudent = new StudentDTO();
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_edited");
         }
-
+        
+      //load datatable again with new values
+        students = studentService.getStudents();
+        
+        this.selectedStudent = new StudentDTO();
         PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");//Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
         PrimeFaces.current().ajax().update("form:dt-students");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
     }
+	
+	public void cancel() {
+		System.out.print("Cancel");
+		this.selectedStudent = new StudentDTO();
+	}
 
-	//Permite eliminar un usuario
+	//Permite eliminar un estudiante
     public void deleteStudent() {
     	try {
-    		this.students.remove(this.selectedStudent);
+    		
+    		//delete student
+    		studentService.deleteStudent(this.selectedStudent.getId());
             this.selectedStudent = null;
+            
+            //load datatable again with new values
+            students = studentService.getStudents();
+            
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_removed");
             PrimeFaces.current().ajax().update("form:dt-students");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
 		} catch (Exception e) {

@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			CallableStatement CS = conn.prepareCall(
-					"{call student_insert(?, ?, ?, ?, ?, ?, ?)}");
+					"{call student_insert(?, ?, ?, ?, ?, ?)}");
 
 			CS.setString(1, student.getIdNum());
 			CS.setString(2, student.getFirstName());
@@ -73,7 +73,7 @@ public class StudentServiceImpl implements StudentService {
 			conn.setAutoCommit(false);
 			
 			CallableStatement CS = conn.prepareCall(
-					"{?= call find_studentbyid()}");
+					"{?= call find_studentbyid(?)}");
 
 			CS.registerOutParameter(1, Types.OTHER);
 			CS.setInt(2, studentId);
@@ -116,14 +116,15 @@ public class StudentServiceImpl implements StudentService {
 
 			CallableStatement CS = conn.prepareCall(
 					"{ call student_update(?, ?, ?, ?, ?, ?, ?)}");
-
+			
 			CS.setInt(1, student.getId());
 			CS.setString(2, student.getIdNum());
 			CS.setString(3, student.getFirstName());
 			CS.setString(4, student.getLastName());
 			CS.setString(5, student.getGender());
 			CS.setString(6, student.getMunicipality());
-
+			CS.setInt(7, student.getStatusID());
+			
 			CS.executeUpdate();
 		}
 	}
@@ -138,21 +139,4 @@ public class StudentServiceImpl implements StudentService {
 			CS.executeUpdate();
 		}
 	}
-
-	private String getMd5Hash(String password) {
-		MessageDigest md;
-		String md5Hash = "";
-		try {
-			md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-			byte[] digest = md.digest();
-			md5Hash = DatatypeConverter
-					.printHexBinary(digest).toUpperCase();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return md5Hash;
-	}
-
 }

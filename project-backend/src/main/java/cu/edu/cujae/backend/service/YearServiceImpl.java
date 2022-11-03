@@ -31,6 +31,7 @@ public class YearServiceImpl implements YearService {
 
         LinkedList<YearDTO> years = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call select_all_year()}";
             CallableStatement preparedFunction = conn.prepareCall(function);
             preparedFunction.registerOutParameter(1, Types.OTHER);
@@ -52,6 +53,7 @@ public class YearServiceImpl implements YearService {
 
         YearDTO year = null;
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call find_yearbyid(?)}";
             CallableStatement preparedFunction = conn.prepareCall(function);
             preparedFunction.registerOutParameter(1, Types.OTHER);

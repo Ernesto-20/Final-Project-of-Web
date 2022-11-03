@@ -35,6 +35,7 @@ public class BrigadeServiceImpl implements BrigadeService {
 
         LinkedList<BrigadeDTO> brigades = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call select_all_brigade()}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -60,6 +61,7 @@ public class BrigadeServiceImpl implements BrigadeService {
         BrigadeDTO brigade = null;
 
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call find_brigadebyid(?)}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -84,6 +86,7 @@ public class BrigadeServiceImpl implements BrigadeService {
 
         LinkedList<BrigadeDTO> brigade = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call find_brigade_by_year_id(?)}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -107,6 +110,7 @@ public class BrigadeServiceImpl implements BrigadeService {
     public BrigadeDTO myFindById(int id) throws SQLException {
         BrigadeDTO brigade = null;
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             String query_to_execute = "SELECT * FROM brigade WHERE brigade.id =" + id;
             ResultSet result = statement.executeQuery(query_to_execute);

@@ -12,6 +12,10 @@ public interface CourseService {
 
     CourseDTO findById(int id) throws SQLException;
 
+    CourseDTO findByStartAndFinish(int start, int finish) throws SQLException;
+
+    CourseDTO findLast() throws SQLException;
+
     void update(CourseDTO courseDTO) throws SQLException;
 
     CourseDTO delete(int id) throws SQLException;

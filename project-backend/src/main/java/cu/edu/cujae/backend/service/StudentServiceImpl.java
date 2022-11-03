@@ -17,7 +17,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.backend.core.dto.StudentDTO;
+import cu.edu.cujae.backend.core.service.StatusService;
 import cu.edu.cujae.backend.core.service.StudentService;
+import cu.edu.cujae.backend.core.service.SubjectService;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -25,6 +27,9 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	private StatusService statusService;
+	
 	@Override
 	public void createStudent(StudentDTO student) throws SQLException {
 
@@ -59,7 +64,8 @@ public class StudentServiceImpl implements StudentService {
 			while (rs.next()) {
 				studentList.add(new StudentDTO(rs.getInt("id"), rs.getString("id_num"), rs.getString("first_name"),
 						rs.getString("last_name"), rs.getString("gender"), rs.getString("municipality"),
-						rs.getInt("status_id")));
+						rs.getInt("status_id"),
+						statusService.findById(rs.getInt("status_id")).getDescription()));
 			}
 		}
 		return studentList;
@@ -83,7 +89,8 @@ public class StudentServiceImpl implements StudentService {
 
 			while (rs.next()) {
 				student = new StudentDTO(studentId, rs.getString("id_num"), rs.getString("first_name"), rs.getString("last_name"),
-						rs.getString("gender"), rs.getString("municipality"), rs.getInt("status_id"));
+						rs.getString("gender"), rs.getString("municipality"), rs.getInt("status_id"),
+						statusService.findById(rs.getInt("status_id")).getDescription());
 			}
 		}
 
@@ -104,7 +111,8 @@ public class StudentServiceImpl implements StudentService {
 			while (rs.next()) {
 				student = new StudentDTO(rs.getInt("id"), studentIdNum, rs.getString("first_name"),
 						rs.getString("last_name"),
-						rs.getString("gender"), rs.getString("municipality"), rs.getInt("status_id"));
+						rs.getString("gender"), rs.getString("municipality"), rs.getInt("status_id"),
+						statusService.findById(rs.getInt("status_id")).getDescription());
 			}
 		}
 		return student;

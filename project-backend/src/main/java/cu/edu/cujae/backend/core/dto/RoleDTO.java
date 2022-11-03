@@ -1,17 +1,17 @@
 package cu.edu.cujae.backend.core.dto;
 
-public class RoleDto {
+public class RoleDTO {
 	private Long id;
 	private String roleName;
 	private String description;
 	
-	public RoleDto(Long id, String roleName, String description) {
+	public RoleDTO(Long id, String roleName, String description) {
 		this.id = id;
 		this.roleName = roleName;
 		this.description = description;
 	}
 	
-	public RoleDto() {
+	public RoleDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

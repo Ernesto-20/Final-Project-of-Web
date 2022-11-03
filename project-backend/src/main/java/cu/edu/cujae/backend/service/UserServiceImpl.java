@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import cu.edu.cujae.backend.core.dto.UserDto;
+import cu.edu.cujae.backend.core.dto.UserDTO;
 import cu.edu.cujae.backend.core.service.RoleService;
 import cu.edu.cujae.backend.core.service.UserService;
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
 	private RoleService roleService;
 
 	@Override
-	public void createUser(UserDto user) throws SQLException {
+	public void createUser(UserDTO user) throws SQLException {
 		
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			CallableStatement CS = conn.prepareCall(
@@ -55,14 +55,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<UserDto> listUsers() throws SQLException {
-		List<UserDto> userList = new ArrayList<UserDto>();
+	public List<UserDTO> listUsers() throws SQLException {
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			ResultSet rs = conn.createStatement().executeQuery(
 					"SELECT * FROM xuser");
 			
 			while(rs.next()){
-				userList.add(new UserDto(rs.getString("id")
+				userList.add(new UserDTO(rs.getString("id")
 						,rs.getString("username")
 						,rs.getString("full_name")
 						,rs.getString("password")
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void updateUser(UserDto user) throws SQLException {
+	public void updateUser(UserDTO user) throws SQLException {
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			
 			PreparedStatement pstmt = conn.prepareStatement(
@@ -92,9 +92,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDto getUserById(String userId) throws SQLException {
+	public UserDTO getUserById(String userId) throws SQLException {
 		
-		UserDto user = null; 
+		UserDTO user = null;
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 		
 			PreparedStatement pstmt = conn.prepareStatement(
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService{
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				user = new UserDto(rs.getString("id")
+				user = new UserDTO(rs.getString("id")
 						,rs.getString("username")
 						,rs.getString("full_name")
 						,rs.getString("password")

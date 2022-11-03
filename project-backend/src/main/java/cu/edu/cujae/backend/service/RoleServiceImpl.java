@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import cu.edu.cujae.backend.core.dto.RoleDto;
-import cu.edu.cujae.backend.core.dto.UserDto;
+import cu.edu.cujae.backend.core.dto.RoleDTO;
 import cu.edu.cujae.backend.core.service.RoleService;
 
 @Service
@@ -22,8 +21,8 @@ public class RoleServiceImpl implements RoleService {
     private JdbcTemplate jdbcTemplate;
 	
 	@Override
-	public List<RoleDto> getRolesByUserId(String userId) throws SQLException {
-		List<RoleDto> roleList = new ArrayList<RoleDto>();
+	public List<RoleDTO> getRolesByUserId(String userId) throws SQLException {
+		List<RoleDTO> roleList = new ArrayList<RoleDTO>();
 		
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			PreparedStatement pstmt = conn.prepareStatement(
@@ -34,7 +33,7 @@ public class RoleServiceImpl implements RoleService {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				roleList.add(new RoleDto(rs.getLong("id")
+				roleList.add(new RoleDTO(rs.getLong("id")
 						,rs.getString("role_name")
 						,rs.getString("description")));
 			}
@@ -43,14 +42,14 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<RoleDto> listRoles() throws SQLException {
-		List<RoleDto> roleList = new ArrayList<RoleDto>();
+	public List<RoleDTO> listRoles() throws SQLException {
+		List<RoleDTO> roleList = new ArrayList<RoleDTO>();
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			ResultSet rs = conn.createStatement().executeQuery(
 					"SELECT * FROM xrole");
 			
 			while(rs.next()){
-				roleList.add(new RoleDto(rs.getLong("id")
+				roleList.add(new RoleDTO(rs.getLong("id")
 						,rs.getString("role_name")
 						,rs.getString("description")));
 			}
@@ -59,8 +58,8 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public RoleDto getRoleById(Long roleId) throws SQLException {
-		RoleDto role = null; 
+	public RoleDTO getRoleById(Long roleId) throws SQLException {
+		RoleDTO role = null;
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 		
 			PreparedStatement pstmt = conn.prepareStatement(
@@ -71,7 +70,7 @@ public class RoleServiceImpl implements RoleService {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				role = new RoleDto(rs.getLong("id")
+				role = new RoleDTO(rs.getLong("id")
 						,rs.getString("role_name")
 						,rs.getString("description"));
 			}

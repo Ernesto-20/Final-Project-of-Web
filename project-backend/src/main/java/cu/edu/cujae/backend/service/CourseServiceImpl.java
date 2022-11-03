@@ -34,6 +34,7 @@ public class CourseServiceImpl implements CourseService {
 
         LinkedList<CourseDTO> courses = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call select_all_course()}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -58,6 +59,7 @@ public class CourseServiceImpl implements CourseService {
 
         CourseDTO course = null;
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call find_coursebyid(?)}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -77,11 +79,12 @@ public class CourseServiceImpl implements CourseService {
         return course;
     }
 
-
+    @Override
     public CourseDTO findByStartAndFinish(int start, int finish) throws SQLException {
 
         CourseDTO course = null;
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call find_coursebystart_and_finish(?, ?)}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -101,11 +104,12 @@ public class CourseServiceImpl implements CourseService {
         return course;
     }
 
-
+    @Override
     public CourseDTO findLast() throws SQLException {
 
         CourseDTO course = null;
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+            conn.setAutoCommit(false);
             String function = "{?= call find_course_last()}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -124,7 +128,6 @@ public class CourseServiceImpl implements CourseService {
 
         return course;
     }
-
 
     @Override
     public void update(CourseDTO courseDTO) throws SQLException {

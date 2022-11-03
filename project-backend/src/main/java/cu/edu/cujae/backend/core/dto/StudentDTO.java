@@ -9,6 +9,26 @@ public class StudentDTO {
 	private String gender;
 	private String municipality;
 	private Integer statusID;
+	private String statusDescription;
+
+	public StudentDTO(Integer id, String idNum, String firstName, String lastName, String gender, String municipality, int statusId, String statusDescription) {
+		this.id = id;
+		this.idNum = idNum;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.municipality = municipality;
+		this.statusID = statusId;
+		this.statusDescription = statusDescription;
+	}
+
+	public String getStatusDescription() {
+		return statusDescription;
+	}
+
+	public void setStatusDescription(String statusDescription) {
+		this.statusDescription = statusDescription;
+	}
 
 	public StudentDTO() {
 		super(); // TODO Auto-generated constructor stub

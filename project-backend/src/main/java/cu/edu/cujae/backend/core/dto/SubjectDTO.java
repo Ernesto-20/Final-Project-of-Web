@@ -2,7 +2,7 @@ package cu.edu.cujae.backend.core.dto;
 
 public class SubjectDTO {
 
-    private String id;
+    private Integer id;
     private String name;
     private boolean newRecord;
 
@@ -10,18 +10,18 @@ public class SubjectDTO {
         super();
     }
 
-    public SubjectDTO(String id, String name, boolean newRecord) {
+    public SubjectDTO(Integer id, String name, boolean newRecord) {
         super();
         this.id = id;
         this.name = name;
         this.newRecord = newRecord;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

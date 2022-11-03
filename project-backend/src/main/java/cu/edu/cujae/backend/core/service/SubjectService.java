@@ -10,5 +10,5 @@ public interface SubjectService {
     SubjectDTO getSubjectById(String subjectId) throws SQLException;
     void createSubject(SubjectDTO subject) throws SQLException;
     void updateSubject(SubjectDTO subject) throws SQLException;
-    void deleteSubject(String id) throws SQLException;
+    void deleteSubject(Integer id) throws SQLException;
 }

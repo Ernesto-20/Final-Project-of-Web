@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/subjects")
 public class SubjectController {
 	
 	@Autowired
@@ -41,7 +41,7 @@ public class SubjectController {
     }
 	
 	@DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id) throws SQLException {
+    public ResponseEntity<String> delete(@PathVariable Integer id) throws SQLException {
         subjectService.deleteSubject(id);
         return ResponseEntity.ok("Subject Deleted");
     }

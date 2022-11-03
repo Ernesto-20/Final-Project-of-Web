@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import cu.edu.cujae.pweb.utils.ApiRestMapper;
+import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -18,9 +20,11 @@ import cu.edu.cujae.pweb.dto.StudentDTO;
  */
 @Service
 public class StudentServiceImpl implements StudentService{
-	
+	@Autowired
+	private RestService restService;
+
 //	@Override
-//	public List<StudentDTO> getStudents() {
+//	public List<StudentDTOS> getStudents() {
 //		
 //		
 //		List<StudentDTO> students = new ArrayList<>();
@@ -39,13 +43,16 @@ public class StudentServiceImpl implements StudentService{
 	public List<StudentDTO> getStudents() {
 		
 		List<StudentDTO> students = null;
-		
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
-		
-		String response = (String)restService.GET("/api/v1/students", params, String.class).getBody();
-		students = apiRestMapper.mapList(response, StudentDTO.class);
-		
+
+		try {
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
+
+			String response = (String) restService.GET("/api/v1/students", params, String.class).getBody();
+			students = apiRestMapper.mapList(response, StudentDTO.class);
+		}catch (Exception e){
+
+		}
 		return students;
 	}
 
@@ -79,7 +86,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public void updateStudent(StudentDTO student) {
-		restService.PUT("/api/v1/students", student, String.class, null).getBody();
+		restService.PUT("/api/v1/students", (MultiValueMap<String, String>) student, String.class, null).getBody();
 		
 		// TODO Auto-generated method stub
 		

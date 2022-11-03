@@ -2,21 +2,21 @@ package cu.edu.cujae.pweb.dto;
 
 public class StudentDTO {
 
-	private Integer id;
+	private String id;
 	private String idNum;
 	private String firstName;
 	private String lastName;
 	private String gender;
 	private String municipality;
-	private Integer statusID;
+	private String statusID;
 	private boolean newRecord;
 	
 	public StudentDTO() {
 		super(); // TODO Auto-generated constructor stub
 	}
 	
-	public StudentDTO(Integer id, String idNum, String firstName, String lastName, String gender, String municipality,
-			Integer statusID, boolean newRecord) {
+	public StudentDTO(String id, String idNum, String firstName, String lastName, String gender, String municipality,
+			String statusID, boolean newRecord) {
 		super();
 		this.id = id;
 		this.idNum = idNum;
@@ -28,10 +28,10 @@ public class StudentDTO {
 		this.newRecord = newRecord;
 	}
 	
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getIdNum() {
@@ -64,10 +64,10 @@ public class StudentDTO {
 	public void setMunicipality(String municipality) {
 		this.municipality = municipality;
 	}
-	public Integer getStatusID() {
+	public String getStatusID() {
 		return statusID;
 	}
-	public void setStatusID(Integer statusID) {
+	public void setStatusID(String statusID) {
 		this.statusID = statusID;
 	}
 	public boolean isNewRecord() {

@@ -1,7 +1,5 @@
 package cu.edu.cujae.backend.service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,8 +8,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.DatatypeConverter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -19,7 +15,6 @@ import org.springframework.stereotype.Service;
 import cu.edu.cujae.backend.core.dto.StudentDTO;
 import cu.edu.cujae.backend.core.service.StatusService;
 import cu.edu.cujae.backend.core.service.StudentService;
-import cu.edu.cujae.backend.core.service.SubjectService;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -29,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StatusService statusService;
-	
+
 	@Override
 	public void createStudent(StudentDTO student) throws SQLException {
 
@@ -53,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
 		List<StudentDTO> studentList = new ArrayList<StudentDTO>();
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			conn.setAutoCommit(false);
-			
+
 			CallableStatement CS = conn.prepareCall(
 					"{?= call select_all_student()}");
 
@@ -77,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
 		StudentDTO student = null;
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			conn.setAutoCommit(false);
-			
+
 			CallableStatement CS = conn.prepareCall(
 					"{?= call find_studentbyid(?)}");
 
@@ -88,7 +83,8 @@ public class StudentServiceImpl implements StudentService {
 			ResultSet rs = (ResultSet) CS.getObject(1);
 
 			while (rs.next()) {
-				student = new StudentDTO(studentId, rs.getString("id_num"), rs.getString("first_name"), rs.getString("last_name"),
+				student = new StudentDTO(studentId, rs.getString("id_num"), rs.getString("first_name"),
+						rs.getString("last_name"),
 						rs.getString("gender"), rs.getString("municipality"), rs.getInt("status_id"),
 						statusService.findById(rs.getInt("status_id")).getDescription());
 			}
@@ -102,7 +98,7 @@ public class StudentServiceImpl implements StudentService {
 		StudentDTO student = null;
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 			conn.setAutoCommit(false);
-			
+
 			CallableStatement CS = conn.prepareCall("{?= call find_studentbyid_num(?)}");
 			CS.registerOutParameter(1, Types.OTHER);
 			CS.setString(2, studentIdNum);
@@ -124,7 +120,7 @@ public class StudentServiceImpl implements StudentService {
 
 			CallableStatement CS = conn.prepareCall(
 					"{ call student_update(?, ?, ?, ?, ?, ?, ?)}");
-			
+
 			CS.setInt(1, student.getId());
 			CS.setString(2, student.getIdNum());
 			CS.setString(3, student.getFirstName());
@@ -132,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
 			CS.setString(5, student.getGender());
 			CS.setString(6, student.getMunicipality());
 			CS.setInt(7, student.getStatusID());
-			
+
 			CS.executeUpdate();
 		}
 	}

@@ -16,9 +16,10 @@ public interface SubjectInCourseService {
 
     LinkedList<SubjectInCourseDTO> findByYearId(int id) throws SQLException;
 
-    void updateHoursLong(int subjectId, int courseId, int yearId, int newHoursLong) throws SQLException;
+    void updateHoursLong(SubjectInCourseDTO subjectInCourse) throws SQLException;
 
-    void delete(int subjectId, int courseId, int yearId) throws SQLException;
+    void delete(SubjectInCourseDTO subjectInCourse) throws SQLException;
 
+    // ?TODO: NO SE HA IMPLEMENTADO ESTE MÉTODO
     LinkedList<SubjectInCourseDTO> findByCourseAndYearId(int course_id, int year_id) throws SQLException;
 }

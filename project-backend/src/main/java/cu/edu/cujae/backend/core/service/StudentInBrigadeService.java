@@ -15,19 +15,22 @@ public interface StudentInBrigadeService {
 
     LinkedList<StudentInBrigadeDTO> findByCourseId(int id) throws SQLException;
 
-    StudentInBrigadeDTO findBrigadeByStudentAndCourse(int student_id, int course_id) throws SQLException;
-
     LinkedList<StudentInBrigadeDTO> findByBrigadeId(int id) throws SQLException;
 
+    LinkedList<StudentDTO> findStudentByBrigadeId(int courseId, int brigadeId) throws SQLException;
+
+    StudentInBrigadeDTO findBrigadeByCourseAndStudent(int courseId, int studentId) throws SQLException;
+
+    // ! ESTE MÉTODO NO SÉ COMO CREARLE SU CONTROLLER
     int findNumberScale(StudentInBrigadeDTO studentInBrigadeDTO) throws SQLException;
 
-    LinkedList<StudentDTO> findStudentByBrigadeId(int brigadeId, int courseId) throws SQLException;
+    void updateBrigade(StudentInBrigadeDTO studentInBrigade) throws SQLException;
 
-    void updateBrigade(int studentId, int courseId, int newBrigadeId) throws SQLException;
-
+    // ! Este método es innecesario
     void updateStudent(int brigadeId, int courseId, int newStudentId) throws SQLException;
 
-    void updateNumberScale(int brigadeId, int courseId, int studentId, int numberScale) throws SQLException;
+    // ?TODO: NO SE HA IMPLEMENTADO ESTE MÉTODO
+    void updateNumberScale(StudentInBrigadeDTO studentInBrigade) throws SQLException;
 
-    void delete(int studentId, int courseId, int brigadeId) throws SQLException;
+    void delete(StudentInBrigadeDTO studentInBrigade) throws SQLException;
 }

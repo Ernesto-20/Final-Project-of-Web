@@ -110,7 +110,7 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
     }
 
     @Override
-    public StudentInBrigadeDTO findBrigadeByStudentAndCourse(int student_id, int course_id) throws SQLException {
+    public StudentInBrigadeDTO findBrigadeByCourseAndStudent(int course_id, int student_id) throws SQLException {
         StudentInBrigadeDTO brigade = null;
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             conn.setAutoCommit(false);
@@ -159,7 +159,7 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
     @Override
     public int findNumberScale(StudentInBrigadeDTO studentInBrigadeDTO) throws SQLException {
         int numberScale = 0;
-        try (Connection conn = jdbcTemplate.getDataSource().getConnection()){
+        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{?= call find_student_in_brigade_number_scale(?,?,?)}";
 
             CallableStatement preparedFunction = conn.prepareCall(function);
@@ -179,7 +179,7 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
     }
 
     @Override
-    public LinkedList<StudentDTO> findStudentByBrigadeId(int brigadeId, int courseId) throws SQLException {
+    public LinkedList<StudentDTO> findStudentByBrigadeId(int courseId, int brigadeId) throws SQLException {
 
         LinkedList<StudentDTO> listStudents = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
@@ -200,7 +200,8 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
                 String municipality = resultSet.getString("municipality");
                 int idStatus = resultSet.getInt("status_id");
                 String statusDescription = statusService.findById(idStatus).getDescription();
-                listStudents.add(new StudentDTO(idSTD, idNum, first_name, last_name, gender, municipality, idStatus, statusDescription));
+                listStudents.add(new StudentDTO(idSTD, idNum, first_name, last_name, gender, municipality, idStatus,
+                        statusDescription));
             }
             resultSet.close();
             preparedFunction.close();
@@ -210,15 +211,15 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
     }
 
     @Override
-    public void updateBrigade(int studentId, int courseId, int newBrigadeId) throws SQLException {
-        //Update newBrigadeId in a row located by studentId and courseId
+    public void updateBrigade(StudentInBrigadeDTO studentInBrigade) throws SQLException {
+        // Update newBrigadeId in a row located by studentId and courseId
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{ call student_in_brigade_update_brigade(?, ?, ?)}";
             CallableStatement preparedFunction = null;
             preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, studentId);
-            preparedFunction.setInt(2, courseId);
-            preparedFunction.setInt(3, newBrigadeId);
+            preparedFunction.setInt(1, studentInBrigade.getStudentId());
+            preparedFunction.setInt(2, studentInBrigade.getCourseId());
+            preparedFunction.setInt(3, studentInBrigade.getBrigadeId());
             preparedFunction.execute();
             preparedFunction.close();
         }
@@ -227,7 +228,7 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
 
     @Override
     public void updateStudent(int brigadeId, int courseId, int newStudentId) throws SQLException {
-        //Update newBrigadeId in a row located by studentId and courseId
+        // Update newBrigadeId in a row located by studentId and courseId
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{ call student_in_brigade_update_student(?, ?, ?)}";
             CallableStatement preparedFunction = null;
@@ -241,33 +242,33 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
     }
 
     @Override
-    public void updateNumberScale(int brigadeId, int courseId, int studentId, int numberScale) throws SQLException {
+    public void updateNumberScale(StudentInBrigadeDTO studentInBrigade) throws SQLException {
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{ call student_in_brigade_update_number_scale(?, ?, ?, ?)}";
             CallableStatement preparedFunction = null;
             preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, brigadeId);
-            preparedFunction.setInt(2, courseId);
-            preparedFunction.setInt(3, studentId);
-            preparedFunction.setInt(4, numberScale);
+            preparedFunction.setInt(1, studentInBrigade.getBrigadeId());
+            preparedFunction.setInt(2, studentInBrigade.getCourseId());
+            preparedFunction.setInt(3, studentInBrigade.getStudentId());
+            preparedFunction.setInt(4, studentInBrigade.getNumberScale());
             preparedFunction.execute();
             preparedFunction.close();
         }
     }
 
     @Override
-    public void delete(int studentId, int courseId, int brigadeId) throws SQLException {
+    public void delete(StudentInBrigadeDTO studentInBrigade) throws SQLException {
         /*
-        1 - student_id
-        2 - course_id
-        3 - brigade_id
+         * 1 - student_id
+         * 2 - course_id
+         * 3 - brigade_id
          */
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{call student_in_brigade_delete(?, ?, ?)}";
             CallableStatement preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, studentId);
-            preparedFunction.setInt(2, courseId);
-            preparedFunction.setInt(3, brigadeId);
+            preparedFunction.setInt(1, studentInBrigade.getStudentId());
+            preparedFunction.setInt(2, studentInBrigade.getCourseId());
+            preparedFunction.setInt(3, studentInBrigade.getBrigadeId());
             preparedFunction.execute();
             preparedFunction.close();
         }

@@ -125,24 +125,25 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
     }
 
     @Override
-    public void updateDropOut(int courseId, int studentId, int newDropOutId) throws SQLException {
-        //Update dropOutId in a row located by courseId and studentId
+    public void updateDropOut(StudentDropOutDTO studentDropOut) throws SQLException {
+        // Update dropOutId in a row located by courseId and studentId
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{ call student_dropout_update_dropout(?, ?, ?)}";
             CallableStatement preparedFunction = null;
             preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, courseId);
-            preparedFunction.setInt(2, studentId);
-            preparedFunction.setInt(3, newDropOutId);
+            preparedFunction.setInt(1, studentDropOut.getCourseId());
+            preparedFunction.setInt(2, studentDropOut.getStudentId());
+            preparedFunction.setInt(3, studentDropOut.getDropoutId());
             preparedFunction.execute();
 
             preparedFunction.close();
         }
     }
 
+    // ! Este método es innecesario
     @Override
     public void updateCourse(int dropOutId, int studentId, int newCourseId) throws SQLException {
-        //Update courseId in a row located by dropOutId and studentId
+        // Update courseId in a row located by dropOutId and studentId
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{ call student_dropout_update_course(?, ?, ?)}";
             CallableStatement preparedFunction = null;
@@ -157,19 +158,19 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
     }
 
     @Override
-    public void delete(int dropOutId, int courseId, int studentId) throws SQLException {
+    public void delete(StudentDropOutDTO studentDropOut) throws SQLException {
         /*
-        1 - dropout_id
-        2 - course_id
-        3 - student_id
+         * 1 - dropout_id
+         * 2 - course_id
+         * 3 - student_id
          */
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{call student_dropout_delete(?, ?, ?)}";
             //
             CallableStatement preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, dropOutId);
-            preparedFunction.setInt(2, courseId);
-            preparedFunction.setInt(3, studentId);
+            preparedFunction.setInt(1, studentDropOut.getDropoutId());
+            preparedFunction.setInt(2, studentDropOut.getCourseId());
+            preparedFunction.setInt(3, studentDropOut.getStudentId());
             preparedFunction.execute();
             preparedFunction.close();
         }

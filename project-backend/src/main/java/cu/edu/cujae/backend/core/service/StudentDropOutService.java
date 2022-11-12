@@ -16,9 +16,10 @@ public interface StudentDropOutService {
 
     LinkedList<StudentDropOutDTO> findByDropOutId(int id) throws SQLException;
 
-    void updateDropOut(int courseId, int studentId, int newDropOutId) throws SQLException;
+    void updateDropOut(StudentDropOutDTO studentDropOut) throws SQLException;
 
+    // ! Este método es innecesario
     void updateCourse(int dropOutId, int studentId, int newCourseId) throws SQLException;
 
-    void delete(int dropOutId, int courseId, int studentId) throws SQLException;
+    void delete(StudentDropOutDTO studentDropOut) throws SQLException;
 }

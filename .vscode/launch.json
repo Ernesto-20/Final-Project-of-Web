@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PwebBackendApplication<project-backend>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cu.edu.cujae.backend.PwebBackendApplication",
+            "projectName": "project-backend",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": "-Dspring.jmx.enabled=true"
+        }
+    ]
+}

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/dropOut")
+@RequestMapping("/api/v1/dropout")
 public class DropOutController {
 
     @Autowired
@@ -35,13 +35,13 @@ public class DropOutController {
     }
 
     @PutMapping("")
-    public ResponseEntity<String> update(@RequestBody DropOutDTO dropOutDTO) throws SQLException{
+    public ResponseEntity<String> update(@RequestBody DropOutDTO dropOutDTO) throws SQLException {
         dropOutService.update(dropOutDTO);
         return ResponseEntity.ok("DropOut Updated");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id) throws SQLException{
+    public ResponseEntity<String> delete(@PathVariable String id) throws SQLException {
         dropOutService.delete(Integer.parseInt(id));
         return ResponseEntity.ok("User deleted");
     }

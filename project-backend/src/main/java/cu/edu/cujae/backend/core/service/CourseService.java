@@ -12,6 +12,7 @@ public interface CourseService {
 
     CourseDTO findById(int id) throws SQLException;
 
+    // NO TIENE UN MÉTODO EN EL API CONTROLLER
     CourseDTO findByStartAndFinish(int start, int finish) throws SQLException;
 
     CourseDTO findLast() throws SQLException;

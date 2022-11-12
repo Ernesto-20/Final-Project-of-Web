@@ -1,7 +1,6 @@
 package cu.edu.cujae.pweb.bean;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -16,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-@Component //Le indica a spring es un componete registrado
+@Component //Le indica a spring es un componente registrado
 @ManagedBean
 @ViewScoped //Este es el alcance utilizado para trabajar con Ajax
 

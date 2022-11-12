@@ -130,17 +130,17 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
     }
 
     @Override
-    public void updateHoursLong(int subjectId, int courseId, int yearId, int newHoursLong) throws SQLException {
-        //Update hours_long in a row located by subjectId, courseId and yearId
+    public void updateHoursLong(SubjectInCourseDTO subjectInCourse) throws SQLException {
+        // Update hours_long in a row located by subjectId, courseId and yearId
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{ call subject_in_course_update(?, ?, ?, ?)}";
             CallableStatement preparedFunction = null;
             //
             preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, subjectId);
-            preparedFunction.setInt(2, courseId);
-            preparedFunction.setInt(3, yearId);
-            preparedFunction.setInt(4, newHoursLong);
+            preparedFunction.setInt(1, subjectInCourse.getSubjectId());
+            preparedFunction.setInt(2, subjectInCourse.getCourseId());
+            preparedFunction.setInt(3, subjectInCourse.getYearId());
+            preparedFunction.setInt(4, subjectInCourse.getHoursLong());
             preparedFunction.execute();
 
             preparedFunction.close();
@@ -149,41 +149,41 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
     }
 
     @Override
-    public void delete(int subjectId, int courseId, int yearId) throws SQLException {
+    public void delete(SubjectInCourseDTO subjectInCourse) throws SQLException {
         /*
-        1 - subject_id
-        2 - course_id
-        3 - year_id
+         * 1 - subject_id
+         * 2 - course_id
+         * 3 - year_id
          */
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{call subject_in_course_delete(?, ?, ?)}";
             //
             CallableStatement preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, subjectId);
-            preparedFunction.setInt(2, courseId);
-            preparedFunction.setInt(3, yearId);
+            preparedFunction.setInt(1, subjectInCourse.getSubjectId());
+            preparedFunction.setInt(2, subjectInCourse.getCourseId());
+            preparedFunction.setInt(3, subjectInCourse.getYearId());
             preparedFunction.execute();
             preparedFunction.close();
 
         }
     }
 
-//    @Override     // No recuerdo la utilidad de esto
-//    public int getYearsByCourseId(int courseId) throws SQLException{
-//
-//        LinkedList<IDTO> subsInCourse = findByCourseId(courseId);
-//        TreeSet<Integer> years = new TreeSet<>();
-//
-//        for(IDTO dto : subsInCourse){
-//            SubjectInCourseDTO s = (SubjectInCourseDTO) dto;
-//            years.add(s.getYearId());
-//        }
-//
-//        return years.size();
-//    }
+    // @Override // No recuerdo la utilidad de esto
+    // public int getYearsByCourseId(int courseId) throws SQLException{
+    //
+    // LinkedList<IDTO> subsInCourse = findByCourseId(courseId);
+    // TreeSet<Integer> years = new TreeSet<>();
+    //
+    // for(IDTO dto : subsInCourse){
+    // SubjectInCourseDTO s = (SubjectInCourseDTO) dto;
+    // years.add(s.getYearId());
+    // }
+    //
+    // return years.size();
+    // }
 
     @Override
-    public LinkedList<SubjectInCourseDTO> findByCourseAndYearId(int course_id ,int year_id) throws SQLException {
+    public LinkedList<SubjectInCourseDTO> findByCourseAndYearId(int course_id, int year_id) throws SQLException {
 
         LinkedList<SubjectInCourseDTO> subsInCourse = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {

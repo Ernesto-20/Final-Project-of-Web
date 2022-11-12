@@ -3,7 +3,6 @@ package cu.edu.cujae.pweb.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.RestService;
@@ -14,11 +13,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
-import cu.edu.cujae.pweb.dto.UserDto;
 
-/* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podr� inyectarse en otro lugar usando
+/* Esta anotación le indica a spring que esta clase es un servicio y por tanto luego podrá inyectarse en otro lugar usando
 
- * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
+ * @Autowired. En estas implementaciones luego se pondrán las llamadas al proyecto backend
  */
 @Service
 public class StudentServiceImpl implements StudentService {

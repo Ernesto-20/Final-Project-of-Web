@@ -2,7 +2,7 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:dialog header="Notas del Estudiante" showEffect="fade" modal="true" widgetVar="gradesStudentDialog"
+	<p:dialog header="#{msgs.header_studentGrades}" showEffect="fade" modal="true" widgetVar="gradesStudentDialog"
 		responsive="true">
 		<p:outputPanel id="grades-student-content" class="ui-fluid">
 			<p:outputPanel rendered="#{not empty manageStudentBean.selectedStudent}">
@@ -14,8 +14,8 @@
 							paginatorPosition="bottom">
 							<f:facet name="header">
 								<div class="products-table-header">
-									<span style="font-weight: bold">Notas</span> <span
-										class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+									<span style="font-weight: bold" value="#{msgs.header_studentGrades}" />
+									<span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
 										<p:inputText id="globalFilter" onkeyup="PF('dtStudentsGrades').filter()"
 											placeholder="Buscar" />
 									</span>
@@ -23,12 +23,12 @@
 								</div>
 							</f:facet>
 
-							<p:column headerText="Asignatura" sortBy="#{studentGrades.subjectId}"
-								filterBy="#{studentGrades.subjectId}">
+							<p:column headerText="#{msgs.column_studentGrades_subject}"
+								sortBy="#{studentGrades.subjectId}" filterBy="#{studentGrades.subjectId}">
 								<h:outputText value="#{studentGrades.subjectId}" />
 							</p:column>
-							<p:column headerText="Nota" sortBy="#{studentGrades.gradeValue}"
-								filterBy="#{studentGrades.gradeValue}">
+							<p:column headerText="#{msgs.column_studentGrades_gradeValue}"
+								sortBy="#{studentGrades.gradeValue}" filterBy="#{studentGrades.gradeValue}">
 								<h:outputText value="#{studentGrades.gradeValue}" />
 							</p:column>
 						</p:dataTable>
@@ -38,7 +38,7 @@
 		</p:outputPanel>
 
 		<f:facet name="footer">
-			<p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('gradeStudentDialog').hide()"
+			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times" onclick="PF('gradeStudentDialog').hide()"
 				class="ui-button-secondary" />
 		</f:facet>
 	</p:dialog>

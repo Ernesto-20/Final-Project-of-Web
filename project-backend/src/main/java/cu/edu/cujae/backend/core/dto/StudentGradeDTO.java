@@ -14,7 +14,7 @@ public class StudentGradeDTO {
 
     // "yearsSubjectsGrades" se utiliza para almacenar todas las notas de las
     // asignaturas de todos los años
-    // <Year, <Subject, Grade>>
+    // <Year, <Subject, Grade Value>>
     private Map<Integer, Map<String, Integer>> yearsSubjectsGrades;
 
     public StudentGradeDTO() {

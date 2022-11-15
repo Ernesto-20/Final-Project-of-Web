@@ -51,6 +51,7 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
                 int courseId = resultSet.getInt("course_id");
                 int brigadeId = resultSet.getInt("brigade_id");
                 int numberScale = resultSet.getInt("number_scale");
+
                 stdsInBrigade.add(new StudentInBrigadeDTO(studentId, courseId, brigadeId, numberScale));
             }
             resultSet.close();

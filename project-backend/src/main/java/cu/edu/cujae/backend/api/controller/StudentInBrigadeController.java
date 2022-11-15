@@ -40,14 +40,6 @@ public class StudentInBrigadeController {
         return ResponseEntity.ok(studentInBrigadeList);
     }
 
-    @GetMapping("/student/{studentId}")
-    public ResponseEntity<List<StudentInBrigadeDTO>> getStudentInBrigadeById(@PathVariable String studentId)
-            throws SQLException {
-        List<StudentInBrigadeDTO> studentInBrigadeList = studentInBrigadeService
-                .findByStudentId(Integer.parseInt(studentId));
-        return ResponseEntity.ok(studentInBrigadeList);
-    }
-
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<StudentInBrigadeDTO>> getStudentInBrigadeByCourseId(@PathVariable String courseId)
             throws SQLException {

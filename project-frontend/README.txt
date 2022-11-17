@@ -1,17 +1,20 @@
-Distribución de Vistas:
+Distribución del Proyecto:
 
 Ernesto Leandro Fariña Benítez:
     selection-student.xhtml paquete init-course
     student-list-component.xhtml paquete init-course
-    CourseBean.java
+    Status classes
+    Brigade classes
     ManageSelectionStudentBean.java
 
 Daniel Fernández Lorenzo
     pages/subjects/subjects.xhtml
     pages/subjects/subjects_forms.xhtml
     pages/reports/escalafon.xhtml
-    ManageStudentEscalafonBean.java
-    ManageSubjectInCourseWithNameBean.java
+    Dropout classes
+    StudentEscalafon classes
+    StudentDropout classes
+    SubjectInCourseWithName classes
 
 Pedro Luis Gutiérrez Díaz
     pages/init-course/year-tab-view.xhtml
@@ -19,23 +22,19 @@ Pedro Luis Gutiérrez Díaz
     pages/init-course/subject-in-course-list-component.xhtml
     pages/init-course/subject-in-course-form.xhtml
     pages/init-course/selection-subject.xhtml
-    ManageSubjectBean
-    ManageSubjectInCourseBean
+    Course classes
+    Subject classes
+    SubjectInCourse classes
     SelectBooleanView de primefaces para los checkbox
 
 Sandy Comas Becerra
     pages/student/student-list.xhtml
     pages/student/student-form.xhtml
-    ManageStudentBean.java
-    ManageStudentGradeBean.java
-    StudentBean.java
-    StudentDTO.java
-    StudentController.java
-    StudentService.java
-    StudentServiceImpl.java
-    StudentBean.java
-    StudentGradeDTO.java
-    StudentGradeController.java
-    StudentGradeService.java
-    StudentGradeServiceImpl.java
+    pages/student/student-grade.xhtml
+    Year classes
+    Grade classes
+    Student classes
+    StudentGrade classes
+
+    
 

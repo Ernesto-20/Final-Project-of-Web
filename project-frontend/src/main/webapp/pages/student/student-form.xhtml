@@ -2,14 +2,14 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:dialog header="#{msgs.header_student}" showEffect="fade" modal="true" widgetVar="manageStudentDialog"
+	<p:dialog header="#{msgs.header_studentForm}" showEffect="fade" modal="true" widgetVar="manageStudentDialog"
 		responsive="true">
 		<p:outputPanel id="manage-student-content" class="ui-fluid">
 			<p:outputPanel rendered="#{true}">
 				<p:panelGrid layout="grid" columns="2">
 					<h:panelGroup>
 						<div class="p-field">
-							<p:outputLabel for="@next" value="#{msgs.label_student_id}" />
+							<p:outputLabel for="@next" value="#{msgs.label_studentForm_id}" />
 							<p:inputText id="idNum" required="true" value="#{manageStudentBean.selectedStudent.idNum}"
 								maxlength="11">
 								<p:keyFilter mask="num" />
@@ -17,13 +17,13 @@
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" value="#{msgs.label_student_firstName}" />
+							<p:outputLabel for="@next" value="#{msgs.label_studentForm_firstName}" />
 							<p:inputText id="firstName" required="true"
 								value="#{manageStudentBean.selectedStudent.firstName}" />
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" value="#{msgs.label_student_lastName}" />
+							<p:outputLabel for="@next" value="#{msgs.label_studentForm_lastName}" />
 							<p:inputText id="lastName" required="true"
 								value="#{manageStudentBean.selectedStudent.lastName}" />
 							<p:message for="@previous"></p:message>
@@ -31,25 +31,25 @@
 					</h:panelGroup>
 					<h:panelGroup>
 						<div class="p-field">
-							<p:outputLabel for="@next" value="#{msgs.label_student_municipality}" />
+							<p:outputLabel for="@next" value="#{msgs.label_studentForm_municipality}" />
 							<p:inputText id="municipality" required="true"
 								value="#{manageStudentBean.selectedStudent.municipality}">
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" value="#{msgs.label_student_status}" />
+							<p:outputLabel for="@next" value="#{msgs.label_studentForm_status}" />
 							<p:inputText id="statusDescription" required="true"
 								value="#{manageStudentBean.selectedStudent.statusDescription}">
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
-							<p:outputLabel for="@next" value="#{msgs.label_student_gender}" />
+							<p:outputLabel for="@next" value="#{msgs.label_studentForm_gender}" />
 							<p:selectOneRadio id="gender" required="true"
 								value="#{manageStudentBean.selectedStudent.gender}" unselectable="true">
-								<f:selectItem itemLabel="#{msgs.radiobtn_student_gender_male}" itemValue="M" />
-								<f:selectItem itemLabel="#{msgs.radiobtn_student_gender_female}" itemValue="F" />
+								<f:selectItem itemLabel="#{msgs.radiobtn_studentForm_gender_male}" itemValue="M" />
+								<f:selectItem itemLabel="#{msgs.radiobtn_studentForm_gender_female}" itemValue="F" />
 							</p:selectOneRadio>
 							<p:message for="@previous"></p:message>
 						</div>
@@ -60,10 +60,10 @@
 		</p:outputPanel>
 
 		<f:facet name="footer">
-			<p:commandButton value="#{msgs.btn_student_save}" icon="pi pi-check"
+			<p:commandButton value="#{msgs.btn_save}" icon="pi pi-check"
 				actionListener="#{manageStudentBean.saveStudent}" update="manage-student-content"
 				process="manage-student-content @this" />
-			<p:commandButton value="#{msgs.btn_student_cancel}" icon="pi pi-times" action="#{manageStudentBean.cancel}"
+			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times" action="#{manageStudentBean.cancel}"
 				onclick="PF('manageStudentDialog').hide()" class="ui-button-secondary" />
 		</f:facet>
 	</p:dialog>

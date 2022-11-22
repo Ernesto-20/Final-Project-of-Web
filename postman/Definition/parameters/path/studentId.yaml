@@ -1,0 +1,7 @@
+name: studentsId
+description: The unique identifier of the student
+in: path
+required: true
+schema:
+  $ref: "../../schemas/StudentId.yaml"
+  example: 1

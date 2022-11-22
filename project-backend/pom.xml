@@ -71,6 +71,13 @@
 <!-- 			<groupId>org.springframework.boot</groupId> -->
 <!-- 			<artifactId>spring-boot-starter-freemarker</artifactId> -->
 <!-- 		</dependency> -->
+
+	    <!-- Do not delete, this is necessary for using mvn install in CLI with Java 17 -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+  			<version>2.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

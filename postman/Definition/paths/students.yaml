@@ -1,0 +1,45 @@
+get:
+  operationId: getAllStudents
+  summary: Read all students
+  description: Get all students of the university
+  tags:
+    - students
+  responses:
+    "200":
+      description: Get all students Example
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/StudentList.yaml"
+
+    default:
+      $ref: "../responses/GeneralError.yaml"
+
+    "404":
+      $ref: "../responses/Error404.yaml"
+
+    "500":
+      $ref: "../responses/Error500.yaml"
+
+post:
+  operationId: createStudent
+  summary: Add new student
+  tags:
+    - students
+  responses:
+    "200":
+      description: Add new student Example
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Student.yaml"
+          example: "Student Created"
+
+    default:
+      $ref: "../responses/GeneralError.yaml"
+
+    "404":
+      $ref: "../responses/Error404.yaml"
+
+    "500":
+      $ref: "../responses/Error500.yaml"

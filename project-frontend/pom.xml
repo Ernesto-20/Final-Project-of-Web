@@ -123,5 +123,22 @@
             <version>2.11.4</version>
         </dependency>
 
+        <!-- Do not delete, this is necessary for using mvn install in CLI with Java 17 -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        
     </dependencies>
+    
+    <!-- Do not delete, this is necessary for using mvn install in CLI with Java 17 -->
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

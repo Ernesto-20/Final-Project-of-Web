@@ -1,0 +1,11 @@
+"200":
+  $ref: "../responses/Success.yaml"
+
+"404":
+  $ref: "../responses/Error404.yaml"
+
+"500":
+  $ref: "../responses/Error500.yaml"
+
+default:
+  $ref: "../responses/GeneralError.yaml"

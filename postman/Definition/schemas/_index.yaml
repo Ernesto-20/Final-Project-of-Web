@@ -1,0 +1,6 @@
+Student:
+  $ref: "./Student.yaml"
+StudentId:
+  $ref: "./StudentId.yaml"
+StudentList:
+  $ref: "./StudentList.yaml"

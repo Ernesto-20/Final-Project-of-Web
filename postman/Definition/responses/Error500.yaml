@@ -1,0 +1,8 @@
+type: object
+description: Internal Server Error
+required:
+  - message
+properties:
+  message:
+    description: Internal Server Error
+    type: string

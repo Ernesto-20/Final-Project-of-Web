@@ -1,6 +1,6 @@
 package cu.edu.cujae.pweb.service;
 
-import cu.edu.cujae.pweb.dto.UserDto;
+import cu.edu.cujae.pweb.dto.UserDTO;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ public class UserServiceImpl implements UserService{
 	private RestService restService;
 
 	@Override
-	public List<UserDto> getUsers(){
+	public List<UserDTO> getUsers(){
 		System.out.println("HEREEEEEEEEEE 1");
-		List<UserDto> userList = new ArrayList<UserDto>();
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 	    try {
 	    	MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		    ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
+		    ApiRestMapper<UserDTO> apiRestMapper = new ApiRestMapper<>();
 		    String response = (String)restService.GET("/api/v1/users", params, String.class).getBody();
-		    userList = apiRestMapper.mapList(response, UserDto.class);
+		    userList = apiRestMapper.mapList(response, UserDTO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -36,17 +36,17 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDto getUserById(String userId) {
-		UserDto user = null;
+	public UserDTO getUserById(String userId) {
+		UserDTO user = null;
 
 		try {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		    ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
+		    ApiRestMapper<UserDTO> apiRestMapper = new ApiRestMapper<>();
 		    
 		    UriTemplate template = new UriTemplate("/api/v1/users/{userId}");
 		    String uri = template.expand(userId).toString();
 		    String response = (String)restService.GET(uri, params, String.class).getBody();
-		    user = apiRestMapper.mapOne(response, UserDto.class);
+		    user = apiRestMapper.mapOne(response, UserDTO.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -54,12 +54,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void createUser(UserDto user) {
+	public void createUser(UserDTO user) {
 		restService.POST("/api/v1/users", user, String.class).getBody();
 	}
 
 	@Override
-	public void updateUser(UserDto user) {
+	public void updateUser(UserDTO user) {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		restService.PUT("/api/v1/users", params, user, String.class).getBody();
 	}

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cu.edu.cujae.backend.core.dto.LoginRequestDto;
 import cu.edu.cujae.backend.core.dto.UserAuthenticatedDto;
-import cu.edu.cujae.backend.core.dto.UserDto;
+import cu.edu.cujae.backend.core.dto.UserDTO;
 import cu.edu.cujae.backend.core.security.TokenProvider;
 import cu.edu.cujae.backend.core.service.UserService;
 import io.swagger.annotations.Api;
@@ -47,7 +47,7 @@ public class AuthController {
 
 			String token = tokenProvider.createToken(authentication);
 			
-			UserDto user = userService.getUserByUsername(loginRequestDto.getUsername());
+			UserDTO user = userService.getUserByUsername(loginRequestDto.getUsername());
 			UserAuthenticatedDto userAuth = new UserAuthenticatedDto(user.getId(), user.getUsername(), user.getFullName(), null, 
 					user.getEmail(), user.getIdentification(), user.getRoles(), token);
 			

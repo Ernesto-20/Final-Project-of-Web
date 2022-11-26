@@ -1,6 +1,6 @@
 package cu.edu.cujae.pweb.bean;
 
-import cu.edu.cujae.pweb.dto.RoleDto;
+import cu.edu.cujae.pweb.dto.RoleDTO;
 import cu.edu.cujae.pweb.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class UserBean {
 	private String username;
 	private String password;
 	
-	private List<RoleDto> roles;
+	private List<RoleDTO> roles;
 	
 	@Autowired
 	private RoleService roleService;

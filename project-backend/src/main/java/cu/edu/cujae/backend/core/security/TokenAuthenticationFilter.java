@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import cu.edu.cujae.backend.core.dto.UserDto;
+import cu.edu.cujae.backend.core.dto.UserDTO;
 import cu.edu.cujae.backend.core.service.UserService;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
@@ -38,7 +38,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 String userId = tokenProvider.getUserIdFromToken(jwt);
 
-                UserDto user = userService.getUserById(userId);
+                UserDTO user = userService.getUserById(userId);
                 
                 UserDetails userDetails = UserPrincipal.create(user);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

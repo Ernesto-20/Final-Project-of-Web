@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cu.edu.cujae.backend.core.dto.UserDto;
+import cu.edu.cujae.backend.core.dto.UserDTO;
 import cu.edu.cujae.backend.core.service.UserService;
 
 @Service
@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        UserDto user = null;
+        UserDTO user = null;
 		try {
 			user = userService.getUserByUsername(username);
 			if (user == null) {

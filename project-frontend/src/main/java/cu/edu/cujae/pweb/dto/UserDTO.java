@@ -2,21 +2,21 @@ package cu.edu.cujae.pweb.dto;
 
 import java.util.List;
 
-public class UserDto {
+public class UserDTO {
 	private String id;
 	private String username;
 	private String fullName;
 	private String password;
 	private String email;
 	private String identification;
-	private List<RoleDto> roles;
+	private List<RoleDTO> roles;
 	
-	public UserDto() {
-
+	public UserDTO() {
+		super();
 	}
 
-	public UserDto(String id, String username, String fullName, String password, String email, String identification,
-			List<RoleDto> roles) {
+	public UserDTO(String id, String username, String fullName, String password, String email, String identification,
+			List<RoleDTO> roles) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -63,10 +63,10 @@ public class UserDto {
 	public void setIdentification(String identification) {
 		this.identification = identification;
 	}
-	public List<RoleDto> getRoles() {
+	public List<RoleDTO> getRoles() {
 		return roles;
 	}
-	public void setRoles(List<RoleDto> roles) {
+	public void setRoles(List<RoleDTO> roles) {
 		this.roles = roles;
 	}
 }

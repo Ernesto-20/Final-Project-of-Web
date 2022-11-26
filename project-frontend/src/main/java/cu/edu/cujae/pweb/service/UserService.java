@@ -2,14 +2,14 @@ package cu.edu.cujae.pweb.service;
 
 
 
-import cu.edu.cujae.pweb.dto.UserDto;
+import cu.edu.cujae.pweb.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
-	List<UserDto> getUsers();
-	UserDto getUserById(String userId);
-	void createUser(UserDto user);
-	void updateUser(UserDto user);
+	List<UserDTO> getUsers();
+	UserDTO getUserById(String userId);
+	void createUser(UserDTO user);
+	void updateUser(UserDTO user);
 	void deleteUser(String id);
 }

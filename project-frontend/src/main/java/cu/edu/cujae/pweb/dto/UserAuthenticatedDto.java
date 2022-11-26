@@ -9,7 +9,7 @@ public class UserAuthenticatedDto {
 	private String password;
 	private String email;
 	private String identification;
-	private List<RoleDto> roles;
+	private List<RoleDTO> roles;
 	private String token;
 	
 	public UserAuthenticatedDto() {
@@ -17,7 +17,7 @@ public class UserAuthenticatedDto {
 	}
 
 	public UserAuthenticatedDto(String id, String username, String fullName, String password, String email, String identification,
-			List<RoleDto> roles, String token) {
+			List<RoleDTO> roles, String token) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -65,10 +65,10 @@ public class UserAuthenticatedDto {
 	public void setIdentification(String identification) {
 		this.identification = identification;
 	}
-	public List<RoleDto> getRoles() {
+	public List<RoleDTO> getRoles() {
 		return roles;
 	}
-	public void setRoles(List<RoleDto> roles) {
+	public void setRoles(List<RoleDTO> roles) {
 		this.roles = roles;
 	}
 

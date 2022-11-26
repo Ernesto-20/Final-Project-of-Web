@@ -1,7 +1,7 @@
 package cu.edu.cujae.pweb.bean;
 
-import cu.edu.cujae.pweb.dto.RoleDto;
-import cu.edu.cujae.pweb.dto.UserDto;
+import cu.edu.cujae.pweb.dto.RoleDTO;
+import cu.edu.cujae.pweb.dto.UserDTO;
 import cu.edu.cujae.pweb.service.RoleService;
 import cu.edu.cujae.pweb.service.UserService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
@@ -23,12 +23,12 @@ import java.util.UUID;
 @ViewScoped 
 public class ManageUserBean {
 	
-	private UserDto userDto;
-	private UserDto selectedUser;
-	private List<UserDto> users;
+	private UserDTO userDTO;
+	private UserDTO selectedUser;
+	private List<UserDTO> users;
 	private Long[] selectedRoles;
 	
-	private List<RoleDto> roles;
+	private List<RoleDTO> roles;
 	
 	@Autowired
 	private UserService userService;
@@ -49,13 +49,13 @@ public class ManageUserBean {
 	
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
-        this.selectedUser = new UserDto();
+        this.selectedUser = new UserDTO();
         this.selectedRoles = null;
     }
 	
 	//Se ejecuta al dar clic en el button con el lapicito
 	public void openForEdit() {
-		List<RoleDto> roles = this.selectedUser.getRoles();
+		List<RoleDTO> roles = this.selectedUser.getRoles();
 		this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
 	}
 	
@@ -63,7 +63,7 @@ public class ManageUserBean {
 	public void saveUser() {
         if (this.selectedUser.getId() == null) {
             this.selectedUser.setId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-            List<RoleDto> rolesToAdd = new ArrayList<RoleDto>();
+            List<RoleDTO> rolesToAdd = new ArrayList<RoleDTO>();
             for(int i = 0; i < this.selectedRoles.length; i++) {
             	rolesToAdd.add(roleService.getRolesById(selectedRoles[i]));
             }
@@ -105,28 +105,28 @@ public class ManageUserBean {
         
     }
 
-	public UserDto getUserDto() {
-		return userDto;
+	public UserDTO getUserDto() {
+		return userDTO;
 	}
 
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
+	public void setUserDto(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 
-	public UserDto getSelectedUser() {
+	public UserDTO getSelectedUser() {
 		return selectedUser;
 	}
 
-	public void setSelectedUser(UserDto selectedUser) {
+	public void setSelectedUser(UserDTO selectedUser) {
 		this.selectedUser = selectedUser;
 	}
 
-	public List<UserDto> getUsers() {
+	public List<UserDTO> getUsers() {
 		
 		return users;
 	}
 
-	public void setUsers(List<UserDto> users) {
+	public void setUsers(List<UserDTO> users) {
 		
 		this.users = users;
 	}
@@ -139,11 +139,11 @@ public class ManageUserBean {
 		this.selectedRoles = selectedRoles;
 	}
 
-	public List<RoleDto> getRoles() {
+	public List<RoleDTO> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<RoleDto> roles) {
+	public void setRoles(List<RoleDTO> roles) {
 		this.roles = roles;
 	}
 

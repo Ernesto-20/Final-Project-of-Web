@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cu.edu.cujae.backend.core.dto.UserDto;
+import cu.edu.cujae.backend.core.dto.UserDTO;
 
 
 public class UserPrincipal implements UserDetails {
@@ -33,7 +33,7 @@ public class UserPrincipal implements UserDetails {
         this.identification = identification;
     }
 
-    public static UserPrincipal create(UserDto user) {
+    public static UserPrincipal create(UserDTO user) {
     	List<GrantedAuthority> authorities;
     	try {
     		Collection<String> roleNames = user.getRoles().stream().map(role -> role.getRoleName()).collect(Collectors.toList());
@@ -53,7 +53,7 @@ public class UserPrincipal implements UserDetails {
         );
     }
 
-    public static UserPrincipal create(UserDto user, Map<String, Object> attributes) {
+    public static UserPrincipal create(UserDTO user, Map<String, Object> attributes) {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         return userPrincipal;
     }

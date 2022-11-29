@@ -3,6 +3,7 @@ package cu.edu.cujae.backend.api.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.StudentInBrigadeNamedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +33,14 @@ public class StudentInBrigadeController {
         return ResponseEntity.ok(studentInBrigadeList);
     }
 
+    @GetMapping("/named")
+    public ResponseEntity<List<StudentInBrigadeNamedDTO>> getNamedStudentsInBrigade() throws SQLException{
+        List<StudentInBrigadeNamedDTO> studentsInBrigade = studentInBrigadeService.findAllNamed();
+        for(StudentInBrigadeNamedDTO s: studentsInBrigade)
+            System.out.println(s);
+        return ResponseEntity.ok(studentsInBrigade);
+    }
+
     @GetMapping("/student/{studentId}")
     public ResponseEntity<List<StudentInBrigadeDTO>> getStudentInBrigadeByStudentId(@PathVariable String studentId)
             throws SQLException {
@@ -40,12 +49,18 @@ public class StudentInBrigadeController {
         return ResponseEntity.ok(studentInBrigadeList);
     }
 
-    @GetMapping("/student/{studentId}")
-    public ResponseEntity<List<StudentInBrigadeDTO>> getStudentInBrigadeById(@PathVariable String studentId)
-            throws SQLException {
-        List<StudentInBrigadeDTO> studentInBrigadeList = studentInBrigadeService
-                .findByStudentId(Integer.parseInt(studentId));
-        return ResponseEntity.ok(studentInBrigadeList);
+//    @GetMapping("/student/{studentId}")
+//    public ResponseEntity<List<StudentInBrigadeDTO>> getStudentInBrigadeById(@PathVariable String studentId)
+//            throws SQLException {
+//        List<StudentInBrigadeDTO> studentInBrigadeList = studentInBrigadeService
+//                .findByStudentId(Integer.parseInt(studentId));
+//        return ResponseEntity.ok(studentInBrigadeList);
+//    }
+
+    @GetMapping("/student/named/{id}")
+    public ResponseEntity<List<StudentInBrigadeNamedDTO>> getNamedStudentInBrigadeByStudentId(@PathVariable int id) throws SQLException{
+        List<StudentInBrigadeNamedDTO> students = studentInBrigadeService.findNamedByStudentId(id);
+        return ResponseEntity.ok(students);
     }
 
     @GetMapping("/course/{courseId}")
@@ -56,12 +71,24 @@ public class StudentInBrigadeController {
         return ResponseEntity.ok(studentInBrigadeList);
     }
 
+    @GetMapping("/course/named/{id}")
+    public ResponseEntity<List<StudentInBrigadeNamedDTO>> getNamedStudentInBrigadeByCourseId(@PathVariable int id) throws SQLException{
+        List<StudentInBrigadeNamedDTO> students = studentInBrigadeService.findNamedByCourseId(id);
+        return ResponseEntity.ok(students);
+    }
+
     @GetMapping("/brigade/{brigadeId}")
     public ResponseEntity<List<StudentInBrigadeDTO>> getStudentInBrigadeByYearID(@PathVariable String brigadeId)
             throws SQLException {
         List<StudentInBrigadeDTO> studentInBrigadeList = studentInBrigadeService
                 .findByBrigadeId(Integer.parseInt(brigadeId));
         return ResponseEntity.ok(studentInBrigadeList);
+    }
+
+    @GetMapping("/brigade/named/{id}")
+    public ResponseEntity<List<StudentInBrigadeNamedDTO>> getNamedStudentInBrigadeByBrigadeId(@PathVariable int id) throws SQLException{
+        List<StudentInBrigadeNamedDTO> students = studentInBrigadeService.findNamedByBrigadeId(id);
+        return ResponseEntity.ok(students);
     }
 
     @GetMapping("/course/{courseId}/brigade/{brigadeId}")

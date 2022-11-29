@@ -36,6 +36,10 @@ public class BrigadeDTO {
         this.yearId = yearId;
     }
 
+    public String getName(){
+        return "" + yearId + "" + number;
+    }
+
     @Override
     public String toString(){
         return number+"";

@@ -101,4 +101,8 @@ public class StudentDTO {
 	public void setStatusID(Integer statusID) {
 		this.statusID = statusID;
 	}
+
+	public String getFullName(){
+		return getFirstName() + " " + getLastName();
+	}
 }

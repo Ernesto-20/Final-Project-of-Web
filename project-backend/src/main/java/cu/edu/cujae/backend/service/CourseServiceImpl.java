@@ -58,7 +58,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseDTO findById(int id) throws SQLException {
 
         CourseDTO course = null;
-        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+        try(Connection conn = jdbcTemplate.getDataSource().getConnection()){
             conn.setAutoCommit(false);
             String function = "{?= call find_coursebyid(?)}";
 

@@ -1,0 +1,25 @@
+type: object
+description: The student information
+required:
+  - id
+  - idNum
+  - firstName
+  - lastName
+  - gender
+  - municipality
+  - statusDescription
+properties:
+  id:
+    $ref: "./StudentId.yaml"
+  idNum:
+    type: string
+  firstName:
+    type: string
+  lastName:
+    type: string
+  gender:
+    type: string
+  municipality:
+    type: string
+  statusDescription:
+    type: string

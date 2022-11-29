@@ -10,8 +10,8 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-/* Esta anotiacioon le indica a spring que esta clase es un servicio y por tanto luego podr� inyectarse en otro lugar usando
- * @Autowired. En estas implementaciones luego se pondraan las llamadas al proyecto backend
+/* Esta anotación le indica a spring que esta clase es un servicio y por tanto luego podrá inyectarse en otro lugar usando
+ * @Autowired. En estas implementaciones luego se pondrían las llamadas al proyecto backend
  */
 @Service
 public class SubjectServiceImpl implements SubjectService {

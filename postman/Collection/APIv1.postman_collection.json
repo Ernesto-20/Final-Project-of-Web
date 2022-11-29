@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "0dfdc80a-5f57-408b-9124-63139de9dfb7",
+		"name": "API v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24138146"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Get all students",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Template using Handlebars\r",
+									"var template = `\r",
+									"    <table bgcolor=\"#FFFFFF\">\r",
+									"        <tr>\r",
+									"            <th>Name</th>\r",
+									"            <th>Gender</th>\r",
+									"            <th>Municipality</th>\r",
+									"            <th>Status Description</th>\r",
+									"        </tr>\r",
+									"\r",
+									"        {{#each response}}\r",
+									"            <tr>\r",
+									"                <td>{{firstName}}</td>\r",
+									"                <td>{{gender}}</td>\r",
+									"                <td>{{municipality}}</td>\r",
+									"                <td>{{statusDescription}}</td>\r",
+									"            </tr>\r",
+									"        {{/each}}\r",
+									"    </table>\r",
+									"`;\r",
+									"\r",
+									"// Set visualizer\r",
+									"pm.visualizer.set(template, {\r",
+									"    // Pass the response body parsed as JSON as `data`\r",
+									"    response: pm.response.json()\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/students",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"students"
+							]
+						},
+						"description": "Devuelve una lista completa de todos los estudiantes"
+					},
+					"response": [
+						{
+							"name": "Get all students Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/students",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"students"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 06 Nov 2022 23:29:40 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"idNum\": \"1234455\",\n        \"firstName\": \"Jorge\",\n        \"lastName\": \"Comas\",\n        \"gender\": \"M\",\n        \"municipality\": \"Regla\",\n        \"statusID\": 2,\n        \"statusDescription\": \"Promovido\"\n    },\n    {\n        \"id\": 2,\n        \"idNum\": \"23456789012\",\n        \"firstName\": \"Damian\",\n        \"lastName\": \"Ordonez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Zoo\",\n        \"statusID\": 2,\n        \"statusDescription\": \"Promovido\"\n    },\n    {\n        \"id\": 3,\n        \"idNum\": \"34567890123\",\n        \"firstName\": \"Ernesto\",\n        \"lastName\": \"Farina\",\n        \"gender\": \"M\",\n        \"municipality\": \"SanMi\",\n        \"statusID\": 3,\n        \"statusDescription\": \"Repitente\"\n    },\n    {\n        \"id\": 4,\n        \"idNum\": \"45678901234\",\n        \"firstName\": \"Pedro Luis\",\n        \"lastName\": \"Gutierrez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Parra\",\n        \"statusID\": 2,\n        \"statusDescription\": \"Promovido\"\n    },\n    {\n        \"id\": 5,\n        \"idNum\": \"00032768467\",\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Luis\",\n        \"gender\": \"M\",\n        \"municipality\": \"La Lisa\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 6,\n        \"idNum\": \"99042312345\",\n        \"firstName\": \"Jorge\",\n        \"lastName\": \"Luis\",\n        \"gender\": \"M\",\n        \"municipality\": \"Playa\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 7,\n        \"idNum\": \"98111456789\",\n        \"firstName\": \"Juan\",\n        \"lastName\": \"Perez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Marianao\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 8,\n        \"idNum\": \"78091867890\",\n        \"firstName\": \"Carlos\",\n        \"lastName\": \"Gonzalez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Arroyo Narannjo\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 10,\n        \"idNum\": \"1212\",\n        \"firstName\": \"Sanqwe\",\n        \"lastName\": \"dasda\",\n        \"gender\": \"M\",\n        \"municipality\": \"asd\",\n        \"statusID\": 3,\n        \"statusDescription\": \"Repitente\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get student by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/students/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"students",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getById Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/students/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"students",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 06 Nov 2022 23:33:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"idNum\": \"1234455\",\n    \"firstName\": \"Jorge\",\n    \"lastName\": \"Comas\",\n    \"gender\": \"M\",\n    \"municipality\": \"Regla\",\n    \"statusID\": 2,\n    \"statusDescription\": \"Promovido\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Esta API devuelve la información relacionada a los estudiantes de la universidad."
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "Get all subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/subjects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"subjects"
+							]
+						},
+						"description": "Devuelve una lista completa de todos los estudiantes"
+					},
+					"response": [
+						{
+							"name": "Get all students Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/students",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"students"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 06 Nov 2022 23:29:40 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"idNum\": \"1234455\",\n        \"firstName\": \"Jorge\",\n        \"lastName\": \"Comas\",\n        \"gender\": \"M\",\n        \"municipality\": \"Regla\",\n        \"statusID\": 2,\n        \"statusDescription\": \"Promovido\"\n    },\n    {\n        \"id\": 2,\n        \"idNum\": \"23456789012\",\n        \"firstName\": \"Damian\",\n        \"lastName\": \"Ordonez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Zoo\",\n        \"statusID\": 2,\n        \"statusDescription\": \"Promovido\"\n    },\n    {\n        \"id\": 3,\n        \"idNum\": \"34567890123\",\n        \"firstName\": \"Ernesto\",\n        \"lastName\": \"Farina\",\n        \"gender\": \"M\",\n        \"municipality\": \"SanMi\",\n        \"statusID\": 3,\n        \"statusDescription\": \"Repitente\"\n    },\n    {\n        \"id\": 4,\n        \"idNum\": \"45678901234\",\n        \"firstName\": \"Pedro Luis\",\n        \"lastName\": \"Gutierrez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Parra\",\n        \"statusID\": 2,\n        \"statusDescription\": \"Promovido\"\n    },\n    {\n        \"id\": 5,\n        \"idNum\": \"00032768467\",\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Luis\",\n        \"gender\": \"M\",\n        \"municipality\": \"La Lisa\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 6,\n        \"idNum\": \"99042312345\",\n        \"firstName\": \"Jorge\",\n        \"lastName\": \"Luis\",\n        \"gender\": \"M\",\n        \"municipality\": \"Playa\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 7,\n        \"idNum\": \"98111456789\",\n        \"firstName\": \"Juan\",\n        \"lastName\": \"Perez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Marianao\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 8,\n        \"idNum\": \"78091867890\",\n        \"firstName\": \"Carlos\",\n        \"lastName\": \"Gonzalez\",\n        \"gender\": \"M\",\n        \"municipality\": \"Arroyo Narannjo\",\n        \"statusID\": 1,\n        \"statusDescription\": \"Nuevo Ingreso\"\n    },\n    {\n        \"id\": 10,\n        \"idNum\": \"1212\",\n        \"firstName\": \"Sanqwe\",\n        \"lastName\": \"dasda\",\n        \"gender\": \"M\",\n        \"municipality\": \"asd\",\n        \"statusID\": 3,\n        \"statusDescription\": \"Repitente\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get subjects by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/subjects/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"subjects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "getById Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/students/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"students",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 06 Nov 2022 23:33:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"idNum\": \"1234455\",\n    \"firstName\": \"Jorge\",\n    \"lastName\": \"Comas\",\n    \"gender\": \"M\",\n    \"municipality\": \"Regla\",\n    \"statusID\": 2,\n    \"statusDescription\": \"Promovido\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8080/api/v1",
+			"type": "string"
+		}
+	]
+}

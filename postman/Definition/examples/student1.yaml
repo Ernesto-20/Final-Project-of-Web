@@ -1,0 +1,9 @@
+summary: Student Example 1
+value:
+  id: 1
+  idNum: 12345
+  firstName: Juan
+  lastName: Fernandez de la Cruz
+  gender: M
+  municipality: La Habana
+  statusDescription: Promovido

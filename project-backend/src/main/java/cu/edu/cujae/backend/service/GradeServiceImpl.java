@@ -57,7 +57,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public GradeDTO findById(int value) throws SQLException {   //return the scale related with the value
+    public GradeDTO findById(int value) throws SQLException { // return the scale related with the value
         GradeDTO gradeDTO = null;
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             conn.setAutoCommit(false);
@@ -108,7 +108,7 @@ public class GradeServiceImpl implements GradeService {
 
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{ call grade_update(?, ?)}";
-            CallableStatement preparedFunction = null;
+            CallableStatement preparedFunction = conn.prepareCall(function);
 
             preparedFunction.setInt(1, gradeDTO.getValue());
             preparedFunction.setString(2, gradeDTO.getScale());

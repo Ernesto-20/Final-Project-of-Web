@@ -1,0 +1,71 @@
+parameters:
+  - $ref: "../parameters/path/studentId.yaml"
+
+get:
+  operationId: getStudentById
+  summary: Get a student by id
+  description: Get the student corresponding to the provided `studentId`
+  tags:
+    - student
+  responses:
+    "200":
+      description: Get a student Example
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Student.yaml"
+          examples:
+            student1:
+              $ref: "../examples/student1.yaml"
+            student2:
+              $ref: "../examples/student2.yaml"
+        application/xml:
+          schema:
+            $ref: "../schemas/Student.yaml"
+          examples:
+            student1:
+              $ref: "../examples/student1.yaml"
+            student2:
+              $ref: "../examples/student2.yaml"
+    "404":
+      description: No student found for the provided `studentId`
+      content:
+        application/json:
+          schema:
+            $ref: "../responses/Error404.yaml"
+    "500":
+      $ref: "../responses/Error500.yaml"
+
+put:
+  operationId: updateStudent
+  summary: Update a student
+  description: Update the student corresponding to the provided `studentId`
+  tags:
+    - student
+  responses:
+    "200":
+      description: Update a student Example
+      content:
+        application/json:
+          schema:
+            $ref: "../responses/Success.yaml"
+          example: "Student Updated"
+    "500":
+      $ref: "../responses/Error500.yaml"
+
+delete:
+  operationId: deleteStudent
+  summary: Delete a student
+  description: Delete the student corresponding to the provided `studentId`
+  tags:
+    - student
+  responses:
+    "200":
+      description: Delete the student Example
+      content:
+        application/json:
+          schema:
+            $ref: "../responses/Success.yaml"
+          example: "Student Deleted"
+    "500":
+      $ref: "../responses/Error500.yaml"

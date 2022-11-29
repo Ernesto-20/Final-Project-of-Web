@@ -1,0 +1,8 @@
+Success:
+  $ref: "./Success.yaml"
+GeneralError:
+  $ref: "./GeneralError.yaml"
+Error404:
+  $ref: "./Error404.yaml"
+Error500:
+  $ref: "./Error500.yaml"

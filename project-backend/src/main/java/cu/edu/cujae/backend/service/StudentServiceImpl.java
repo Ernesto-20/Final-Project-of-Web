@@ -24,7 +24,8 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StatusService statusService;
-
+	
+	
 	@Override
 	public void createStudent(StudentDTO student) throws SQLException {
 
@@ -37,12 +38,15 @@ public class StudentServiceImpl implements StudentService {
 			CS.setString(3, student.getLastName());
 			CS.setString(4, student.getGender());
 			CS.setString(5, student.getMunicipality());
-			CS.setInt(6, student.getStatusID());
+			int defaultState = 1;
+			CS.setInt(6, defaultState);
 			CS.executeUpdate();
 		}
 
 	}
 
+	
+	
 	@Override
 	public List<StudentDTO> getStudents() throws SQLException {
 		List<StudentDTO> studentList = new ArrayList<StudentDTO>();
@@ -66,6 +70,7 @@ public class StudentServiceImpl implements StudentService {
 		return studentList;
 	}
 
+	
 	@Override
 	public StudentDTO getStudentById(Integer studentId) throws SQLException {
 

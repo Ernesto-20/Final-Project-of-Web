@@ -1,7 +1,7 @@
 package cu.edu.cujae.backend.core.dto;
 
 public class YearDTO {
-    //Id is not serial, but the actual year
+    // Id is not serial, but the actual year
     private int id;
 
     public YearDTO(int id) {
@@ -17,7 +17,7 @@ public class YearDTO {
     }
 
     @Override
-    public String toString(){
-        return id+"";
+    public String toString() {
+        return id + "";
     }
 }

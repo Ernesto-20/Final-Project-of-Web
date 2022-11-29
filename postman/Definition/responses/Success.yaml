@@ -1,0 +1,8 @@
+Success:
+  type: object
+  required:
+    - message
+  properties:
+    message:
+      description: Successful Operation
+      type: string

@@ -1,21 +1,23 @@
 package cu.edu.cujae.pweb.bean;
 
-import cu.edu.cujae.pweb.dto.RoleDTO;
-import cu.edu.cujae.pweb.dto.UserDTO;
-import cu.edu.cujae.pweb.service.RoleService;
-import cu.edu.cujae.pweb.service.UserService;
-import cu.edu.cujae.pweb.utils.JsfUtils;
-import org.primefaces.PrimeFaces;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
+import org.primefaces.PrimeFaces;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import cu.edu.cujae.pweb.dto.RoleDTO;
+import cu.edu.cujae.pweb.dto.UserDTO;
+import cu.edu.cujae.pweb.service.RoleService;
+import cu.edu.cujae.pweb.service.UserService;
+import cu.edu.cujae.pweb.utils.JsfUtils;
 
 
 @Component
@@ -23,7 +25,7 @@ import java.util.UUID;
 @ViewScoped 
 public class ManageUserBean {
 	
-	private UserDTO userDTO;
+	private UserDTO userDto;
 	private UserDTO selectedUser;
 	private List<UserDTO> users;
 	private Long[] selectedRoles;
@@ -38,14 +40,8 @@ public class ManageUserBean {
 	
 	public ManageUserBean() {
 		
+		
 	}
-	
-	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
-	@PostConstruct
-    public void init() {
-		users = userService.getUsers();
-		roles = roleService.getRoles();
-    }
 	
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
@@ -105,12 +101,12 @@ public class ManageUserBean {
         
     }
 
-	public UserDTO getUserDto() {
-		return userDTO;
+	public UserDTO getUserDTO() {
+		return userDto;
 	}
 
-	public void setUserDto(UserDTO userDTO) {
-		this.userDTO = userDTO;
+	public void setUserDTO(UserDTO userDto) {
+		this.userDto = userDto;
 	}
 
 	public UserDTO getSelectedUser() {
@@ -122,7 +118,7 @@ public class ManageUserBean {
 	}
 
 	public List<UserDTO> getUsers() {
-		
+		users = userService.getUsers();
 		return users;
 	}
 
@@ -140,6 +136,7 @@ public class ManageUserBean {
 	}
 
 	public List<RoleDTO> getRoles() {
+		roles = roleService.getRoles();
 		return roles;
 	}
 

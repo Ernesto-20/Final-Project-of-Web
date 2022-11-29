@@ -2,14 +2,14 @@ package cu.edu.cujae.backend.core.dto;
 
 import org.springframework.lang.NonNull;
 
-public class LoginRequestDto {
+public class LoginRequestDTO {
 	
 	@NonNull
     private String username;
 	@NonNull
     private String password;
 
-	public LoginRequestDto() {
+	public LoginRequestDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

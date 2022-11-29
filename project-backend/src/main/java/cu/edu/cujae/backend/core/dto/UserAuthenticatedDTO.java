@@ -2,7 +2,7 @@ package cu.edu.cujae.backend.core.dto;
 
 import java.util.List;
 
-public class UserAuthenticatedDto {
+public class UserAuthenticatedDTO {
 	private String id;
 	private String username;
 	private String fullName;
@@ -12,11 +12,11 @@ public class UserAuthenticatedDto {
 	private List<RoleDTO> roles;
 	private String token;
 	
-	public UserAuthenticatedDto() {
+	public UserAuthenticatedDTO() {
 		super();
 	}
 
-	public UserAuthenticatedDto(String id, String username, String fullName, String password, String email, String identification,
+	public UserAuthenticatedDTO(String id, String username, String fullName, String password, String email, String identification,
 			List<RoleDTO> roles, String token) {
 		super();
 		this.id = id;

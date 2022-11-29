@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.pweb.dto.LoginRequestDto;
-import cu.edu.cujae.pweb.dto.UserAuthenticatedDto;
+import cu.edu.cujae.pweb.dto.UserAuthenticatedDTO;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.RestService;
 
@@ -15,12 +15,12 @@ public class AuthServiceImpl implements AuthService {
 	private RestService restService;
 
 	@Override
-	public UserAuthenticatedDto login(String username, String password) {
-		UserAuthenticatedDto authenticatedDto = null;
+	public UserAuthenticatedDTO login(String username, String password) {
+		UserAuthenticatedDTO authenticatedDto = null;
 		try {
-		    ApiRestMapper<UserAuthenticatedDto> apiRestMapper = new ApiRestMapper<>();
+		    ApiRestMapper<UserAuthenticatedDTO> apiRestMapper = new ApiRestMapper<>();
 		    String response = (String)restService.POST("/api/v1/auth/login", new LoginRequestDto(username, password), String.class).getBody();
-		    authenticatedDto = apiRestMapper.mapOne(response, UserAuthenticatedDto.class);
+		    authenticatedDto = apiRestMapper.mapOne(response, UserAuthenticatedDTO.class);
 		} catch (Exception e) {
 			authenticatedDto = null;
 		}

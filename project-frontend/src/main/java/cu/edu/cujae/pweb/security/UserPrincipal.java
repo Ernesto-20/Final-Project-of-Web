@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cu.edu.cujae.pweb.dto.UserAuthenticatedDto;
+import cu.edu.cujae.pweb.dto.UserAuthenticatedDTO;
 
 public class UserPrincipal implements UserDetails {
     private String userId;
@@ -36,7 +36,7 @@ public class UserPrincipal implements UserDetails {
         this.fullName = fullName;
     }
 
-    public static UserPrincipal create(UserAuthenticatedDto user) {
+    public static UserPrincipal create(UserAuthenticatedDTO user) {
     	List<GrantedAuthority> authorities;
     	try {
     		Collection<String> roleNames = user.getRoles().stream().map(role -> role.getRoleName()).collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class UserPrincipal implements UserDetails {
         );
     }
 
-    public static UserPrincipal create(UserAuthenticatedDto user, Map<String, Object> attributes) {
+    public static UserPrincipal create(UserAuthenticatedDTO user, Map<String, Object> attributes) {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         return userPrincipal;
     }

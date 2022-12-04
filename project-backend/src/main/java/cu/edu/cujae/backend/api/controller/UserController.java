@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cu.edu.cujae.backend.core.dto.UserDTO;
-import cu.edu.cujae.backend.core.email.EmailSenderService;
+//import cu.edu.cujae.backend.core.email.EmailSenderService;
 import cu.edu.cujae.backend.core.email.Mail;
 import cu.edu.cujae.backend.core.service.UserService;
 import freemarker.template.TemplateException;
@@ -32,8 +32,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private EmailSenderService emailService;
+//	@Autowired
+//	private EmailSenderService emailService;
 	
 	@GetMapping("")
     public ResponseEntity<List<UserDTO>> getUsers() throws SQLException {

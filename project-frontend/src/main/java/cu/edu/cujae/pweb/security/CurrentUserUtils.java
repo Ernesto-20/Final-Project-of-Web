@@ -15,7 +15,9 @@ public class CurrentUserUtils {
 	public static String getUsername() {
 		String username = null;
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-			username = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+//			Quitar esta linea y dejar la siguiente
+			username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//			username = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
 		}
 		return username;
 	}

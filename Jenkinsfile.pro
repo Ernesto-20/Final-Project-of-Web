@@ -26,8 +26,13 @@ pipeline {
             failFast true
             parallel{
                 stage('Launch Backend Server') {
+                    
                     steps {
-                        bat 'java -jar .\\project-backend\\target\\project-backend-0.0.1-SNAPSHOT.war'
+                        timeout(time: 3, unit: 'MINUTES') {
+                            retry(5) {
+                                bat 'java -jar .\\project-backend\\target\\project-backend-0.0.1-SNAPSHOT.war'
+                            }
+                        }
                     }
                 }
                 stage('Launch Frontend Server') {
@@ -42,6 +47,32 @@ pipeline {
                 sh 'sleep 60'
                 bat 'newman run https://api.getpostman.com/collections/0dfdc80a-5f57-408b-9124-63139de9dfb7?apikey=%API_KEY%'            }
         }
+
+        stage('Deploy') {
+            when {
+              expression {
+                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+              }
+            }
+            steps {
+                sh 'make publish'
+            }
     }
-    post{always{echo 'Implementar notificacion por Slack'}}
+    post{
+        always{
+            echo 'Implementar notificacion por Slack'
+            junit '**/target/*.xml'
+        }
+
+        // Send using Email
+        failure {
+            mail to: sandytechboy00@gmail.com, subject: 'The Pipeline failed :(',  body: "Something is wrong with ${env.BUILD_URL}"
+        }
+        // Send using Slack
+        success {
+            slackSend channel: '#ops-room',
+                color: 'good',
+                message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
+        }
+    }
 }

@@ -34,14 +34,6 @@ public class ManageSubjectBean {
 
 	}
 
-	// Esta anotación permite que se ejecute code luego de haberse ejecuta el
-	// constructor de la clase.
-	@PostConstruct
-	public void init() {
-		subjects = subjects == null ? subjectService.getSubjects() : subjects;
-
-	}
-
 	// Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
 		this.selectedSubject = new SubjectDTO();
@@ -123,6 +115,7 @@ public class ManageSubjectBean {
 	}
 
 	public List<SubjectDTO> getSubjects() {
+		subjects = subjects == null ? subjectService.getSubjects() : subjects;
 		return subjects;
 	}
 

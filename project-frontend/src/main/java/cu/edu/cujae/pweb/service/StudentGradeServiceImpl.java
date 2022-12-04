@@ -1,3 +1,5 @@
+//import cu.edu.cujae.pweb.security.CurrentUserUtils;
+
 //package cu.edu.cujae.pweb.service;
 //
 //import java.io.IOException;
@@ -32,7 +34,7 @@
 //
 //			UriTemplate template = new UriTemplate("/api/v1/studentgrades/{studentId}");
 //			String uri = template.expand(studentId.toString()).toString();
-//			String response = (String) restService.GET(uri, params, String.class).getBody();
+//			String response = (String) restService.GET(uri, params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 //			studentGrades = apiRestMapper.mapOne(response, StudentGradeDTO.class);
 //		} catch (IOException e) {
 //			e.printStackTrace();

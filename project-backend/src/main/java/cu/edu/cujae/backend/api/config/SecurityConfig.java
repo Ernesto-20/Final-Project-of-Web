@@ -24,28 +24,26 @@ import cu.edu.cujae.backend.core.security.TokenAuthenticationFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService; 
-	
-	@Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-	
-	@Bean
+
+    @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter();
     }
-	
-	@Override
+
+    @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(customUserDetailsService)
@@ -56,38 +54,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
-                    .and()
+                .and()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .csrf()
-                    .disable()
+                .disable()
                 .formLogin()
-                    .disable()
+                .disable()
                 .httpBasic()
-                    .disable()
+                .disable()
                 .exceptionHandling()
-                    .authenticationEntryPoint(new RestAuthenticationEntryPoint())
-                    .and()
+                .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                .and()
                 .authorizeRequests()
-                    .antMatchers("/")
-                        .permitAll()
-                    .antMatchers("/api/v1/auth/**")
-                        .permitAll()
-                    .anyRequest()
-                        .authenticated();
+                .antMatchers("/")
+                .permitAll()
+                .antMatchers("/api/v1/auth/**")
+                .permitAll();
+        // .anyRequest()
+        // .authenticated();
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring()
-		.antMatchers(HttpMethod.OPTIONS)
-		.antMatchers("/swagger-ui**", "/webjars/**", "/swagger-resources/**", "/v2/api-docs**", "/api/v1/auth**");
-	}
-
-
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS)
+                .antMatchers("/swagger-ui/**", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**",
+                        "/api/v1/auth/**");
+    }
 
 }

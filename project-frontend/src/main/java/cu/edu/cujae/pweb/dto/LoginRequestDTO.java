@@ -1,10 +1,10 @@
 package cu.edu.cujae.pweb.dto;
 
-public class LoginRequestDto {
+public class LoginRequestDTO {
 	
     private String username;
     
-    public LoginRequestDto(String username, String password) {
+    public LoginRequestDTO(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;

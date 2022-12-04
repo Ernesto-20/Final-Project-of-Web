@@ -1,9 +1,9 @@
 package cu.edu.cujae.pweb.service;
 
-import cu.edu.cujae.pweb.dto.UserAuthenticatedDto;
+import cu.edu.cujae.pweb.dto.UserAuthenticatedDTO;
 
 public interface AuthService {
-	
-	UserAuthenticatedDto login(String username, String password);
-	
+
+	UserAuthenticatedDTO login(String username, String password);
+
 }

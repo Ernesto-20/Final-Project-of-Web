@@ -23,7 +23,7 @@ public class ManageStudentBean {
 	private StudentDTO studentDTO;
 	private StudentDTO selectedStudent;
 	private List<StudentDTO> students;
-
+	
 	/*
 	 * @Autowired es la manera para inyectar una dependencia/clase anotada
 	 * con @service en spring
@@ -39,7 +39,7 @@ public class ManageStudentBean {
 	// constructor de la clase.
 	@PostConstruct
 	public void init() {
-		students = studentService.getStudents();
+		
 		this.selectedStudent = new StudentDTO();
 	}
 
@@ -125,6 +125,7 @@ public class ManageStudentBean {
 	}
 
 	public List<StudentDTO> getStudents() {
+		students = studentService.getStudents();
 		return students;
 	}
 

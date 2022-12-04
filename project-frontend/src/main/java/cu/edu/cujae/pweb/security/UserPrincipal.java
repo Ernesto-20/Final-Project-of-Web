@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import cu.edu.cujae.pweb.dto.UserAuthenticatedDto;
+import cu.edu.cujae.pweb.dto.UserAuthenticatedDTO;
 
 public class UserPrincipal implements UserDetails {
     private String userId;
@@ -24,7 +24,8 @@ public class UserPrincipal implements UserDetails {
     private String token;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(String userId, String email, String password, boolean active, String identification, Collection<? extends GrantedAuthority> authorities, String token, String username, String fullName) {
+    public UserPrincipal(String userId, String email, String password, boolean active, String identification,
+            Collection<? extends GrantedAuthority> authorities, String token, String username, String fullName) {
         this.userId = userId;
         this.email = email;
         this.password = password;
@@ -36,17 +37,17 @@ public class UserPrincipal implements UserDetails {
         this.fullName = fullName;
     }
 
-    public static UserPrincipal create(UserAuthenticatedDto user) {
-    	List<GrantedAuthority> authorities;
-    	try {
-    		Collection<String> roleNames = user.getRoles().stream().map(role -> role.getRoleName()).collect(Collectors.toList());
-    		authorities = AuthorityUtils.createAuthorityList(roleNames.toArray(new String[0]));
-		} catch (Exception e) {
-			authorities = Collections.
-	                singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-			
-		}
-    	return new UserPrincipal(
+    public static UserPrincipal create(UserAuthenticatedDTO user) {
+        List<GrantedAuthority> authorities;
+        try {
+            Collection<String> roleNames = user.getRoles().stream().map(role -> role.getRoleName())
+                    .collect(Collectors.toList());
+            authorities = AuthorityUtils.createAuthorityList(roleNames.toArray(new String[0]));
+        } catch (Exception e) {
+            authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+
+        }
+        return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
@@ -55,11 +56,10 @@ public class UserPrincipal implements UserDetails {
                 authorities,
                 user.getToken(),
                 user.getUsername(),
-                user.getFullName()
-        );
+                user.getFullName());
     }
 
-    public static UserPrincipal create(UserAuthenticatedDto user, Map<String, Object> attributes) {
+    public static UserPrincipal create(UserAuthenticatedDTO user, Map<String, Object> attributes) {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         return userPrincipal;
     }
@@ -107,31 +107,31 @@ public class UserPrincipal implements UserDetails {
         return fullName;
     }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getIdentification() {
-		return identification;
-	}
+    public String getIdentification() {
+        return identification;
+    }
 
-	public void setIdentification(String identification) {
-		this.identification = identification;
-	}
+    public void setIdentification(String identification) {
+        this.identification = identification;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

@@ -16,6 +16,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.backend.core.dto.UserDTO;
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService{
 			CS.setString(1, UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
 			CS.setString(2, user.getUsername());
 			CS.setString(3, user.getFullName());
-			CS.setString(4, getMd5Hash(user.getPassword()));
+			CS.setString(4, encodePass(user.getPassword()));
 			CS.setString(5, user.getEmail());
 			CS.setString(6, user.getIdentification());
 			
@@ -52,6 +53,10 @@ public class UserServiceImpl implements UserService{
 		} 
 		
 		
+	}
+	
+	private String encodePass(String password) {
+		return new BCryptPasswordEncoder().encode(password);
 	}
 
 	@Override
@@ -94,7 +99,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDTO getUserById(String userId) throws SQLException {
 		
-		UserDTO user = null;
+		UserDTO user = null; 
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 		
 			PreparedStatement pstmt = conn.prepareStatement(
@@ -129,20 +134,32 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	
-	private String getMd5Hash(String password) {
-		MessageDigest md;
-		String md5Hash = "";
-		try {
-			md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-		    byte[] digest = md.digest();
-		    md5Hash = DatatypeConverter
-		      .printHexBinary(digest).toUpperCase();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+
+	@Override
+	public UserDTO getUserByUsername(String username) throws SQLException {
+		UserDTO user = null; 
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+		
+			PreparedStatement pstmt = conn.prepareStatement(
+				      "SELECT * FROM xuser where username = ?");
+	
+			pstmt.setString(1, username);
+	
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				user = new UserDTO(rs.getString("id")
+						,rs.getString("username")
+						,rs.getString("full_name")
+						,rs.getString("password")
+						,rs.getString("email")
+						,rs.getString("identification")
+						,roleService.getRolesByUserId(rs.getString("id")));
+			}
 		}
-	    return md5Hash;
+		
+		return user;
 	}
 
 }

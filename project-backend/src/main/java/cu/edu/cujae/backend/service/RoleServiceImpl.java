@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.backend.core.dto.RoleDTO;
+import cu.edu.cujae.backend.core.dto.UserDTO;
 import cu.edu.cujae.backend.core.service.RoleService;
 
 @Service
@@ -59,7 +60,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public RoleDTO getRoleById(Long roleId) throws SQLException {
-		RoleDTO role = null;
+		RoleDTO role = null; 
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
 		
 			PreparedStatement pstmt = conn.prepareStatement(

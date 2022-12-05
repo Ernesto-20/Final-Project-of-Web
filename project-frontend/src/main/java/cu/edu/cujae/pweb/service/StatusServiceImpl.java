@@ -13,6 +13,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
 import cu.edu.cujae.pweb.dto.StatusDTO;
+import cu.edu.cujae.pweb.security.CurrentUserUtils;
 
 /* Esta anotación le indica a spring que esta clase es un servicio y por tanto luego podrá inyectarse en otro lugar usando
 
@@ -34,7 +35,7 @@ public class StatusServiceImpl implements StatusService {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 			ApiRestMapper<StatusDTO> apiRestMapper = new ApiRestMapper<>();
 
-			String response = (String) restService.GET("/api/v1/status", params, String.class).getBody();
+			String response = (String) restService.GET("/api/v1/status", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 			status = apiRestMapper.mapList(response, StatusDTO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -52,7 +53,7 @@ public class StatusServiceImpl implements StatusService {
 
 			UriTemplate template = new UriTemplate("/api/v1/status/{statusId}");
 			String uri = template.expand(statusId.toString()).toString();
-			String response = (String) restService.GET(uri, params, String.class).getBody();
+			String response = (String) restService.GET(uri, params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 			status = apiRestMapper.mapOne(response, StatusDTO.class);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -70,7 +71,7 @@ public class StatusServiceImpl implements StatusService {
 			params.add("description", description);
 			ApiRestMapper<StatusDTO> apiRestMapper = new ApiRestMapper<>();
 
-			String response = (String) restService.GET("/api/v1/status", params, String.class).getBody();
+			String response = (String) restService.GET("/api/v1/status", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 			status = apiRestMapper.mapOne(response, StatusDTO.class);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -80,13 +81,13 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public void createStatus(StatusDTO status) {
-		restService.POST("/api/v1/status", status, String.class).getBody();
+		restService.POST("/api/v1/status", status, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 	}
 
 	@Override
 	public void updateStatus(StatusDTO status) {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		restService.PUT("/api/v1/status", params, status, String.class).getBody();
+		restService.PUT("/api/v1/status", params, status, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class StatusServiceImpl implements StatusService {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		UriTemplate template = new UriTemplate("/api/v1/status/{statusId}");
 		String uri = template.expand(statusId.toString()).toString();
-		restService.DELETE(uri, params, String.class, null).getBody();
+		restService.DELETE(uri, params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 	}
 
 }

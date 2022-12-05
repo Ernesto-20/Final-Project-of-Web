@@ -84,11 +84,11 @@
 		</dependency>
 
 	    <!-- Do not delete, this is necessary for using mvn install in CLI with Java 17 -->
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-  			<version>2.3.1</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>javax.xml.bind</groupId>-->
+<!--			<artifactId>jaxb-api</artifactId>-->
+<!--  			<version>2.3.1</version>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>
@@ -99,5 +99,11 @@
 			</plugin>
 		</plugins>
 	</build>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 </project>

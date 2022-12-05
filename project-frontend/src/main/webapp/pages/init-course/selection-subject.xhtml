@@ -1,25 +1,33 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" template="/pages/init-course/init-course-template.xhtml">
 
-<ui:composition template="/pages/init-course/init-course-template.xhtml">
-    <ui:define name="selection-list-title">
-        Nuevo Curso Universitario
+    <ui:define name="selection-subject-title">
+        Nuevo programa de asignaturas
     </ui:define>
-    <ui:define name="selection-list-content">
-        <h:form id="form5">
-            <p:panelGrid id="panelGridId" columns="1" layout="grid">
+    <ui:define name="selection-subject-content">
+        <h:form id="formSelectionSubject">
+            <p:panelGrid id="panelGridId" columns="3" layout="grid" contentStyleClass="ui-fluid">
                 <f:facet name="Nuevo curso universitario">
                     <p:graphicImage name="demo/images/misc/kobe.png"/>
                 </f:facet>
-                <p:panel id="panelLeft">
-                    <ui:include src="./subject-list-component.xhtml"></ui:include>
-                </p:panel>
 
+                <ui:include src="subject-list-component.xhtml"></ui:include>
+
+                <p:panelGrid columns="1" layout="grid" style="align-items: center" contentStyleClass="ui-fluid">
+                    <p:commandButton value="Asignar" icon="pi pi-arrow-right" iconPos="right"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                    </p:commandButton>
+                    <p:commandButton value="Retirar" icon="pi pi-arrow-left"
+                                     styleClass="ui-button-warning" style="margin-right: .5rem">
+                    </p:commandButton>
+                </p:panelGrid>
+                <p:panel>
+
+                </p:panel>
             </p:panelGrid>
         </h:form>
     </ui:define>
 </ui:composition>
-</html>

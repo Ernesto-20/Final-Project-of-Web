@@ -39,7 +39,6 @@ public class ManageSubjectBean {
 	@PostConstruct
 	public void init() {
 		subjects = subjects == null ? subjectService.getSubjects() : subjects;
-
 	}
 
 	// Se ejecuta al dar clic en el button Nuevo
@@ -82,7 +81,7 @@ public class ManageSubjectBean {
 		PrimeFaces.current().executeScript("PF('manageSubjectDialog').hide()");// Este code permite cerrar el dialog
 																				// cuyo id es manageUserDialog. Este
 																				// identificador es el widgetVar
-		PrimeFaces.current().ajax().update("form:dt-subjects");// Este code es para refrescar el componente con id
+		PrimeFaces.current().ajax().update("formSelectionSubject:dt-subjects");// Este code es para refrescar el componente con id
 																// dt-users que se encuentra dentro del formulario con
 																// id form
 	}
@@ -91,13 +90,13 @@ public class ManageSubjectBean {
 	public void deleteSubject() {
 		try {
 			// delete subject
+			System.out.println(selectedSubject.getName());
 			subjectService.deleteSubject(this.selectedSubject.getId());
 			this.selectedSubject = null;
-
 			// load datatable again with new values
 			subjects = subjectService.getSubjects();
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_deleted");
-			PrimeFaces.current().ajax().update("form:dt-subjects");// Este code es para refrescar el componente con id
+			PrimeFaces.current().ajax().update("formSelectionSubject:dt-subjects");// Este code es para refrescar el componente con id
 																	// dt-users que se encuentra dentro del formulario
 																	// con id form
 		} catch (Exception e) {

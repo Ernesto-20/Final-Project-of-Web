@@ -56,16 +56,15 @@
 //        return subjectsGrades;
 //    }
 //
-//    public void setSubjectsGrades(Map<String, Integer> subjectsGrades) {
-//        this.subjectsGrades = subjectsGrades;
+//    public void addSubjectsGrades(String subject, Integer gradeValue) {
+//        subjectsGrades.put(subject, gradeValue);
 //    }
 //
 //    public Map<Integer, Map<String, Integer>> getYearsSubjectsGrades() {
 //        return yearsSubjectsGrades;
 //    }
 //
-//    public void setYearsSubjectsGrades(Map<Integer, Map<String, Integer>> yearsSubjectsGrades) {
-//        this.yearsSubjectsGrades = yearsSubjectsGrades;
+//    public void addYearsSubjectsGrades(Integer year, Map<String, Integer> subjectsGrades) {
+//        yearsSubjectsGrades.put(year, subjectsGrades);
 //    }
-//
 //}

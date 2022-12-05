@@ -1,21 +1,30 @@
 package cu.edu.cujae.backend.service;
 
-import cu.edu.cujae.backend.core.dto.StudentDTO;
-import cu.edu.cujae.backend.core.dto.StudentInBrigadeDTO;
-import cu.edu.cujae.backend.core.service.StatusService;
-import cu.edu.cujae.backend.core.service.StudentInBrigadeService;
+import cu.edu.cujae.backend.core.dto.*;
+import cu.edu.cujae.backend.core.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private BrigadeService brigadeService;
 
     @Autowired
     private StatusService statusService;
@@ -62,6 +71,29 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
     }
 
     @Override
+    public List<StudentInBrigadeNamedDTO> findAllNamed() throws SQLException {
+        List<StudentInBrigadeDTO> studentsInBrigade = findAll();
+        List<StudentInBrigadeNamedDTO> namedStudentsInBrigade = new LinkedList<>();
+
+        for(StudentInBrigadeDTO dto: studentsInBrigade){
+            StudentInBrigadeNamedDTO student = new StudentInBrigadeNamedDTO(dto);
+
+            StudentDTO studentDTO = studentService.getStudentById(student.getStudentId());
+            if(studentDTO != null) student.setStudentName(studentDTO.getFullName());
+
+            CourseDTO courseDTO = courseService.findById(student.getCourseId());
+            if(courseDTO != null) student.setCourseName(courseDTO.getIdentifier());
+
+            BrigadeDTO brigadeDTO = brigadeService.findById(student.getBrigadeId());
+            if(brigadeDTO != null) student.setBrigadeName(brigadeDTO.getName());
+
+            namedStudentsInBrigade.add(student);
+        }
+
+        return namedStudentsInBrigade;
+    }
+
+    @Override
     public LinkedList<StudentInBrigadeDTO> findByStudentId(int id) throws SQLException {
         LinkedList<StudentInBrigadeDTO> stdInBrigade = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
@@ -83,6 +115,11 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
         }
 
         return stdInBrigade;
+    }
+
+    @Override
+    public List<StudentInBrigadeNamedDTO> findNamedByStudentId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getStudentId() == id).collect(Collectors.toList());
     }
 
     @Override
@@ -108,6 +145,11 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
         }
 
         return stdInBrigade;
+    }
+
+    @Override
+    public List<StudentInBrigadeNamedDTO> findNamedByCourseId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getCourseId() == id).collect(Collectors.toList());
     }
 
     @Override
@@ -155,6 +197,11 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
         }
 
         return stdInBrigade;
+    }
+
+    @Override
+    public List<StudentInBrigadeNamedDTO> findNamedByBrigadeId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getBrigadeId() == id).collect(Collectors.toList());
     }
 
     @Override

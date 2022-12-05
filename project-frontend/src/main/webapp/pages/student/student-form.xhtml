@@ -37,13 +37,13 @@
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
-						<div class="p-field">
-							<p:outputLabel for="@next" value="#{msgs.label_studentForm_status}" />
-							<p:inputText id="statusDescription" required="true"
-								value="#{manageStudentBean.selectedStudent.statusDescription}">
-							</p:inputText>
-							<p:message for="@previous"></p:message>
-						</div>
+<!-- 						<div class="p-field"> -->
+<!-- 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_status}" /> -->
+<!-- 							<p:inputText id="statusDescription" required="true" -->
+<!-- 								value="#{manageStudentBean.selectedStudent.statusDescription}"> -->
+<!-- 							</p:inputText> -->
+<!-- 							<p:message for="@previous"></p:message> -->
+<!-- 						</div> -->
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_gender}" />
 							<p:selectOneRadio id="gender" required="true"
@@ -61,7 +61,7 @@
 
 		<f:facet name="footer">
 			<p:commandButton value="#{msgs.btn_save}" icon="pi pi-check"
-				actionListener="#{manageStudentBean.saveStudent}" update="manage-student-content"
+				action="#{manageStudentBean.saveStudent}" update="manage-student-content"
 				process="manage-student-content @this" />
 			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times" action="#{manageStudentBean.cancel}"
 				onclick="PF('manageStudentDialog').hide()" class="ui-button-secondary" />

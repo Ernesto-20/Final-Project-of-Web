@@ -1,0 +1,27 @@
+openapi: "3.0.0"
+info:
+  version: "1.0"
+  title: "PW-Project"
+  description: Manage students of the university
+
+servers:
+  - url: "{url}"
+    description: "Development server"
+    variables:
+      url:
+        default: http://localhost:8080/api/v1
+        description: API de la universidad
+
+paths:
+  /students:
+    $ref: "./paths/students.yaml"
+  /students/{studentsId}:
+    $ref: "./paths/studentId.yaml"
+
+components:
+  parameters:
+    $ref: "./parameters/_index.yaml"
+  schemas:
+    $ref: "./schemas/_index.yaml"
+  responses:
+    $ref: "./responses/_index.yaml"

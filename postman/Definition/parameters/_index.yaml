@@ -1,0 +1,2 @@
+studentsId:
+  $ref: "./path/studentId.yaml"

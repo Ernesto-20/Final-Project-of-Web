@@ -1,0 +1,8 @@
+type: object
+description: Error, Server Not Found
+required:
+  - message
+properties:
+  message:
+    description: Error, Server Not Found
+    type: string

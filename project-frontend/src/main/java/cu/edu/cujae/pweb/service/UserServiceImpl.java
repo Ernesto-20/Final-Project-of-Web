@@ -1,6 +1,7 @@
 package cu.edu.cujae.pweb.service;
 
-import cu.edu.cujae.pweb.dto.UserDto;
+import cu.edu.cujae.pweb.dto.UserDTO;
+import cu.edu.cujae.pweb.security.CurrentUserUtils;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,39 +15,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Autowired
 	private RestService restService;
 
 	@Override
-	public List<UserDto> getUsers(){
-		System.out.println("HEREEEEEEEEEE 1");
-		List<UserDto> userList = new ArrayList<UserDto>();
-	    try {
-	    	MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		    ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
-		    String response = (String)restService.GET("/api/v1/users", params, String.class).getBody();
-		    userList = apiRestMapper.mapList(response, UserDto.class);
+	public List<UserDTO> getUsers() {
+		List<UserDTO> userList = new ArrayList<UserDTO>();
+		try {
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			ApiRestMapper<UserDTO> apiRestMapper = new ApiRestMapper<>();
+			String response = (String) restService
+					.GET("/api/v1/users", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
+			userList = apiRestMapper.mapList(response, UserDTO.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("HEREEEEEEEEEE 1 end");
 		return userList;
 	}
 
 	@Override
-	public UserDto getUserById(String userId) {
-		UserDto user = null;
+	public UserDTO getUserById(String userId) {
+		UserDTO user = null;
 
 		try {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		    ApiRestMapper<UserDto> apiRestMapper = new ApiRestMapper<>();
-		    
-		    UriTemplate template = new UriTemplate("/api/v1/users/{userId}");
-		    String uri = template.expand(userId).toString();
-		    String response = (String)restService.GET(uri, params, String.class).getBody();
-		    user = apiRestMapper.mapOne(response, UserDto.class);
+			ApiRestMapper<UserDTO> apiRestMapper = new ApiRestMapper<>();
+
+			UriTemplate template = new UriTemplate("/api/v1/users/{userId}");
+			String uri = template.expand(userId).toString();
+			String response = (String) restService.GET(uri, params, String.class, CurrentUserUtils.getTokenBearer())
+					.getBody();
+			user = apiRestMapper.mapOne(response, UserDTO.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -54,22 +55,22 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void createUser(UserDto user) {
-		restService.POST("/api/v1/users", user, String.class).getBody();
+	public void createUser(UserDTO user) {
+		restService.POST("/api/v1/users", user, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 	}
 
 	@Override
-	public void updateUser(UserDto user) {
+	public void updateUser(UserDTO user) {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		restService.PUT("/api/v1/users", params, user, String.class).getBody();
+		restService.PUT("/api/v1/users", params, user, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 	}
 
 	@Override
 	public void deleteUser(String userId) {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		UriTemplate template = new UriTemplate("/api/v1/users/{userId}");
-	    String uri = template.expand(userId).toString();
-		restService.DELETE(uri, params, String.class, null).getBody();
+		String uri = template.expand(userId).toString();
+		restService.DELETE(uri, params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 	}
-	
+
 }

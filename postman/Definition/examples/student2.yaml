@@ -1,0 +1,9 @@
+summary: Student Example 2
+value:
+  id: 5
+  idNum: 534322
+  firstName: Felipe
+  lastName: Gutierrez Lopez
+  gender: M
+  municipality: San Agustin
+  statusDescription: Promovido

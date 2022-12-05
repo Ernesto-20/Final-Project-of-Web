@@ -15,5 +15,7 @@ public interface UserService {
 	
 	UserDTO getUserById(String userId) throws SQLException;
 	
+	UserDTO getUserByUsername(String username) throws SQLException;
+	
 	void deleteUser(String id) throws SQLException;
 }

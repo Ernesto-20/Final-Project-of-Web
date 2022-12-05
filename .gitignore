@@ -1,4 +1,5 @@
 # ignore .idea
+.idea
 project-frontend/.idea
 project-backend/.idea
 
@@ -20,3 +21,4 @@ project-backend/bin/
 project-backend/.settings/
 project-backend/.mvn/
 
+project

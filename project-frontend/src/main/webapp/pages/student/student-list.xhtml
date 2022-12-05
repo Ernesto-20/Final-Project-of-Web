@@ -2,10 +2,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/pages/template/layout.xhtml">
-	<ui:define name="title" >#{msgs.title_studentList}</ui:define>
+	<ui:define name="title">#{msgs.title_studentList}</ui:define>
 	<ui:define name="layout">
 		<h:form id="form">
-			<div class="card crud-demo">
+			<div class="crud-demo">
 				<p:toolbar>
 					<p:toolbarGroup>
 						<!-- 
@@ -23,7 +23,8 @@
 							<p:resetInput target=":student-form:manage-student-content" />
 						</p:commandButton>
 						<p:commandButton value="#{msgs.btn_studentList_dar_baja}"
-							actionListener="#{manageStudentBean.openNew}" update=":student-dropout-form:student-dropout-content"
+							actionListener="#{manageStudentBean.openNew}"
+							update=":student-dropout-form:student-dropout-content"
 							oncomplete="PF('studentDropoutDialog').show()" styleClass="ui-button-secondary"
 							style="margin-right: .5rem">
 							<p:resetInput target=":student-dropout-form:student-dropout-content" />
@@ -42,8 +43,8 @@
 					<p:toolbarGroup align="right">
 						<!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
 					         del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
-						<p:commandButton value="#{msgs.btn_export}" icon="pi pi-upload"
-							styleClass="ui-button-help" ajax="false">
+						<p:commandButton value="#{msgs.btn_export}" icon="pi pi-upload" styleClass="ui-button-help"
+							ajax="false">
 							<p:dataExporter type="pdf" target="dt-students" fileName="users" />
 						</p:commandButton>
 					</p:toolbarGroup>
@@ -63,7 +64,7 @@
 					reflow="true" paginator="true" rows="10" paginatorPosition="bottom">
 					<f:facet name="header">
 						<div class="products-table-header">
-							<span style="font-weight: bold" value="#{msgs.header_table_studentList}" />
+							<span style="font-weight: bold">#{msgs.header_table_studentList}</span>
 							<span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
 								<p:inputText id="globalFilter" onkeyup="PF('dtStudents').filter()"
 									placeholder="Buscar" />
@@ -109,13 +110,13 @@
 							action="#{manageStudentBean.deleteStudent}">
 							<f:setPropertyActionListener value="#{student}"
 								target="#{manageStudentBean.selectedStudent}" />
-							<p:confirm header="#{msgs.btn_studentList_confirmDelete}"
-								message="#{msgs.btn_studentList_delete_msg}" icon="pi pi-exclamation-triangle" />
+							<p:confirm header="#{msgs.btn_confirmDelete}" message="#{msgs.btn_studentList_delete_msg}"
+								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
-<!-- 						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this" -->
-<!-- 							action="manageStudentGradeBean.setStudentGrades(manageStudentBean.getSelectedStudent().getId())" -->
-<!-- 							update=":form:grades-student-content" oncomplete="PF('gradesStudentDialog').show()"> -->
-<!-- 						</p:commandButton> -->
+						<!-- 						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this" -->
+						<!-- 							action="manageStudentGradeBean.setStudentGrades(manageStudentBean.getSelectedStudent().getId())" -->
+						<!-- 							update=":form:grades-student-content" oncomplete="PF('gradesStudentDialog').show()"> -->
+						<!-- 						</p:commandButton> -->
 					</p:column>
 
 				</p:dataTable>
@@ -124,23 +125,23 @@
 				<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
 				su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se define dentro del button -->
 				<p:confirmDialog global="true" showEffect="fade" width="300">
-					<p:commandButton value="#{msgs.btn_studentList_delete_yes}" type="button"
-						styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-					<p:commandButton value="#{msgs.btn_studentList_delete_no}" type="button"
+					<p:commandButton value="#{msgs.btn_delete_yes}" type="button" styleClass="ui-confirmdialog-yes"
+						icon="pi pi-check" />
+					<p:commandButton value="#{msgs.btn_delete_no}" type="button"
 						styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
 				</p:confirmDialog>
 			</div>
 		</h:form>
-		
+
 		<h:form id="student-form">
-		<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+			<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
 			<ui:include src="student-form.xhtml"></ui:include>
 		</h:form>
-		
+
 		<h:form id="student-grades">
-	<!-- 	<ui:include src="student-grades.xhtml"></ui:include> -->
+			<!-- 	<ui:include src="student-grades.xhtml"></ui:include> -->
 		</h:form>
-		
+
 		<h:form id="student-dropout-form">
 			<ui:include src="student_dropout_form.xhtml"></ui:include>
 		</h:form>

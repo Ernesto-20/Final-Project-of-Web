@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cu.edu.cujae.pweb.dto.SubjectDTO;
+import cu.edu.cujae.pweb.security.CurrentUserUtils;
+
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
@@ -29,7 +31,7 @@ public class SubjectServiceImpl implements SubjectService{
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             ApiRestMapper<SubjectDTO> apiRestMapper = new ApiRestMapper<>();
-            String response = (String)restService.GET("/api/v1/subjects", params, String.class).getBody();
+            String response = (String)restService.GET("/api/v1/subjects", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
             subjectList = apiRestMapper.mapList(response, SubjectDTO.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,7 +49,7 @@ public class SubjectServiceImpl implements SubjectService{
 
             UriTemplate template = new UriTemplate("/api/v1/subjects/{subjectId}");
             String uri = template.expand(subjectId.toString()).toString();
-            String response = (String)restService.GET(uri, params, String.class).getBody();
+            String response = (String)restService.GET(uri, params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
             subject = apiRestMapper.mapOne(response, SubjectDTO.class);
         } catch (Exception e) {
             // TODO: handle exception
@@ -57,14 +59,14 @@ public class SubjectServiceImpl implements SubjectService{
 
     @Override
     public void createSubject(SubjectDTO subjectDTO) {
-        restService.POST("/api/v1/subjects", subjectDTO, String.class).getBody();
+        restService.POST("/api/v1/subjects", subjectDTO, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 
     }
 
     @Override
     public void updateSubject(SubjectDTO subjectDTO) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        restService.PUT("/api/v1/subjects", params, subjectDTO, String.class).getBody();
+        restService.PUT("/api/v1/subjects", params, subjectDTO, String.class, CurrentUserUtils.getTokenBearer()).getBody();
     }
 
     @Override
@@ -72,7 +74,7 @@ public class SubjectServiceImpl implements SubjectService{
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         UriTemplate template = new UriTemplate("/api/v1/subjects/{subjectId}");
         String uri = template.expand(subjectId.toString()).toString();
-        restService.DELETE(uri, params, String.class, null).getBody();
+        restService.DELETE(uri, params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
     }
 
 }

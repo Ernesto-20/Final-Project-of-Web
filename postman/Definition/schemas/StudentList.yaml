@@ -1,0 +1,4 @@
+description: List of students
+type: array
+items:
+  $ref: "./Student.yaml"

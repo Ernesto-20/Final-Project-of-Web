@@ -31,8 +31,8 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDTO> getStudentById(@PathVariable String id) throws SQLException {
-        StudentDTO student = studentService.getStudentById(Integer.parseInt(id));
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Integer id) throws SQLException {
+        StudentDTO student = studentService.getStudentById(id);
         return ResponseEntity.ok(student);
     }
 
@@ -55,8 +55,8 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id) throws SQLException {
-        studentService.deleteStudent(Integer.parseInt(id));
+    public ResponseEntity<String> delete(@PathVariable Integer id) throws SQLException {
+        studentService.deleteStudent(id);
         return ResponseEntity.ok("Student deleted");
     }
 }

@@ -1,17 +1,39 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
 
     <div class="layout-topbar">
         <a class="menu-button" tabindex="0">
             <i class="pi pi-bars"></i>
         </a>
         <h:link styleClass="logo" outcome="/pages/welcome/welcome.xhtml">
-            <h2 style="color:black; margin-top:15px;">Gestión de Estudiantes</h2>
+            <h2 style="color:black; margin-top:15px;">#{msgs.h2_topbar}</h2>
         </h:link>
 
         <h:form styleClass="topbar-form">
             <ul class="topbar-menu">
+                <li>
+                    <p:outputLabel style="padding-left:5px;"> #{userBean.userLogued}</p:outputLabel>
+                </li>
+                <li>
+                    <p:commandLink action="#{userBean.logout}" ajax="false"><i class="pi pi-sign-out"></i>
+                        #{msgs.btn_logout}</p:commandLink>
+                </li>
+                <li>
+                    <p:growl id="messages" showDetail="true" />
 
+                    <p:commandButton id="dynaButton" type="button" value="#{msgs.btn_settings}" icon="pi pi-cog"
+                        styleClass="ui-button-flat ui-button-plain" />
+                    <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">
+                        <p:submenu label="#{msgs.btn_language}">
+                            <p:menuitem value="#{msgs.btn_language_es}" action="#{languageBean.setLanguage('es')}"
+                                ajax="false" />
+                            <p:menuitem value="#{msgs.btn_language_en}" action="#{languageBean.setLanguage('en')}"
+                                ajax="false" update="messages" />
+                        </p:submenu>
+                    </p:menu>
+
+                </li>
             </ul>
         </h:form>
     </div>

@@ -1,4 +1,4 @@
-//package cu.edu.cujae.backend.core.dto;
+//package cu.edu.cujae.pweb.dto;
 //
 //import java.util.Map;
 //
@@ -56,20 +56,15 @@
 //        return subjectsGrades;
 //    }
 //
-//    public void setSubjectsGrades(Map<String, Integer> subjectsGrades) {
-//        this.subjectsGrades = subjectsGrades;
+//    public void addSubjectsGrades(String subject, Integer gradeValue) {
+//        subjectsGrades.put(subject, gradeValue);
 //    }
 //
 //    public Map<Integer, Map<String, Integer>> getYearsSubjectsGrades() {
 //        return yearsSubjectsGrades;
 //    }
 //
-//    public void setYearsSubjectsGrades(Map<Integer, Map<String, Integer>> yearsSubjectsGrades) {
-//        this.yearsSubjectsGrades = yearsSubjectsGrades;
-//    }
-//    
-//    public void addYearAndSubjectsGrades(Integer year, Map<String, Integer> subjectsGrades) {
+//    public void addYearsSubjectsGrades(Integer year, Map<String, Integer> subjectsGrades) {
 //        yearsSubjectsGrades.put(year, subjectsGrades);
 //    }
-//
 //}

@@ -36,14 +36,14 @@
                                     <f:selectItem itemLabel="3" itemValue="3"/>
                                 </p:selectOneMenu>
                             </div>
-                            <p:dataTable id="dt-subjects" widgetVar="dtSubjects" var="subject"
-                                         value="#{manageSubjectInCourseWithNameBean.subjects}" reflow="true"
+                            <p:dataTable id="dt-subjects" widgetVar="dtSubjects" var="dto"
+                                         value="#{manageSubjectInCourseBean.subjectsInCourseNamed}" reflow="true"
                                          rows="10">
                                 <p:column headerText="Asignatura">
-                                    <h:outputText value="#{subject.name}" />
+                                    <h:outputText value="#{dto.subjectName}" />
                                 </p:column>
                                 <p:column headerText="Horas">
-                                    <h:outputText value="#{subject.hoursLong}" />
+                                    <h:outputText value="#{dto.hoursLong}" />
                                 </p:column>
                                 <p:column exportable="false">
                                     <p:commandButton icon="pi pi-pencil" action="#{manageSubjectInCourseWithNameBean.openForEdit}"

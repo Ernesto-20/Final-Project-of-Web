@@ -6,11 +6,12 @@ public class StudentDTO {
 	private String idNum;
 	private String firstName;
 	private String lastName;
+	private String fullName;
+
 	private String gender;
 	private String municipality;
 	private Integer statusID;
 	private String statusDescription;
-	private String fullName;
 
 	public StudentDTO(Integer id, String idNum, String firstName, String lastName, String gender, String municipality, int statusId, String statusDescription) {
 		this.id = id;
@@ -112,4 +113,3 @@ public class StudentDTO {
 		this.fullName = fullName;
 	}
 }
-

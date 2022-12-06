@@ -3,13 +3,20 @@ package cu.edu.cujae.backend.core.dto;
 public class BrigadeDTO {
 
     private Integer id;
+    private Integer yearId;
     private int number;
-    private int yearId;
+    private String name;
 
-    public BrigadeDTO(Integer id, int number, int yearId) {
+    public BrigadeDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public BrigadeDTO(Integer id, int number, Integer yearId) {
         this.id = id;
         this.number = number;
         this.yearId = yearId;
+        name = "" + yearId + "" + number;
     }
 
     public int getId() {
@@ -28,20 +35,24 @@ public class BrigadeDTO {
         this.number = number;
     }
 
-    public int getYearId() {
+    public Integer getYearId() {
         return yearId;
     }
 
-    public void setYearId(int yearId) {
+    public void setYearId(Integer yearId) {
         this.yearId = yearId;
     }
 
     public String getName(){
-        return "" + yearId + "" + number;
+        return name;
     }
 
     @Override
     public String toString(){
         return number+"";
     }
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

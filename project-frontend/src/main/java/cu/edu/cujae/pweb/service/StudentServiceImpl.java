@@ -1,6 +1,7 @@
 package cu.edu.cujae.pweb.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +97,26 @@ public class StudentServiceImpl implements StudentService {
 		UriTemplate template = new UriTemplate("/api/v1/students/{studentId}");
 		String uri = template.expand(studentId.toString()).toString();
 		restService.DELETE(uri, params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
+	}
+
+	@Override
+	public List<StudentDTO> getStudentsByBrigadeCourseYearIds(Integer brigadeId, Integer courseId, Integer yearId) {
+		List<StudentDTO> students = null;
+
+		try {
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			params.add("brigadeId", brigadeId.toString());
+			params.add("courseId", courseId.toString());
+			params.add("yearId", yearId.toString());
+			
+			ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
+
+			String response = (String) restService.GET("/api/v1/students/", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
+			students = apiRestMapper.mapList(response, StudentDTO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return students;
 	}
 
 }

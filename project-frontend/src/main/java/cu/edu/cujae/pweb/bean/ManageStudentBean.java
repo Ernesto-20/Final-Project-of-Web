@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.pweb.service.BrigadeService;
+import cu.edu.cujae.pweb.service.CourseService;
 import cu.edu.cujae.pweb.service.StudentService;
+import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
 @Component // Le indica a spring es un componente registrado
@@ -24,6 +27,20 @@ public class ManageStudentBean {
 	private StudentDTO selectedStudent;
 	private List<StudentDTO> students;
 	
+	// Por defecto mostrar los estudiantes del curso, grupo y año con id = 1
+	private Integer course = 1;
+	private Integer year = 1;
+	private Integer brigade = 1;
+	
+	public void reloadListStudent() {
+		System.out.println("Brigada:" + brigade);
+		System.out.println("Curso:" + course);
+		System.out.println("Año:" + year);
+		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+		System.out.println("Estudiantes:" + students);
+		PrimeFaces.current().ajax().update("form:dt-students");
+	}
+
 	/*
 	 * @Autowired es la manera para inyectar una dependencia/clase anotada
 	 * con @service en spring
@@ -125,11 +142,36 @@ public class ManageStudentBean {
 	}
 
 	public List<StudentDTO> getStudents() {
+		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
 		return students;
 	}
 
 	public void setStudents(List<StudentDTO> students) {
 		this.students = students;
+	}
+
+	public Integer getBrigade() {
+		return brigade;
+	}
+
+	public void setBrigade(Integer brigade) {
+		this.brigade = brigade;
+	}
+
+	public Integer getCourse() {
+		return course;
+	}
+
+	public void setCourse(Integer course) {
+		this.course = course;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 }

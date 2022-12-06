@@ -7,9 +7,8 @@ import cu.edu.cujae.pweb.dto.CourseDTO;
 
 public interface CourseService {
 	List<CourseDTO> getCourses();
-	CourseDTO getCourseById(String courseId);
+	CourseDTO getCourseById(Integer courseId);
 	void createCourse(CourseDTO course);
 	void updateCourse(CourseDTO course);
-	void deleteCourse(String id);
-	Map<String, String> getCourses2();
+	void deleteCourse(Integer courseId);
 }

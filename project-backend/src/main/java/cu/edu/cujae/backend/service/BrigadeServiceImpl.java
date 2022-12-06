@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +34,7 @@ public class BrigadeServiceImpl implements BrigadeService {
     @Override
     public List<BrigadeDTO> findAll() throws SQLException {
 
-        List<BrigadeDTO> brigades = new LinkedList<>();
+        List<BrigadeDTO> brigades = new ArrayList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             conn.setAutoCommit(false);
             String function = "{?= call select_all_brigade()}";
@@ -44,9 +44,9 @@ public class BrigadeServiceImpl implements BrigadeService {
             preparedFunction.execute();
             ResultSet resultSet = (ResultSet) preparedFunction.getObject(1);
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                Integer id = resultSet.getInt("id");
                 int number = resultSet.getInt("number");
-                int yearId = resultSet.getInt("year_id");
+                Integer yearId = resultSet.getInt("year_id");
                 brigades.add(new BrigadeDTO(id, number, yearId));
             }
             resultSet.close();
@@ -85,7 +85,7 @@ public class BrigadeServiceImpl implements BrigadeService {
     @Override
     public List<BrigadeDTO> findByYearId(Integer yearId) throws SQLException {
 
-        List<BrigadeDTO> brigade = new LinkedList<>();
+        List<BrigadeDTO> brigade = new ArrayList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             conn.setAutoCommit(false);
             String function = "{?= call find_brigade_by_year_id(?)}";

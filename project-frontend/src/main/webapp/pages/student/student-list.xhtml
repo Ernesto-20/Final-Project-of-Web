@@ -33,25 +33,31 @@
 							ajax="false" style="margin-right: .5rem">
 						</p:commandButton>
 
+						<p:outputLabel for="course" value="#{msgs.label_course}" style="margin-right: .5rem" />
 						<p:selectOneMenu id="course" value="#{manageStudentBean.course}" style="margin-right: .5rem">
 							<f:selectItems value="#{manageCourseBean.courses}" var="course"
 								itemLabel="#{course.identifier}" itemValue="#{course.id}" />
 							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
 								update="dt-students"></p:ajax>
 						</p:selectOneMenu>
+
+						<p:outputLabel for="year" value="#{msgs.label_year}" style="margin-right: .5rem" />
 						<p:selectOneMenu id="year" value="#{manageStudentBean.year}" style="margin-right: .5rem">
 							<f:selectItems value="#{manageYearBean.years}" var="year" itemLabel="#{year.id}"
 								itemValue="#{year.id}" />
 							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
 								update="dt-students"></p:ajax>
 						</p:selectOneMenu>
+
+						<p:outputLabel for="brigade" value="#{msgs.label_brigade}" style="margin-right: .5rem" />
 						<p:selectOneMenu id="brigade" value="#{manageStudentBean.brigade}" style="margin-right: .5rem">
-							<f:selectItems value="#{manageBrigadeBean.brigades}" var="brigade" itemLabel="#{brigade.id}"
-								itemValue="#{brigade.id}" />
+							<f:selectItems value="#{manageBrigadeBean.brigades}" var="brigade"
+								itemLabel="#{brigade.name}" itemValue="#{brigade.id}" />
 							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
 								update="dt-students"></p:ajax>
 						</p:selectOneMenu>
 					</p:toolbarGroup>
+
 					<p:toolbarGroup align="right">
 						<!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
 					         del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->

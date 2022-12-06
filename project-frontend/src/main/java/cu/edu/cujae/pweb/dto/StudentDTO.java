@@ -6,6 +6,8 @@ public class StudentDTO {
 	private String idNum;
 	private String firstName;
 	private String lastName;
+	private String fullName;
+
 	private String gender;
 	private String municipality;
 	private Integer statusID;
@@ -101,5 +103,14 @@ public class StudentDTO {
 	public void setStatusID(Integer statusID) {
 		this.statusID = statusID;
 	}
-}
 
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
+	public String getFullName(){
+		fullName = getFirstName() + " " + getLastName();
+		return fullName;
+	}
+	
+}

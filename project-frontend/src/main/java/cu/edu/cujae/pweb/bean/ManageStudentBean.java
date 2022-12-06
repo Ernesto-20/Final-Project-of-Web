@@ -25,8 +25,8 @@ public class ManageStudentBean {
 	private StudentDTO selectedStudent;
 	private List<StudentDTO> students;
 	private CourseDTO course;
-	private int year;
-	private int brigade;
+	private Integer year;
+	private Integer brigade;
 
 	public void reloadListStudent() {
 		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course.getId(), this.year);
@@ -142,11 +142,11 @@ public class ManageStudentBean {
 		this.students = students;
 	}
 
-	public int getBrigade() {
+	public Integer getBrigade() {
 		return brigade;
 	}
 
-	public void setBrigade(int brigade) {
+	public void setBrigade(Integer brigade) {
 		this.brigade = brigade;
 	}
 
@@ -158,11 +158,11 @@ public class ManageStudentBean {
 		this.course = course;
 	}
 
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 

@@ -45,7 +45,7 @@ public class ManageBrigadeBean {
 		this.brigadeDTO = brigadeDTO;
 	}
 
-	public BrigadeDTO getselectedCourse() {
+	public BrigadeDTO getSelectedBrigade() {
 		return selectedBrigade;
 	}
 

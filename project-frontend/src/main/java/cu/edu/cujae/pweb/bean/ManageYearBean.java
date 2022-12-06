@@ -24,7 +24,6 @@ public class ManageYearBean {
 	private YearDTO yearDTO;
 	private YearDTO selectedYear;
 	private List<YearDTO> years;
-	private Map<String, String> years2;
 
 	/*
 	 * @Autowired es la manera para inyectar una dependencia/clase anotada
@@ -38,11 +37,11 @@ public class ManageYearBean {
 
 	}
 
-	public YearDTO yearDto() {
+	public YearDTO getYearDto() {
 		return yearDTO;
 	}
 
-	public void yearDto(YearDTO yearDTO) {
+	public void getYearDto(YearDTO yearDTO) {
 		this.yearDTO = yearDTO;
 	}
 
@@ -55,19 +54,11 @@ public class ManageYearBean {
 	}
 
 	public List<YearDTO> getYears() {
-		return years;
+		return years = years == null ? yearService.getYears() : years;
 	}
 
 	public void setYears(List<YearDTO> years) {
 		this.years = years;
-	}
-
-	public Map<String, String> getYears2() {
-		return years2;
-	}
-
-	public void setYears2(Map<String, String> years2) {
-		this.years2 = years2;
 	}
 
 }

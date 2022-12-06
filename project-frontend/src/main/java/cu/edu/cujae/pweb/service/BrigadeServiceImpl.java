@@ -2,10 +2,7 @@ package cu.edu.cujae.pweb.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +11,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
 import cu.edu.cujae.pweb.dto.BrigadeDTO;
-import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.security.CurrentUserUtils;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
 import cu.edu.cujae.pweb.utils.RestService;
@@ -31,7 +27,7 @@ public class BrigadeServiceImpl implements BrigadeService {
 	@Override
 	public List<BrigadeDTO> findAll() {
 
-		List<BrigadeDTO> brigades = new ArrayList<BrigadeDTO>();
+		List<BrigadeDTO> brigades = null;
 
 		try {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -41,9 +37,10 @@ public class BrigadeServiceImpl implements BrigadeService {
 					.GET("/api/v1/brigades", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 			brigades = apiRestMapper.mapList(response, BrigadeDTO.class);
 		} catch (IOException e) {
+			System.out.println("ERRRRRROOOOOOORRRRRR");
 			e.printStackTrace();
 		}
-
+		System.out.println(brigades);
 		return brigades;
 	}
 
@@ -61,7 +58,7 @@ public class BrigadeServiceImpl implements BrigadeService {
 					.getBody();
 			brigade = apiRestMapper.mapOne(response, BrigadeDTO.class);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return brigade;
 	}

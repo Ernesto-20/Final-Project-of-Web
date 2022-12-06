@@ -36,7 +36,6 @@ public class StudentServiceImpl implements StudentService {
 			ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
 
 			String response = (String) restService.GET("/api/v1/students", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
-			System.out.println(response);
 			students = apiRestMapper.mapList(response, StudentDTO.class);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -39,7 +39,7 @@ public class ManageStudentBean {
 	// constructor de la clase.
 	@PostConstruct
 	public void init() {
-		
+		students = students == null ? studentService.getStudents() : students;
 		this.selectedStudent = new StudentDTO();
 	}
 
@@ -125,7 +125,6 @@ public class ManageStudentBean {
 	}
 
 	public List<StudentDTO> getStudents() {
-		students = studentService.getStudents();
 		return students;
 	}
 

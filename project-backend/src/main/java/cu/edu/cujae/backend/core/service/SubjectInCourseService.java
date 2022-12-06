@@ -28,7 +28,7 @@ public interface SubjectInCourseService {
 
     void updateHoursLong(SubjectInCourseDTO subjectInCourse) throws SQLException;
 
-    void delete(SubjectInCourseDTO subjectInCourse) throws SQLException;
+    void delete(String subjectId, String courseId, String yearId) throws SQLException;
 
     // ?TODO: NO SE HA IMPLEMENTADO ESTE MÉTODO
     LinkedList<SubjectInCourseDTO> findByCourseAndYearId(int course_id, int year_id) throws SQLException;

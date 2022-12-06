@@ -7,7 +7,9 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,11 @@ import cu.edu.cujae.pweb.utils.JsfUtils;
 
 @Component //Le indica a spring es un componete registrado
 @ManagedBean
+@Named
 @ViewScoped //Este es el alcance utilizado para trabajar con Ajax
 public class ManageCourseBean {
-	
+
+	private String selectOption;
 	private CourseDTO courseDTO;
 	private CourseDTO selectedCourse;
 	private List<CourseDTO> courses;
@@ -96,11 +100,11 @@ public class ManageCourseBean {
 		this.courseDTO = courseDTO;
 	}
 
-	public CourseDTO getselectedCourse() {
+	public CourseDTO getSelectedCourse() {
 		return selectedCourse;
 	}
 
-	public void setselectedCourse(CourseDTO selectedCourse) {
+	public void setSelectedCourse(CourseDTO selectedCourse) {
 		this.selectedCourse = selectedCourse;
 	}
 
@@ -132,4 +136,13 @@ public class ManageCourseBean {
 		this.courseService = courseService;
 	}
 
+	public String getSelectOption() {
+		return selectOption;
+	}
+
+	public void setSelectOption(String selectOption) {
+		this.selectOption = selectOption;
+		System.out.println("Selected course is:");
+		System.out.println(selectOption);
+	}
 }

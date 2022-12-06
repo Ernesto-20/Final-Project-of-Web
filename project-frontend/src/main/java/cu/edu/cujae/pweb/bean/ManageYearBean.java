@@ -25,6 +25,7 @@ public class ManageYearBean {
 	private YearDTO selectedYear;
 	private List<YearDTO> years;
 	private Map<String, String> years2;
+	private String selectOption;
 
 	/*
 	 * @Autowired es la manera para inyectar una dependencia/clase anotada
@@ -132,4 +133,11 @@ public class ManageYearBean {
 		this.years2 = years2;
 	}
 
+	public String getSelectOption() {
+		return selectOption;
+	}
+
+	public void setSelectOption(String selectOption) {
+		this.selectOption = selectOption;
+	}
 }

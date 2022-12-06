@@ -195,7 +195,7 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
     }
 
     @Override
-    public void delete(SubjectInCourseDTO subjectInCourse) throws SQLException {
+    public void delete(String subjectId, String courseId, String yearId) throws SQLException {
         /*
          * 1 - subject_id
          * 2 - course_id
@@ -205,9 +205,9 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
             String function = "{call subject_in_course_delete(?, ?, ?)}";
             //
             CallableStatement preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, subjectInCourse.getSubjectId());
-            preparedFunction.setInt(2, subjectInCourse.getCourseId());
-            preparedFunction.setInt(3, subjectInCourse.getYearId());
+            preparedFunction.setInt(1, Integer.parseInt(subjectId));
+            preparedFunction.setInt(2, Integer.parseInt(courseId));
+            preparedFunction.setInt(3, Integer.parseInt(yearId));
             preparedFunction.execute();
             preparedFunction.close();
 

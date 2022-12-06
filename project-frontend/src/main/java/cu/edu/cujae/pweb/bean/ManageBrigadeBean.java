@@ -13,51 +13,52 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cu.edu.cujae.pweb.dto.CourseDTO;
-import cu.edu.cujae.pweb.service.CourseService;
+import cu.edu.cujae.pweb.dto.BrigadeDTO;
+import cu.edu.cujae.pweb.service.BrigadeService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
 
 @Component //Le indica a spring es un componete registrado
 @ManagedBean
 @ViewScoped //Este es el alcance utilizado para trabajar con Ajax
-public class ManageCourseBean {
+public class ManageBrigadeBean {
 	
-	private CourseDTO courseDTO;
-	private CourseDTO selectedCourse;
-	private List<CourseDTO> courses;
+	private BrigadeDTO brigadeDTO;
+	private BrigadeDTO selectedBrigade;
+	private List<BrigadeDTO> brigades;
 	
 	/* @Autowired es la manera para inyectar una dependencia/clase anotada con @service en spring
 	 * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
 	 */
 	@Autowired
-	private CourseService courseService;
+	private BrigadeService brigadeService;
 		
-	public ManageCourseBean() {
+	public ManageBrigadeBean() {
 		
 	}
 	
-	public CourseDTO getCourseDTO() {
-		return courseDTO;
+	public BrigadeDTO getBrigadeDTO() {
+		return brigadeDTO;
 	}
 
-	public void setCourseDTO(CourseDTO courseDTO) {
-		this.courseDTO = courseDTO;
+	public void setBrigadeDTO(BrigadeDTO brigadeDTO) {
+		this.brigadeDTO = brigadeDTO;
 	}
 
-	public CourseDTO getselectedCourse() {
-		return selectedCourse;
+	public BrigadeDTO getselectedCourse() {
+		return selectedBrigade;
 	}
 
-	public void setselectedCourse(CourseDTO selectedCourse) {
-		this.selectedCourse = selectedCourse;
+	public void setSelectedBrigade(BrigadeDTO selectedBrigade) {
+		this.selectedBrigade = selectedBrigade;
 	}
 
-	public List<CourseDTO> getCourses() {
-		return courses = courses == null ? courseService.getCourses() : courses;
+	public List<BrigadeDTO> getBrigades() {
+		return brigades = brigades == null ? brigadeService.findAll() : brigades;
 	}
 
-	public void setCourses(List<CourseDTO> courses) {
-		this.courses = courses;
+	public void setBrigades(List<BrigadeDTO> brigades) {
+		this.brigades = brigades;
 	}
+
 }

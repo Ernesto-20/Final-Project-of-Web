@@ -6,6 +6,7 @@ import cu.edu.cujae.pweb.dto.StudentDTO;
 
 public interface StudentService {
 	List<StudentDTO> getStudents();
+	List<StudentDTO> getStudentsByBrigadeCourseYearIds(Integer brigadeId, Integer courseId, Integer yearId);
 	StudentDTO getStudentById(Integer studentId);
 	StudentDTO getStudentByIdNum(String studentIdNum);
 	void createStudent(StudentDTO student);

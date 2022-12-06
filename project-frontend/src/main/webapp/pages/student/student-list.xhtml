@@ -33,11 +33,23 @@
 							ajax="false" style="margin-right: .5rem">
 						</p:commandButton>
 
-						<p:selectOneMenu id="course" value="#{manageCourseBean.courses2}" style="margin-right: .5rem">
-							<f:selectItems value="#{manageCourseBean.courses2}" />
+						<p:selectOneMenu id="course" value="#{manageStudentBean.course}" style="margin-right: .5rem">
+							<f:selectItems value="#{manageCourseBean.courses}" var="course"
+								itemLabel="#{course.identifier}" itemValue="#{course.id}" />
+							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
+								update="dt-students"></p:ajax>
 						</p:selectOneMenu>
-						<p:selectOneMenu id="year" value="#{manageYearBean.years2}" style="margin-right: .5rem">
-							<f:selectItems value="#{manageYearBean.years2}" />
+						<p:selectOneMenu id="year" value="#{manageStudentBean.year}" style="margin-right: .5rem">
+							<f:selectItems value="#{manageYearBean.years}" var="year" itemLabel="#{year.id}"
+								itemValue="#{year.id}" />
+							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
+								update="dt-students"></p:ajax>
+						</p:selectOneMenu>
+						<p:selectOneMenu id="brigade" value="#{manageStudentBean.brigade}" style="margin-right: .5rem">
+							<f:selectItems value="#{manageBrigadeBean.brigades}" var="brigade" itemLabel="#{brigade.id}"
+								itemValue="#{brigade.id}" />
+							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
+								update="dt-students"></p:ajax>
 						</p:selectOneMenu>
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
@@ -114,8 +126,8 @@
 								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
 						<!-- 						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this" -->
-						<!-- 							action="manageStudentGradeBean.setStudentGrades(manageStudentBean.getSelectedStudent().getId())" -->
-						<!-- 							update=":form:grades-student-content" oncomplete="PF('gradesStudentDialog').show()"> -->
+						<!-- 							action="manageStudentGradeBean.getStudentGrade" -->
+						<!-- 							update=":student-grades:grades-student-content" oncomplete="PF('gradesStudentDialog').show()"> -->
 						<!-- 						</p:commandButton> -->
 					</p:column>
 
@@ -138,9 +150,9 @@
 			<ui:include src="student-form.xhtml"></ui:include>
 		</h:form>
 
-		<h:form id="student-grades">
-			<!-- 	<ui:include src="student-grades.xhtml"></ui:include> -->
-		</h:form>
+		<!-- 		<h:form id="student-grades"> -->
+		<!-- 				<ui:include src="student-grades.xhtml"></ui:include> -->
+		<!-- 		</h:form> -->
 
 		<h:form id="student-dropout-form">
 			<ui:include src="student_dropout_form.xhtml"></ui:include>

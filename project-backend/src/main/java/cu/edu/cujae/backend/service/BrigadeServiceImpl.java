@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class BrigadeServiceImpl implements BrigadeService {
@@ -31,9 +32,9 @@ public class BrigadeServiceImpl implements BrigadeService {
     }
 
     @Override
-    public LinkedList<BrigadeDTO> findAll() throws SQLException {
+    public List<BrigadeDTO> findAll() throws SQLException {
 
-        LinkedList<BrigadeDTO> brigades = new LinkedList<>();
+        List<BrigadeDTO> brigades = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             conn.setAutoCommit(false);
             String function = "{?= call select_all_brigade()}";
@@ -56,7 +57,7 @@ public class BrigadeServiceImpl implements BrigadeService {
     }
 
     @Override
-    public BrigadeDTO findById(int id) throws SQLException {
+    public BrigadeDTO findById(Integer id) throws SQLException {
 
         BrigadeDTO brigade = null;
 
@@ -82,9 +83,9 @@ public class BrigadeServiceImpl implements BrigadeService {
     }
 
     @Override
-    public LinkedList<BrigadeDTO> findByYearId(int yearId) throws SQLException {
+    public List<BrigadeDTO> findByYearId(Integer yearId) throws SQLException {
 
-        LinkedList<BrigadeDTO> brigade = new LinkedList<>();
+        List<BrigadeDTO> brigade = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             conn.setAutoCommit(false);
             String function = "{?= call find_brigade_by_year_id(?)}";
@@ -106,27 +107,27 @@ public class BrigadeServiceImpl implements BrigadeService {
         return brigade;
     }
 
-    @Override
-    public BrigadeDTO myFindById(int id) throws SQLException {
-        BrigadeDTO brigade = null;
-        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
-            conn.setAutoCommit(false);
-            Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String query_to_execute = "SELECT * FROM brigade WHERE brigade.id =" + id;
-            ResultSet result = statement.executeQuery(query_to_execute);
-            result.first(); /* esto es necesario para que la clase ResultSet cargue el valor de resultado de la consulta*/
-            /*esto lo que hace es devolver el primer campo del ResultSet que es de tipo String. Si hubiera más campos se pone el número correspondiente y se utiliza el get del tipo de dato de ese campo. Por ejemplo si tuviera dos campo y el segundo es entero se pusiera resultado.getInt(2)*/
-            int number = result.getInt(2);
-            int yearId = result.getInt(3);
-
-            brigade = new BrigadeDTO(id, number, yearId);
-
-            result.close();
-            statement.close();
-        }
-
-        return brigade;
-    }
+//    @Override
+//    public BrigadeDTO myFindById(int id) throws SQLException {
+//        BrigadeDTO brigade = null;
+//        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+//            conn.setAutoCommit(false);
+//            Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//            String query_to_execute = "SELECT * FROM brigade WHERE brigade.id =" + id;
+//            ResultSet result = statement.executeQuery(query_to_execute);
+//            result.first(); /* esto es necesario para que la clase ResultSet cargue el valor de resultado de la consulta*/
+//            /*esto lo que hace es devolver el primer campo del ResultSet que es de tipo String. Si hubiera más campos se pone el número correspondiente y se utiliza el get del tipo de dato de ese campo. Por ejemplo si tuviera dos campo y el segundo es entero se pusiera resultado.getInt(2)*/
+//            int number = result.getInt(2);
+//            int yearId = result.getInt(3);
+//
+//            brigade = new BrigadeDTO(id, number, yearId);
+//
+//            result.close();
+//            statement.close();
+//        }
+//
+//        return brigade;
+//    }
 
     @Override
     public void update(BrigadeDTO brigadeDTO) throws SQLException {
@@ -147,21 +148,7 @@ public class BrigadeServiceImpl implements BrigadeService {
     }
 
     @Override
-    public BrigadeDTO delete(int id) throws SQLException {
-        BrigadeDTO brigadeDTO = findById(id);
-        try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
-            String function = "{call brigade_delete(?)}";
-            CallableStatement preparedFunction = conn.prepareCall(function);
-            preparedFunction.setInt(1, id);
-            preparedFunction.execute();
-            preparedFunction.close();
-        }
-
-        return brigadeDTO;
-    }
-
-    @Override
-    public void deleteVoid(int id) throws SQLException {
+    public void delete(Integer id) throws SQLException {
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
             String function = "{call brigade_delete(?)}";
             CallableStatement preparedFunction = conn.prepareCall(function);

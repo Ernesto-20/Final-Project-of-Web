@@ -4,6 +4,7 @@
 	<ui:define name="title">
 
 	</ui:define>
+	<ui:define name="title">#{msgs.title_userList}</ui:define>
 	<ui:define name="layout">
 		<h:form id="form">
 			<div class="card crud-demo">
@@ -50,7 +51,7 @@
 						<div class="products-table-header">
 							<span style="font-weight: bold">#{msgs.header_table_userList}</span> <span
 								class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
-								<p:inputText id="globalFilter" onkeyup="PF('dtUsers').filter()" placeholder="Buscar" />
+								<p:inputText id="globalFilter" onkeyup="PF('dtUsers').filter()" placeholder="#{msgs.ph_search}" />
 							</span>
 
 						</div>
@@ -61,7 +62,7 @@
 						filterBy="#{user.username}">
 						<h:outputText value="#{user.username}" />
 					</p:column>
-					<p:column headerText="{msgs.column_userList_identification}" sortBy="#{user.identification}"
+					<p:column headerText="#{msgs.column_userList_identification}" sortBy="#{user.identification}"
 						filterBy="#{user.identification}">
 						<h:outputText value="#{user.identification}" />
 					</p:column>

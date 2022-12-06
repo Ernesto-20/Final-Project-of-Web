@@ -73,11 +73,11 @@
                                     <f:selectItem itemLabel="3" itemValue="3"/>
                                 </p:selectOneMenu>
                             </div>
-                            <p:dataTable id="dt-students" widgetVar="dtStudents" var="student"
-                                         value="#{manageStudentBean.students}" reflow="true"
+                            <p:dataTable id="dt-students" widgetVar="dtStudents" var=""
+                                         value="" reflow="true"
                                          rows="10">
                                 <p:column headerText="#{msgs.student_name_column_student_grade}">
-                                    <h:outputText value="#{student.fullName}" />
+                                    <h:outputText value="estudiante" />
                                 </p:column>
                                 <p:column headerText="#{msgs.grade_column_student_grade}">
                                     <h:outputText value="-" />

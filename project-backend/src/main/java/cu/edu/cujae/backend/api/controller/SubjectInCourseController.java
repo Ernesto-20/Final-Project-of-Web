@@ -3,6 +3,7 @@ package cu.edu.cujae.backend.api.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.SubjectInCourseNamedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,11 +31,23 @@ public class SubjectInCourseController {
         return ResponseEntity.ok(subjectInCourseList);
     }
 
+    @GetMapping("/named")
+    public ResponseEntity<List<SubjectInCourseNamedDTO>> getSubjectsInCourseNamed() throws SQLException {
+        List<SubjectInCourseNamedDTO> subjectInCourseList = subjectInCourseService.findAllNamed();
+        return ResponseEntity.ok(subjectInCourseList);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<List<SubjectInCourseDTO>> getSubjectInCourseById(@PathVariable String id)
             throws SQLException {
         List<SubjectInCourseDTO> subjectInCourseList = subjectInCourseService.findBySubjectId(Integer.parseInt(id));
         return ResponseEntity.ok(subjectInCourseList);
+    }
+
+    @GetMapping("/named/{id}")
+    public ResponseEntity<List<SubjectInCourseNamedDTO>> getSubjectsInCourseByIdNamed(@PathVariable int id) throws SQLException{
+        List<SubjectInCourseNamedDTO> subjectsInCourse = subjectInCourseService.findNamedBySubjectId(id);
+        return ResponseEntity.ok(subjectsInCourse);
     }
 
     @GetMapping("course/{courseId}")
@@ -45,12 +58,24 @@ public class SubjectInCourseController {
         return ResponseEntity.ok(subjectInCourseList);
     }
 
+    @GetMapping("/course/named/{id}")
+    public ResponseEntity<List<SubjectInCourseNamedDTO>> getSubjectsInCourseByCourseIdNamed(@PathVariable int id) throws SQLException{
+        List<SubjectInCourseNamedDTO> subjectsInCourse = subjectInCourseService.findNamedByCourseId(id);
+        return ResponseEntity.ok(subjectsInCourse);
+    }
+
     @GetMapping("/year/{yearId}")
     public ResponseEntity<List<SubjectInCourseDTO>> getSubjectInCourseByStudentId(@PathVariable String yearId)
             throws SQLException {
         List<SubjectInCourseDTO> subjectInCourseList = subjectInCourseService
                 .findByYearId(Integer.parseInt(yearId));
         return ResponseEntity.ok(subjectInCourseList);
+    }
+
+    @GetMapping("/year/named/{id}")
+    public ResponseEntity<List<SubjectInCourseNamedDTO>> getSubjectsInCourseByYearIdNamed(@PathVariable int id) throws SQLException{
+        List<SubjectInCourseNamedDTO> subjectsInCourse = subjectInCourseService.findNamedByYearId(id);
+        return ResponseEntity.ok(subjectsInCourse);
     }
 
     @PostMapping("")

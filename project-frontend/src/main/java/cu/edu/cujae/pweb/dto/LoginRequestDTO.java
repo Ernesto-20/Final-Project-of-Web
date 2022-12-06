@@ -1,16 +1,19 @@
 package cu.edu.cujae.pweb.dto;
 
+import org.springframework.lang.NonNull;
+
 public class LoginRequestDTO {
 	
+	@NonNull
     private String username;
-    
-    public LoginRequestDTO(String username, String password) {
+	@NonNull
+    private String password;
+
+	public LoginRequestDTO(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
 	}
-
-	private String password;
 
 	public String getUsername() {
 		return username;

@@ -3,6 +3,7 @@ package cu.edu.cujae.backend.api.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.StudentDropOutNamedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,10 +31,23 @@ public class StudentDropOutController {
         return ResponseEntity.ok(studentDropOutList);
     }
 
+    @GetMapping("/named")
+    public ResponseEntity<List<StudentDropOutNamedDTO>> getNamedStudentDropOuts() throws SQLException {
+        List<StudentDropOutNamedDTO> studentDropOutList = studentDropOutService.findAllNamed();
+        return ResponseEntity.ok(studentDropOutList);
+    }
+
     @GetMapping("/student/{studentId}")
     public ResponseEntity<List<StudentDropOutDTO>> getStudentDropOutByStudentId(@PathVariable String studentId)
             throws SQLException {
         List<StudentDropOutDTO> studentDropOutList = studentDropOutService.findByStudentId(Integer.parseInt(studentId));
+        return ResponseEntity.ok(studentDropOutList);
+    }
+
+    @GetMapping("/student/named/{studentId}")
+    public ResponseEntity<List<StudentDropOutNamedDTO>> getNamedStudentDropOutByStudentId(@PathVariable String studentId)
+            throws SQLException {
+        List<StudentDropOutNamedDTO> studentDropOutList = studentDropOutService.findNamedByStudentId(Integer.parseInt(studentId));
         return ResponseEntity.ok(studentDropOutList);
     }
 
@@ -44,10 +58,24 @@ public class StudentDropOutController {
         return ResponseEntity.ok(studentDropOutList);
     }
 
+    @GetMapping("course/named/{courseId}")
+    public ResponseEntity<List<StudentDropOutNamedDTO>> getNamedStudentDropOutByCourseId(@PathVariable String courseId)
+            throws SQLException {
+        List<StudentDropOutNamedDTO> studentDropOutList = studentDropOutService.findNamedByCourseId(Integer.parseInt(courseId));
+        return ResponseEntity.ok(studentDropOutList);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<List<StudentDropOutDTO>> getStudentDropOutById(@PathVariable String id)
             throws SQLException {
         List<StudentDropOutDTO> studentDropOutList = studentDropOutService.findByDropOutId(Integer.parseInt(id));
+        return ResponseEntity.ok(studentDropOutList);
+    }
+
+    @GetMapping("/named/{id}")
+    public ResponseEntity<List<StudentDropOutNamedDTO>> getNamedStudentDropOutById(@PathVariable String id)
+            throws SQLException {
+        List<StudentDropOutNamedDTO> studentDropOutList = studentDropOutService.findNamedByDropOutId(Integer.parseInt(id));
         return ResponseEntity.ok(studentDropOutList);
     }
 

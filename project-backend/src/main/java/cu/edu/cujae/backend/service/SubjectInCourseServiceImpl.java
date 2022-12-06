@@ -1,19 +1,29 @@
 package cu.edu.cujae.backend.service;
 
-import cu.edu.cujae.backend.core.dto.SubjectInCourseDTO;
+import cu.edu.cujae.backend.core.dto.*;
+import cu.edu.cujae.backend.core.service.CourseService;
 import cu.edu.cujae.backend.core.service.SubjectInCourseService;
+import cu.edu.cujae.backend.core.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SubjectInCourseServiceImpl implements SubjectInCourseService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
+    private CourseService courseService;
 
     @Override
     public void insert(SubjectInCourseDTO subjectInCourseDTO) throws SQLException {
@@ -55,6 +65,25 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
     }
 
     @Override
+    public List<SubjectInCourseNamedDTO> findAllNamed() throws SQLException {
+        LinkedList<SubjectInCourseDTO> subsInCourse = findAll();
+        LinkedList<SubjectInCourseNamedDTO> namedSubsInCourse = new LinkedList<>();
+        for(SubjectInCourseDTO dto: subsInCourse){
+            SubjectInCourseNamedDTO subInCourse = new SubjectInCourseNamedDTO(dto);
+
+            CourseDTO courseDTO = courseService.findById(subInCourse.getCourseId());
+            if(courseDTO != null) subInCourse.setCourseName(courseDTO.getIdentifier());
+
+            SubjectDTO subjectDTO = subjectService.getSubjectById(subInCourse.getSubjectId());
+            if(subjectDTO != null) subInCourse.setSubjectName(subjectDTO.getName());
+
+            namedSubsInCourse.add(subInCourse);
+        }
+
+        return namedSubsInCourse;
+    }
+
+    @Override
     public LinkedList<SubjectInCourseDTO> findBySubjectId(int id) throws SQLException {
         LinkedList<SubjectInCourseDTO> subsInCourse = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
@@ -76,6 +105,11 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
         }
 
         return subsInCourse;
+    }
+
+    @Override
+    public List<SubjectInCourseNamedDTO> findNamedBySubjectId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getSubjectId() == id).collect(Collectors.toList());
     }
 
     @Override
@@ -104,6 +138,12 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
     }
 
     @Override
+    public List<SubjectInCourseNamedDTO> findNamedByCourseId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getCourseId() == id).collect(Collectors.toList());
+
+    }
+
+    @Override
     public LinkedList<SubjectInCourseDTO> findByYearId(int id) throws SQLException {
 
         LinkedList<SubjectInCourseDTO> subsInCourse = new LinkedList<>();
@@ -127,6 +167,12 @@ public class SubjectInCourseServiceImpl implements SubjectInCourseService {
         }
 
         return subsInCourse;
+    }
+
+    @Override
+    public List<SubjectInCourseNamedDTO> findNamedByYearId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getYearId() == id).collect(Collectors.toList());
+
     }
 
     @Override

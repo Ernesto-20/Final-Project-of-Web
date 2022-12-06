@@ -1,19 +1,33 @@
 package cu.edu.cujae.backend.service;
 
-import cu.edu.cujae.backend.core.dto.StudentDropOutDTO;
+import cu.edu.cujae.backend.core.dto.*;
+import cu.edu.cujae.backend.core.service.CourseService;
+import cu.edu.cujae.backend.core.service.DropOutService;
 import cu.edu.cujae.backend.core.service.StudentDropOutService;
+import cu.edu.cujae.backend.core.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentDropOutServiceImpl implements StudentDropOutService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private DropOutService dropOutService;
+
+    @Autowired
+    private CourseService courseService;
 
     @Override
     public void insert(StudentDropOutDTO studentDropOutDTO) throws SQLException {
@@ -56,6 +70,28 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
     }
 
     @Override
+    public List<StudentDropOutNamedDTO> findAllNamed() throws SQLException {
+        LinkedList<StudentDropOutDTO> students = new LinkedList<>();
+        List<StudentDropOutNamedDTO> namedStudents = new LinkedList<>();
+
+
+        for(StudentDropOutDTO nameLess: students){
+            StudentDropOutNamedDTO student = new StudentDropOutNamedDTO(nameLess);
+
+            StudentDTO studentDTO = studentService.getStudentById(student.getStudentId());
+            if(studentDTO != null) student.setStudentName(studentDTO.getFullName());
+
+            DropOutDTO dropOutDTO = dropOutService.findById(student.getDropoutId());
+            if(dropOutDTO != null) student.setDropoutName(dropOutDTO.getCause());
+
+            CourseDTO courseDTO = courseService.findById(student.getCourseId());
+            if(courseDTO != null) student.setCourseName(courseDTO.getIdentifier());
+        }
+
+        return namedStudents;
+    }
+
+    @Override
     public LinkedList<StudentDropOutDTO> findByStudentId(int id) throws SQLException {
         LinkedList<StudentDropOutDTO> stdDropOut = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
@@ -76,6 +112,11 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
             preparedFunction.close();
         }
         return stdDropOut;
+    }
+
+    @Override
+    public List<StudentDropOutNamedDTO> findNamedByStudentId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getStudentId() == id).collect(Collectors.toList());
     }
 
     @Override
@@ -102,6 +143,11 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
     }
 
     @Override
+    public List<StudentDropOutNamedDTO> findNamedByCourseId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getCourseId() == id).collect(Collectors.toList());
+    }
+
+    @Override
     public LinkedList<StudentDropOutDTO> findByDropOutId(int id) throws SQLException {
         LinkedList<StudentDropOutDTO> stdDropOut = new LinkedList<>();
         try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
@@ -122,6 +168,11 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
             preparedFunction.close();
         }
         return stdDropOut;
+    }
+
+    @Override
+    public List<StudentDropOutNamedDTO> findNamedByDropOutId(int id) throws SQLException {
+        return findAllNamed().stream().filter(dto -> dto.getCourseId() == id).collect(Collectors.toList());
     }
 
     @Override

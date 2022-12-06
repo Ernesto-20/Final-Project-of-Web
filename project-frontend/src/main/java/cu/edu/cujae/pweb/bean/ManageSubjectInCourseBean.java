@@ -2,7 +2,10 @@ package cu.edu.cujae.pweb.bean;
 
 import cu.edu.cujae.pweb.dto.SubjectDTO;
 import cu.edu.cujae.pweb.dto.SubjectInCourseDTO;
+import cu.edu.cujae.pweb.dto.SubjectInCourseNamedDTO;
+import cu.edu.cujae.pweb.dto.YearDTO;
 import cu.edu.cujae.pweb.service.SubjectInCourseService;
+import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,11 @@ public class ManageSubjectInCourseBean {
 	private SubjectInCourseDTO subjectInCourseDTO;
 	private SubjectInCourseDTO selectedSubjectInCourse;
 	private List<SubjectInCourseDTO> subjectsInCourse;
+	private List<SubjectInCourseNamedDTO> subjectsInCourseNamed;
 
+
+
+	private List<YearDTO> years;
 
 	/* @Autowired es la manera para inyectar una dependencia/clase anotada con @service en spring
 	 * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
@@ -32,6 +39,8 @@ public class ManageSubjectInCourseBean {
 	@Autowired
 	private SubjectInCourseService subjectInCourseService;
 
+	@Autowired
+	private YearService yearService;
 
 	public ManageSubjectInCourseBean() {
 		
@@ -42,8 +51,10 @@ public class ManageSubjectInCourseBean {
 	@PostConstruct
     public void init() {
 	    subjectsInCourse = subjectsInCourse == null ? subjectInCourseService.getSubjectsInCourse() : subjectsInCourse;
+    	subjectsInCourseNamed = subjectsInCourseNamed == null ? subjectInCourseService.getSubjectsInCourseNamed() : subjectsInCourseNamed;
+		years = years == null ? yearService.getYears() : years;
     }
-	
+
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
         this.selectedSubjectInCourse = new SubjectInCourseDTO();
@@ -108,9 +119,23 @@ public class ManageSubjectInCourseBean {
 		return subjectsInCourse;
 	}
 
+	public List<SubjectInCourseNamedDTO> getSubjectsInCourseNamed() {
+		return subjectsInCourseNamed;
+	}
+
 	public void setSubjectsInCourse(List<SubjectInCourseDTO> subjectsInCourse) {
 		this.subjectsInCourse = subjectsInCourse;
 	}
 
+	public void setSubjectsInCourseNamed(List<SubjectInCourseNamedDTO> subjectsInCourseNamed) {
+		this.subjectsInCourseNamed = subjectsInCourseNamed;
+	}
 
+	public List<YearDTO> getYears() {
+		return years;
+	}
+
+	public void setYears(List<YearDTO> years) {
+		this.years = years;
+	}
 }

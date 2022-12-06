@@ -98,6 +98,7 @@ public class StudentServiceImpl implements StudentService {
 		return student;
 	}
 
+	@Override
 	public StudentDTO getStudentByIdNum(String studentIdNum) throws SQLException {
 
 		StudentDTO student = null;
@@ -119,6 +120,30 @@ public class StudentServiceImpl implements StudentService {
 		return student;
 	}
 
+	@Override
+	public List<StudentDTO> getStudentsByBrigadeCourseYearIds(Integer brigadeId, Integer courseId, Integer yearId) throws SQLException {
+
+		List<StudentDTO> students = new ArrayList<>();
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+			conn.setAutoCommit(false);
+
+			CallableStatement CS = conn.prepareCall("{?= call find_student_by_brigade_course_year_ids(?, ?, ?)}");
+			CS.registerOutParameter(1, Types.OTHER);
+			CS.setInt(2, brigadeId);
+			CS.setInt(3, courseId);
+			CS.setInt(4, yearId);
+			CS.execute();
+			ResultSet rs = (ResultSet) CS.getObject(1);
+			while (rs.next()) {
+				students.add(new StudentDTO(rs.getInt("id"), rs.getString("id_num"), rs.getString("first_name"),
+						rs.getString("last_name"),
+						rs.getString("gender"), rs.getString("municipality"), rs.getInt("status_id"),
+						statusService.findById(rs.getInt("status_id")).getDescription()));
+			}
+		}
+		return students;
+	}
+	
 	@Override
 	public void updateStudent(StudentDTO student) throws SQLException {
 		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {

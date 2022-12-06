@@ -4,14 +4,14 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:dialog header="Asignatura" showEffect="fade" modal="true"
+    <p:dialog header="#{msgs.modal_header_subject_in_courses}" showEffect="fade" modal="true"
               widgetVar="manageSubjectDialog" responsive="true">
         <p:outputPanel id="manage-subject-content" class="ui-fluid">
-                    <h3>#{manageSubjectInCourseWithNameBean.selectedSubject.name}</h3>
+                    <h3>#{manageSubjectInCourseBean.selectedSubjectInCourseNamed.subjectName}</h3>
                     <div class="p-field">
-                        <p:outputLabel for="@next">Cantidad de Horas</p:outputLabel>
+                        <p:outputLabel for="@next">#{msgs.hours_amount_label_subject_in_course}</p:outputLabel>
                         <p:inputText id="idNum" required="true"
-                                     value="#{manageSubjectInCourseWithNameBean.selectedSubject.hoursLong}"
+                                     value="#{manageSubjectInCourseBean.selectedSubjectInCourseNamed.hoursLong}"
                                      maxlength="3">
                             <p:keyFilter mask="num" />
                         </p:inputText>
@@ -19,10 +19,10 @@
                     </div>
         </p:outputPanel>
         <f:facet name="footer">
-            <p:commandButton value="Salvar" icon="pi pi-check"
-                             actionListener="#{manageSubjectInCourseWithNameBean.saveSubject}"
+            <p:commandButton value="#{msgs.save_button_subject_in_courses}" icon="pi pi-check"
+                             actionListener="#{manageSubjectInCourseBean.saveSubjectInCourseNamed}"
                              update="manage-subject-content" process="manage-subject-content @this" />
-            <p:commandButton value="Cancelar" icon="pi pi-times"
+            <p:commandButton value="#{msgs.cancel_button_subject_in_courses}" icon="pi pi-times"
                              onclick="PF('manageSubjectDialog').hide()" class="ui-button-secondary" />
         </f:facet>
     </p:dialog>

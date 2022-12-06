@@ -6,14 +6,7 @@ import java.util.List;
 import cu.edu.cujae.backend.core.dto.SubjectInCourseNamedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cu.edu.cujae.backend.core.dto.SubjectInCourseDTO;
 import cu.edu.cujae.backend.core.service.SubjectInCourseService;
@@ -90,9 +83,9 @@ public class SubjectInCourseController {
         return ResponseEntity.ok("SubjectInCourse Updated");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@RequestBody SubjectInCourseDTO subjectInCourse) throws SQLException {
-        subjectInCourseService.delete(subjectInCourse);
+    @DeleteMapping("")
+    public ResponseEntity<String> delete(@RequestParam String subjectId, @RequestParam String courseId, @RequestParam String yearId) throws SQLException {
+        subjectInCourseService.delete(subjectId, courseId, yearId);
         return ResponseEntity.ok("SubjectInCourse deleted");
     }
 

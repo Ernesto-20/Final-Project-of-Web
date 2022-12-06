@@ -2,38 +2,28 @@ package cu.edu.cujae.pweb.dto;
 
 public class CourseDTO {
 
-    private String id;
+    private Integer id;
     private int start;
     private int finish;
     private String identifier;
-    private boolean newRecord;
 
     public CourseDTO() {
 		super(); // TODO Auto-generated constructor stub
 	}
     
-    public CourseDTO(String id, int start, int finish, boolean newRecord) {
+    public CourseDTO(Integer id, int start, int finish) {
     	super();
         this.id = id;
         this.start = start;
         this.finish = finish;
         this.identifier = start + "-" + finish;
-        this.newRecord = newRecord;
     }
 
-    public boolean isNewRecord() {
-		return newRecord;
-	}
-
-	public void setNewRecord(boolean newRecord) {
-		this.newRecord = newRecord;
-	}
-
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getId() {
+	public Integer getId() {
         return id;
     }
 

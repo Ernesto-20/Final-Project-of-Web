@@ -24,7 +24,7 @@ public class ManageYearBean {
 	private YearDTO yearDTO;
 	private YearDTO selectedYear;
 	private List<YearDTO> years;
-	private Map<String, String> years2;
+	private String selectOption;
 
 	/*
 	 * @Autowired es la manera para inyectar una dependencia/clase anotada
@@ -38,73 +38,11 @@ public class ManageYearBean {
 
 	}
 
-	// Esta anotación permite que se ejecute code luego de haberse ejecuta el
-	// constructor de la clase.
-	@PostConstruct
-	public void init() {
-		years = years == null ? yearService.getYears() : years;
-		years2 = years2 == null ? yearService.getYears2() : years2;
-
-	}
-
-	// Se ejecuta al dar clic en el button Nuevo
-	public void openNew() {
-		this.selectedYear = new YearDTO();
-	}
-
-	// Se ejecuta al dar clic en el button con el lapicito
-	public void openForEdit() {
-		// List<RoleDto> roles = this.selectedUser.getRoles();
-		// this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
-	}
-
-	// Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar
-	// al usuario
-	// public void saveYear() {
-	// if (this.selectedYear.getId() == null) {
-	// this.selectedYear.setId(UUID.randomUUID().toString().replaceAll("-",
-	// "").substring(0, 9));
-	// this.selectedYear.setNewRecord(true);
-	//
-	// this.years.add(this.selectedYear);
-	// JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO,
-	// "message_user_added"); //Este code permite mostrar un mensaje exitoso
-	// (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de
-	// recursos, con la llave message_user_added
-	// }
-	// else {
-	// JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO,
-	// "message_user_edited");
-	// }
-	//
-	// PrimeFaces.current().executeScript("PF('manageYearDialog').hide()");//Este
-	// code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador
-	// es el widgetVar
-	// PrimeFaces.current().ajax().update("form:dt-years");// Este code es para
-	// refrescar el componente con id dt-users que se encuentra dentro del
-	// formulario con id form
-	// }
-
-	// Permite eliminar un usuario
-	public void deleteYear() {
-		try {
-			this.years.remove(this.selectedYear);
-			this.selectedYear = null;
-			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_removed");
-			PrimeFaces.current().ajax().update("form:dt-years");// Este code es para refrescar el componente con id
-																// dt-users que se encuentra dentro del formulario con
-																// id form
-		} catch (Exception e) {
-			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
-		}
-
-	}
-
-	public YearDTO yearDto() {
+	public YearDTO getYearDto() {
 		return yearDTO;
 	}
 
-	public void yearDto(YearDTO yearDTO) {
+	public void getYearDto(YearDTO yearDTO) {
 		this.yearDTO = yearDTO;
 	}
 
@@ -117,19 +55,18 @@ public class ManageYearBean {
 	}
 
 	public List<YearDTO> getYears() {
-		return years;
+		return years = years == null ? yearService.getYears() : years;
 	}
 
 	public void setYears(List<YearDTO> years) {
 		this.years = years;
 	}
 
-	public Map<String, String> getYears2() {
-		return years2;
+	public String getSelectOption() {
+		return selectOption;
 	}
 
-	public void setYears2(Map<String, String> years2) {
-		this.years2 = years2;
+	public void setSelectOption(String selectOption) {
+		this.selectOption = selectOption;
 	}
-
 }

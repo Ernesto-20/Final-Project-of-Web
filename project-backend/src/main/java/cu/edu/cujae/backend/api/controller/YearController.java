@@ -30,12 +30,6 @@ public class YearController {
         return ResponseEntity.ok(yearList);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<YearDTO> getYearById(@PathVariable String id) throws SQLException {
-        YearDTO year = yearService.findById(Integer.parseInt(id));
-        return ResponseEntity.ok(year);
-    }
-
     @PostMapping("")
     public ResponseEntity<String> create(@RequestBody YearDTO year) throws SQLException {
         yearService.insert(year);

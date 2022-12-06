@@ -6,18 +6,16 @@ public class SubjectInCourseDTO {
     private String courseId;
     private String yearId;
     private int hoursLong;
-    private boolean newRecord;
 
     public SubjectInCourseDTO() {
         super();
     }
-    public SubjectInCourseDTO(String subjectId, String courseId, String yearId, int hoursLong, boolean newRecord) {
+    public SubjectInCourseDTO(String subjectId, String courseId, String yearId, int hoursLong) {
         super();
         this.subjectId = subjectId;
         this.courseId = courseId;
         this.yearId = yearId;
         this.hoursLong = hoursLong;
-        this.newRecord = newRecord;
     }
 
     public String getSubjectId() {
@@ -50,14 +48,6 @@ public class SubjectInCourseDTO {
 
     public void setHoursLong(int hoursLong) {
         this.hoursLong = hoursLong;
-    }
-
-    public boolean isNewRecord() {
-        return newRecord;
-    }
-
-    public void setNewRecord(boolean newRecord) {
-        this.newRecord = newRecord;
     }
 
 }

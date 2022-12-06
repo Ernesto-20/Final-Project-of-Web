@@ -11,9 +11,11 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cu.edu.cujae.pweb.dto.CourseDTO;
 import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.pweb.service.BrigadeService;
+import cu.edu.cujae.pweb.service.CourseService;
 import cu.edu.cujae.pweb.service.StudentService;
+import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
 @Component // Le indica a spring es un componente registrado
@@ -24,12 +26,19 @@ public class ManageStudentBean {
 	private StudentDTO studentDTO;
 	private StudentDTO selectedStudent;
 	private List<StudentDTO> students;
-	private CourseDTO course;
-	private Integer year;
-	private Integer brigade;
-
+	
+	// Por defecto mostrar los estudiantes del curso, grupo y año con id = 1
+	private Integer course = 1;
+	private Integer year = 1;
+	private Integer brigade = 1;
+	
 	public void reloadListStudent() {
-		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course.getId(), this.year);
+		System.out.println("Brigada:" + brigade);
+		System.out.println("Curso:" + course);
+		System.out.println("Año:" + year);
+		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+		System.out.println("Estudiantes:" + students);
+		PrimeFaces.current().ajax().update("form:dt-students");
 	}
 
 	/*
@@ -133,8 +142,7 @@ public class ManageStudentBean {
 	}
 
 	public List<StudentDTO> getStudents() {
-		// Por defecto mostrar los estudiantes del curso, grupo y año con id = 1
-		students = studentService.getStudentsByBrigadeCourseYearIds(1, 1, 1);
+		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
 		return students;
 	}
 
@@ -150,11 +158,11 @@ public class ManageStudentBean {
 		this.brigade = brigade;
 	}
 
-	public CourseDTO getCourse() {
+	public Integer getCourse() {
 		return course;
 	}
 
-	public void setCourse(CourseDTO course) {
+	public void setCourse(Integer course) {
 		this.course = course;
 	}
 

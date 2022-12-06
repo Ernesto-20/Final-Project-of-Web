@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-            <p:panel class="card crud-demo">
+            <p:panel class="crud-demo">
                 <p:toolbar>
                     <p:toolbarGroup>
                         <!--
@@ -15,7 +15,7 @@
                         * La propiedad onComplete ejecuta un code en Javascript una vez finalizada el action del button. También es posible ejecutar
                           code en Javascript desde el bean de Jsf
                         -->
-                        <p:commandButton value="Nueva asignatura" icon="pi pi-plus"
+                        <p:commandButton value="#{msgs.btn_subject_new}" icon="pi pi-plus"
                                          actionListener="#{manageSubjectBean.openNew}"
                                          update="formSelectionSubject:manage-subject-content"
                                          oncomplete="PF('manageSubjectDialog').show()"
@@ -26,7 +26,7 @@
                     <p:toolbarGroup align="right">
                         <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
                              del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
-                        <p:commandButton value="Exportar asignaturas" icon="pi pi-upload"
+                        <p:commandButton value="#{msgs.btn_subject_export}" icon="pi pi-upload"
                                          styleClass="ui-button-help" ajax="false">
                             <p:dataExporter type="pdf" target="dt-subjects" fileName="subjects" />
                         </p:commandButton>
@@ -49,9 +49,9 @@
                              emptyMessage="No subjects found">
                     <f:facet name="header">
                         <div class="products-table-header">
-                            <span style="font-weight: bold">Asignaturas</span>
+                            <span style="font-weight: bold">#{msgs.span_subjects}</span>
                             <span class="filter-container ui-input-icon-left"><i class="pi pi-search"></i>
-                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjects').filter()" placeholder="Buscar"/>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjects').filter()" placeholder="#{msgs.ph_search}"/>
 							</span>
                         </div>
                     </f:facet>
@@ -60,7 +60,7 @@
                         <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
                     </p:column>
 
-                    <p:column headerText="Asignatura" sortBy="#{subject.name}"
+                    <p:column headerText="#{msgs.column_subject}" sortBy="#{subject.name}"
                               filterBy="#{subject.name}"
                               filterMatchMode="contains">
                         <h:outputText value="#{subject.name}" />
@@ -81,7 +81,7 @@
                                          action="#{manageSubjectBean.deleteSubject}" >
                             <f:setPropertyActionListener value="#{subject}"
                                                          target="#{manageSubjectBean.selectedSubject}" />
-                            <p:confirm header="Confirmar" message="Está seguro de eliminar la asignatura?" icon="pi pi-exclamation-triangle"/>
+                            <p:confirm header="#{msgs.btn_confirmDelete}" message="#{msgs.message_confirm_delete_subject}" icon="pi pi-exclamation-triangle"/>
                         </p:commandButton>
                     </p:column>
 
@@ -93,9 +93,9 @@
                 <!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
                 su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se definie dentro del button -->
                 <p:confirmDialog global="true" showEffect="fade" width="300">
-                    <p:commandButton value="Si" type="button"
+                    <p:commandButton value="#{msgs.btn_delete_yes}" type="button"
                                      styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                    <p:commandButton value="No" type="button"
+                    <p:commandButton value="#{msgs.btn_delete_no}" type="button"
                                      styleClass="ui-confirmdialog-no ui-button-secondary"
                                      icon="pi pi-times" />
                 </p:confirmDialog>

@@ -6,18 +6,18 @@
 
 <ui:composition template="/pages/init-course/init-course-template.xhtml">
     <ui:define name="selection-list-title">
-        Nueva Matricula
+        #{msgs.title_selection_student}
     </ui:define>
     <ui:define name="selection-list-content">
         <h:form id="form">
             <div>
                 <p:tabView id="panelView">
-                    <p:tab title="Grupo: 1">
+                    <p:tab title="#{msgs.tab_group}: 1">
                         <ui:include src="./student-list-component.xhtml"></ui:include>
                     </p:tab>
-                    <p:tab title="Grupo: 2">
+                    <p:tab title="#{msgs.tab_group}: 2">
                     </p:tab>
-                    <p:tab title="Grupo: 3">
+                    <p:tab title="#{msgs.tab_group}: 3">
 
                     </p:tab>
                 </p:tabView>

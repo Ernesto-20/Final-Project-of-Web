@@ -6,7 +6,7 @@
     <div id="form2" class="crud-demo">
         <p:toolbar>
             <p:toolbarGroup>
-                <p:commandButton value="Ingresar Estudiante" icon="pi pi-plus"
+                <p:commandButton value="#{msgs.btn_student_new}" icon="pi pi-plus"
                                  actionListener="#{manageStudentBean.openNew}"
                                  update=":form:panelView:manage-student-content"
                                  oncomplete="PF('manageStudentDialog').show()"
@@ -22,35 +22,35 @@
                      rows="10" paginatorPosition="bottom">
             <f:facet name="header">
                 <div class="products-table-header">
-                    <span style="font-weight: bold">Estudiantes</span> <span
+                    <span style="font-weight: bold">#{msgs.span_students}</span> <span
                         class="filter-container ui-input-icon-left"> <i
                         class="pi pi-search"></i> <p:inputText id="globalFilter"
                                                                onkeyup="PF('dtStudents').filter()"
-                                                               placeholder="Buscar"/>
+                                                               placeholder="#{ph_search}"/>
                             </span>
                 </div>
             </f:facet>
 
-            <p:column headerText="Ci" sortBy="#{student.idNum}"
+            <p:column headerText="#{msgs.column_studentList_id}" sortBy="#{student.idNum}"
                       filterBy="#{student.idNum}">
                 <h:outputText value="#{student.idNum}"/>
             </p:column>
-            <p:column headerText="Nombre" sortBy="#{student.firstName}" filterBy="#{student.firstName}">
+            <p:column headerText="#{msgs.column_studentList_firstName}" sortBy="#{student.firstName}" filterBy="#{student.firstName}">
                 <h:outputText value="#{student.firstName}"/>
             </p:column>
-            <p:column headerText="Apellidos" sortBy="#{student.lastName}"
+            <p:column headerText="#{msgs.column_studentList_lastName}" sortBy="#{student.lastName}"
                       filterBy="#{student.lastName}">
                 <h:outputText value="#{student.lastName}"/>
             </p:column>
-            <p:column headerText="Género" sortBy="#{student.gender}"
+            <p:column headerText="#{msgs.column_studentList_gender}" sortBy="#{student.gender}"
                       filterBy="#{student.gender}">
                 <h:outputText value="#{student.gender}"/>
             </p:column>
-            <p:column headerText="Dirección" sortBy="#{student.municipality}"
+            <p:column headerText="#{msgs.column_studentList_municipality}" sortBy="#{student.municipality}"
                       filterBy="#{student.municipality}">
                 <h:outputText value="#{student.municipality}"/>
             </p:column>
-            <p:column headerText="Estado Actual" sortBy="#{student.statusID}"
+            <p:column headerText="#{msgs.column_studentList_status}" sortBy="#{student.statusID}"
                       filterBy="#{student.statusID}">
                 <h:outputText value="#{student.statusID}"/>
             </p:column>
@@ -70,7 +70,7 @@
                                  action="#{manageStudentBean.deleteStudent}">
                     <f:setPropertyActionListener value="#{student}"
                                                  target="#{manageStudentBean.selectedStudent}"/>
-                    <p:confirm header="Confirmar" message="Está seguro de eliminar al estudiante?"
+                    <p:confirm header="#{msgs.btn_confirmDelete}" message="#{msgs.btn_studentList_delete_msg}"
                                icon="pi pi-exclamation-triangle"/>
                 </p:commandButton>
             </p:column>
@@ -79,9 +79,9 @@
 
 
         <p:confirmDialog global="true" showEffect="fade" width="300">
-            <p:commandButton value="Si" type="button"
+            <p:commandButton value="#{msgs.btn_delete_yes}" type="button"
                              styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-            <p:commandButton value="No" type="button"
+            <p:commandButton value="#{msgs.btn_delete_no}" type="button"
                              styleClass="ui-confirmdialog-no ui-button-secondary"
                              icon="pi pi-times"/>
         </p:confirmDialog>

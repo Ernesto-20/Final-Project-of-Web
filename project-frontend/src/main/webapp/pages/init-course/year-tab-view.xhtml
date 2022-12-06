@@ -1,31 +1,25 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/pages/template/layout.xhtml">
-    <ui:define name="title">
-        Inicio de Curso
-    </ui:define>
-    <ui:define name="layout">
-        <h:form id="form">
-            <p:tabView id="tabContent" value="#{manageSubjectInCourseBean.years}" var="year">
-                <p:tab title="Año: #{year.id}" value="#{manageSubjectInCourseBeam.subjectsInCourse}" var="subject"
+    <p:panel class="crud-demo">
+            <p:tabView id="tabContent" value="#{manageYearTabView.years}" var="year" dynamic="true">
+                <p:tab title="#{msgs.tab_year}: #{year.id}" value="#{manageYearTabView.subjectsInCourse}" var="subject"
                        class="card crud-demo">
-
 
 
                     <ui:include src="subject-in-course-form.xhtml"></ui:include>
 
-                    <p:dataTable id="dt-subjectsInCourse" widgetVar="dtSubjectsInCourse" var="subjectInCourse"
-                                 value="#{manageSubjectInCourseBean.subjectsInCourse}" reflow="true" paginator="true"
+                    <p:dataTable id="#{year.id}dt-subjectsInCourse" widgetVar="dtSubjectsInCourse" var="subjectInCourse"
+                                 value="#{manageYearTabView.subjectsInCourse}" reflow="true" paginator="true"
                                  rows="10" paginatorPosition="bottom">
                         <f:facet name="header">
                             <div class="products-table-header">
-                                <span style="font-weight: bold">Asignaturas del año</span>
+                                <span style="font-weight: bold">#{msgs.span_subjects_of_year}:#{year.id}</span>
                                 <span class="filter-container ui-input-icon-left"><i class="pi pi-search"></i>
-                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjectsInCourse').filter()" placeholder="Buscar" />
+                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjectsInCourse').filter()" placeholder="#{msgs.ph_search}" />
 							    </span>
                             </div>
                         </f:facet>
@@ -34,17 +28,16 @@
                             <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
                         </p:column>
 
-                        <p:column headerText="Asignatura asignada" sortBy="#{subject.subjectInCourse.subjectId}"
-                                  filterBy="#{subjectInCourse.subjectId}">
+                        <p:column headerText="#{msgs.column_subject_assigned}" sortBy="#{subject.subjectInCourse.subjectId}">
                             <h:outputText value="#{subjectInCourse.subjectId}" />
                         </p:column>
 
-                        <p:column headerText="Horas" sortBy="#{subjectInCourse.hoursLong}" filterBy="#{subjectInCourse.hoursLong}">
+                        <p:column headerText="#{msgs.column_subject_hours}" sortBy="#{subjectInCourse.hoursLong}">
                             <h:outputText value="#{subjectInCourse.hoursLong}" />
                         </p:column>
 
                         <p:column exportable="false">
-                            <p:commandButton icon="pi pi-pencil" action="#{manageSubjectInCourseBean.openForEdit}"
+                            <p:commandButton icon="pi pi-pencil" action="#{manageYearTabView.openForEdit}"
                                              update="form:tabContent:0:manage-subjectInCourse-content"
                                              oncomplete="PF('manageSubjectInCourseDialog').show()"
                                              styleClass="edit-button rounded-button ui-button-success"
@@ -52,13 +45,6 @@
                                 <f:setPropertyActionListener value="#{subjectInCourse}"
                                                              target="#{manageSubjectInCourseBean.selectedSubjectInCourse}" />
                                 <p:resetInput target="form:tabContent:0:manage-subjectInCourse-content" />
-                            </p:commandButton>
-                            <p:commandButton class="ui-button-warning rounded-button"
-                                             icon="pi pi-trash" process="@this"
-                                             action="#{manageSubjectInCourseBean.deleteSubjectInCourse}" >
-                                <f:setPropertyActionListener value="#{subjectInCourse}"
-                                                             target="#{manageSubjectInCourseBean.selectedSubjectInCourse}" />
-                                <p:confirm header="Confirmar" message="Está seguro de eliminar la asignatura?" icon="pi pi-exclamation-triangle"/>
                             </p:commandButton>
                         </p:column>
 
@@ -76,7 +62,5 @@
 
                 </p:tab>
             </p:tabView>
-        </h:form>
-    </ui:define>
+    </p:panel>
 </ui:composition>
-</html>

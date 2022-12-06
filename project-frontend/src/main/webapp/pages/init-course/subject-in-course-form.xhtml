@@ -4,14 +4,14 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:dialog header="Asignatura" showEffect="fade" modal="true"
+    <p:dialog header="#{msgs.header_subject}" showEffect="fade" modal="true"
               widgetVar="manageSubjectInCourseDialog" responsive="true">
         <p:outputPanel id="manage-subjectInCourse-content" class="ui-fluid">
             <p:outputPanel rendered="#{not empty manageSubjectInCourseBean.selectedSubjectInCourse}">
                 <p:panelGrid layout="grid" columns="1">
                     <h:panelGroup>
                         <div class="p-field">
-                            <p:outputLabel for="@next">Horas de la asignatura</p:outputLabel>
+                            <p:outputLabel for="@next">#{msgs.label_subject_hours}</p:outputLabel>
                             <p:inputText id="hoursLong" required="true" value="#{manageSubjectInCourseBean.selectedSubjectInCourse.hoursLong}">
                             </p:inputText>
                             <p:message for="@previous"></p:message>
@@ -22,10 +22,10 @@
         </p:outputPanel>
 
         <f:facet name="footer">
-            <p:commandButton value="Salvar" icon="pi pi-check"
+            <p:commandButton value="#{msgs.btn_save}" icon="pi pi-check"
                              actionListener="#{manageSubjectInCourseBean.saveSubjectInCourse}"
                              update="manage-subjectInCourse-content" process="manage-subjectInCourse-content @this" />
-            <p:commandButton value="Cancelar" icon="pi pi-times"
+            <p:commandButton value="#{btn_cancel}" icon="pi pi-times"
                              onclick="PF('manageSubjectInCourseDialog').hide()" class="ui-button-secondary" />
         </f:facet>
     </p:dialog>

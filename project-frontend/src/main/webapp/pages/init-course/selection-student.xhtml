@@ -10,37 +10,26 @@
     </ui:define>
     <ui:define name="selection-list-content">
             <div>
-<<<<<<< Updated upstream
-                <p:tabView id="panelView">
-                    <p:tab title="#{msgs.tab_group}: 1">
-                        <ui:include src="./student-list-component.xhtml"></ui:include>
-                    </p:tab>
-                    <p:tab title="#{msgs.tab_group}: 2">
-                    </p:tab>
-                    <p:tab title="#{msgs.tab_group}: 3">
-
-=======
                 <p:tabView id="panelView" dynamic="true">
-                    <p:tab title="Grupo: 1">
+                    <p:tab title="#{msgs.tab_group}: 1">
                         <ui:include src="./student-list-component.xhtml">
                             <ui:param name="groupID" value="group-1"/>
                         </ui:include>
                     </p:tab>
-                    <p:tab title="Grupo: 2">
+                    <p:tab title="#{msgs.tab_group}: 2">
                         <ui:include src="./student-list-component.xhtml">
                             <ui:param name="groupID" value="group-2"/>
                         </ui:include>
                     </p:tab>
-                    <p:tab title="Grupo: 3">
+                    <p:tab title="#{msgs.tab_group}: 3">
                         <ui:include src="./student-list-component.xhtml">
                             <ui:param name="groupID" value="group-3"/>
                         </ui:include>
                     </p:tab>
-                    <p:tab title="Grupo: 4">
+                    <p:tab title="#{msgs.tab_group}: 4">
                         <ui:include src="./student-list-component.xhtml">
                             <ui:param name="groupID" value="group-4"/>
                         </ui:include>
->>>>>>> Stashed changes
                     </p:tab>
                 </p:tabView>
             </div>

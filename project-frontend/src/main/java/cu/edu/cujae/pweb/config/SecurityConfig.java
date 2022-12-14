@@ -17,12 +17,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/javax.faces.resource/**", "/resources/**", "/pages/security/login.jsf",
                                                 "/pages/errors/**")
                                 .permitAll()
-                                .antMatchers("/pages/security/**").hasAnyAuthority("admin");
-                // .anyRequest().authenticated();
+                                .antMatchers("/pages/security/**").hasAnyAuthority("admin")
+                 .anyRequest().authenticated();
 
                 // configurando el login
-                http
-                                .exceptionHandling().accessDeniedPage("/pages/errors/access-denied.jsf");
+                http.exceptionHandling().accessDeniedPage("/pages/errors/access-denied.jsf");
 
                 // logout, cuando se ejecute el logout va para el login
                 http.logout().logoutUrl("/logout").invalidateHttpSession(true)

@@ -70,7 +70,6 @@ public class ManageYearTabView {
             this.selectedSubjectInCourse.setSubjectId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
 			this.selectedSubjectInCourse.setCourseId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
 			this.selectedSubjectInCourse.setYearId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-			this.selectedSubjectInCourse.setNewRecord(true);
             
             this.subjectsInCourse.add(this.selectedSubjectInCourse);
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_added"); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added

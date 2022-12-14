@@ -9,21 +9,30 @@
         #{msgs.title_selection_student}
     </ui:define>
     <ui:define name="selection-list-content">
-        <h:form id="form">
             <div>
-                <p:tabView id="panelView">
+                <p:tabView id="panelView" dynamic="true">
                     <p:tab title="#{msgs.tab_group}: 1">
-                        <ui:include src="./student-list-component.xhtml"></ui:include>
+                        <ui:include src="./student-list-component.xhtml">
+                            <ui:param name="groupID" value="group-1"/>
+                        </ui:include>
                     </p:tab>
                     <p:tab title="#{msgs.tab_group}: 2">
+                        <ui:include src="./student-list-component.xhtml">
+                            <ui:param name="groupID" value="group-2"/>
+                        </ui:include>
                     </p:tab>
                     <p:tab title="#{msgs.tab_group}: 3">
-
+                        <ui:include src="./student-list-component.xhtml">
+                            <ui:param name="groupID" value="group-3"/>
+                        </ui:include>
+                    </p:tab>
+                    <p:tab title="#{msgs.tab_group}: 4">
+                        <ui:include src="./student-list-component.xhtml">
+                            <ui:param name="groupID" value="group-4"/>
+                        </ui:include>
                     </p:tab>
                 </p:tabView>
             </div>
-
-        </h:form>
     </ui:define>
 </ui:composition>
 </html>

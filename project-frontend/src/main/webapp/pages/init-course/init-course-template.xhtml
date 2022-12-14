@@ -14,16 +14,15 @@
                 <div class="p-d-flex p-jc-between p-ai-center" style="border-bottom-style: solid; border-color: rgb(90,92,95);">
                     <div>
                         <h3 style="color: rgb(90,92,95); padding: 10px 25px 0px 25px;">
-                            <ui:insert name="selection-subject-title"></ui:insert>
                             <ui:insert name="selection-list-title"></ui:insert>
                         </h3>
                     </div>
-                    <p:linkButton outcome="/pages/init-course/selection-student.xhtml" value="Siguiente"
-                                  style="margin-right:20px;">
-                    </p:linkButton>
+                    <h:form style="margin: auto 0">
+                        <p:commandButton value="#{manageInitCourse.actionLabel}" action="#{manageInitCourse.moveAction}"></p:commandButton>
+                        <p:commandButton value="Iniciar Curso" disabled="true" style="border-color: rgb(161,156,156);background-color: rgb(161,156,156);margin-left: 20px; margin-right: 20px"></p:commandButton>
+                    </h:form>
                 </div>
             </f:facet>
-            <ui:insert name="selection-subject-content"></ui:insert>
             <ui:insert name="selection-list-content"></ui:insert>
         </p:card>
     </ui:define>

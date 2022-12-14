@@ -6,10 +6,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.service.BrigadeService;
@@ -40,7 +43,7 @@ public class ManageStudentBean {
 		System.out.println("Estudiantes:" + students);
 		PrimeFaces.current().ajax().update("form:dt-students");
 	}
-
+	
 	/*
 	 * @Autowired es la manera para inyectar una dependencia/clase anotada
 	 * con @service en spring
@@ -141,6 +144,9 @@ public class ManageStudentBean {
 	}
 
 	public List<StudentDTO> getStudents() {
+//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+//		String url = request.getRequestURL().toString() + "?" + request.getQueryString();
+//		System.out.println(url);
 		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
 		return students;
 	}

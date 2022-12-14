@@ -17,8 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/javax.faces.resource/**", "/resources/**", "/pages/security/login.jsf",
                                                 "/pages/errors/**")
                                 .permitAll()
-                                .antMatchers("/pages/security/**").hasAnyAuthority("admin");
-                // .anyRequest().authenticated();
+                                .antMatchers("/pages/security/**").hasAnyAuthority("admin")
+                 .anyRequest().authenticated();
 
                 // configurando el login
                 http

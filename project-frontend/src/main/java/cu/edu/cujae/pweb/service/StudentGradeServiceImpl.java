@@ -36,10 +36,9 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 			params.add("yearId", yearId.toString());
 			ApiRestMapper<StudentGradeDTO> apiRestMapper = new ApiRestMapper<>();
 
-			UriTemplate template = new UriTemplate("/api/v1/studentgrades/");
-			String uri = template.expand(studentId.toString()).toString();
-			String response = (String) restService.GET(uri, params, String.class, CurrentUserUtils.getTokenBearer())
+			String response = (String) restService.GET("/api/v1/studentgrades/", params, String.class, CurrentUserUtils.getTokenBearer())
 					.getBody();
+			
 			studentGrades = apiRestMapper.mapList(response, StudentGradeDTO.class);
 		} catch (IOException e) {
 			e.printStackTrace();

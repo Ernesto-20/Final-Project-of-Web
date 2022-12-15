@@ -14,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.pweb.dto.StudentInBrigadeDTO;
 import cu.edu.cujae.pweb.security.CurrentUserUtils;
 
 /* Esta anotación le indica a spring que esta clase es un servicio y por tanto luego podrá inyectarse en otro lugar usando
@@ -86,7 +87,6 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void createStudent(StudentDTO student) {
 		restService.POST("/api/v1/students", student, String.class, CurrentUserUtils.getTokenBearer()).getBody();
-//		restService.POST("/api/v1/students", student, String.class).getBody();
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package cu.edu.cujae.backend.core.dto;
 
 public class StudentGradeDTO {
 
-	private Integer id;
 	private Integer yearId;
 	private Integer studentId;
 	private String studentName;
@@ -14,24 +13,15 @@ public class StudentGradeDTO {
 		super(); // TODO Auto-generated constructor stub
 	}
 
-	public StudentGradeDTO(Integer id, Integer yearId, Integer studentId, String studentName, Integer subjectId,
+	public StudentGradeDTO(Integer yearId, Integer studentId, String studentName, Integer subjectId,
 			String subject, Integer gradeValue) {
 		super();
-		this.id = id;
 		this.yearId = yearId;
 		this.studentId = studentId;
 		this.studentName = studentName;
 		this.subjectId = subjectId;
 		this.subject = subject;
 		this.gradeValue = gradeValue;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getStudentName() {

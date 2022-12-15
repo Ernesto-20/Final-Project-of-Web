@@ -9,30 +9,16 @@
         #{msgs.title_selection_student}
     </ui:define>
     <ui:define name="selection-list-content">
-            <div>
-                <p:tabView id="panelView" dynamic="true">
-                    <p:tab title="#{msgs.tab_group}: 1">
+            <h:form id="form">
+                <p:tabView id="panelView" dynamic="true"  value="#{manageSelectionStudentBean.studentsList}" var="brigade">
+                    <p:ajax event="tabChange" listener="#{manageSelectionStudentBean.changeGroup}" />
+                    <p:tab title="#{msgs.tab_group}: #{manageSelectionStudentBean.index(brigade)+1}">
                         <ui:include src="./student-list-component.xhtml">
-                            <ui:param name="groupID" value="group-1"/>
-                        </ui:include>
-                    </p:tab>
-                    <p:tab title="#{msgs.tab_group}: 2">
-                        <ui:include src="./student-list-component.xhtml">
-                            <ui:param name="groupID" value="group-2"/>
-                        </ui:include>
-                    </p:tab>
-                    <p:tab title="#{msgs.tab_group}: 3">
-                        <ui:include src="./student-list-component.xhtml">
-                            <ui:param name="groupID" value="group-3"/>
-                        </ui:include>
-                    </p:tab>
-                    <p:tab title="#{msgs.tab_group}: 4">
-                        <ui:include src="./student-list-component.xhtml">
-                            <ui:param name="groupID" value="group-4"/>
+                            <ui:param name="unique" value="#{manageSelectionStudentBean.index(brigade)}" />
                         </ui:include>
                     </p:tab>
                 </p:tabView>
-            </div>
+            </h:form>
     </ui:define>
 </ui:composition>
 </html>

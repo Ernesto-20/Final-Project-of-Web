@@ -1,11 +1,16 @@
 package cu.edu.cujae.pweb.bean.initCourse;
 
+import cu.edu.cujae.pweb.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Component
@@ -16,6 +21,22 @@ public class ManageInitCourse {
 
     public ManageInitCourse(){
 
+    }
+
+    @Autowired
+    private ManageSelectionStudentBean manageSelectionStudentBean;
+
+
+    public String getViewSelected(){
+        manageSelectionStudentBean.refresh();
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String url = request.getRequestURL().toString().substring(39);
+
+        if(actionLabel.equals("Atras") && url.equals("init-course/selection-subject")){
+          actionLabel = "Siguiente";
+        }
+        return "selection-subject.xhtml";
     }
 
     public void moveAction() throws IOException {

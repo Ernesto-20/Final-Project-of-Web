@@ -131,8 +131,8 @@ public class ManageStudentBean {
 				break;
 //			Vista de Ernesto
 			case "init-course/selection-student":
-//				students = new ArrayList<>();
-				students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+				students = new ArrayList<>();
+//				students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
 				break;
 //			Vista de Daniel
 			case "":

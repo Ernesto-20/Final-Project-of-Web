@@ -13,7 +13,6 @@ import java.io.IOException;
 @ViewScoped
 public class ManageInitCourse {
     private String actionLabel = "Siguiente";
-    private String directionURL;
 
     public ManageInitCourse(){
 
@@ -36,19 +35,12 @@ public class ManageInitCourse {
         }
     }
 
-    public String getDirectionURL() {
-        if(actionLabel.equals("selection-subject.xhtml")){
-            actionLabel = "selection-student.xhtml";
-        }else{
-            actionLabel = "selection-subject.xhtml";
-        }
-
-        return actionLabel;
+    public void startCourse()throws IOException{
+//            Validar Primera y Segunda Vista (llamar a metodo validate() de su bean).
+//            Obtener los datos.
+//            Llamar a servicion de unica transacción.
     }
 
-    public void setDirectionURL(String directionURL) {
-        this.directionURL = directionURL;
-    }
 
     public String getActionLabel() {
         return actionLabel;

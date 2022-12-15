@@ -37,7 +37,6 @@ public class BrigadeServiceImpl implements BrigadeService {
 					.GET("/api/v1/brigades", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 			brigades = apiRestMapper.mapList(response, BrigadeDTO.class);
 		} catch (IOException e) {
-			System.out.println("ERRRRRROOOOOOORRRRRR");
 			e.printStackTrace();
 		}
 		System.out.println(brigades);

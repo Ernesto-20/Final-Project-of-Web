@@ -34,6 +34,9 @@ public class StudentServiceImpl implements StudentService {
 
 		try {
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			params.add("brigadeId", "0");
+			params.add("courseId", "0");
+			params.add("yearId", "0");
 			ApiRestMapper<StudentDTO> apiRestMapper = new ApiRestMapper<>();
 
 			String response = (String) restService.GET("/api/v1/students", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
@@ -82,7 +85,8 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void createStudent(StudentDTO student) {
-		restService.POST("/api/v1/students", student, String.class).getBody();
+		restService.POST("/api/v1/students", student, String.class, CurrentUserUtils.getTokenBearer()).getBody();
+//		restService.POST("/api/v1/students", student, String.class).getBody();
 	}
 
 	@Override

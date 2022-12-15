@@ -1,5 +1,6 @@
 package cu.edu.cujae.pweb.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,9 +22,9 @@ import cu.edu.cujae.pweb.service.StudentService;
 import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
-@Component // Le indica a spring es un componente registrado
+@Component 
 @ManagedBean
-@ViewScoped // Este es el alcance utilizado para trabajar con Ajax
+@ViewScoped 
 public class ManageStudentBean {
 
 	private StudentDTO studentDTO;
@@ -44,19 +45,12 @@ public class ManageStudentBean {
 		PrimeFaces.current().ajax().update("form:dt-students");
 	}
 	
-	/*
-	 * @Autowired es la manera para inyectar una dependencia/clase anotada
-	 * con @service en spring
-	 * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
-	 */
 	@Autowired
 	private StudentService studentService;
 
 	public ManageStudentBean() {
 	}
 
-	// Esta anotación permite que se ejecute code luego de haberse ejecuta el
-	// constructor de la clase.
 	@PostConstruct
 	public void init() {
 		this.selectedStudent = new StudentDTO();
@@ -69,35 +63,23 @@ public class ManageStudentBean {
 		System.out.println(selectedStudent);
 	}
 
-	// Se ejecuta al dar clic en el button con el lapicito
 	public void openForEdit() {
 	}
 
-	// Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar
-	// al usuario
 	public void saveStudent() {
 		if (this.selectedStudent.getId() == null) {
 			studentService.createStudent(this.selectedStudent);
-			// Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO)
-			// obteniendo el mensaje
-			// desde el fichero de recursos, con la llave message_student_added
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
 		} else {
-			// register student
 			studentService.updateStudent(this.selectedStudent);
 
 			this.selectedStudent = new StudentDTO();
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_edited");
 		}
-		// load datatable again with new values
-		students = studentService.getStudents();
+		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
 
 		this.selectedStudent = new StudentDTO();
-		// Este code permite cerrar el dialog cuyo id es managestudentDialog. Este
-		// identificador es el widgetVar
 		PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
-		// Este code es para refrescar el componente con id dt-students que se encuentra
-		// dentro del formulario con id form
 		PrimeFaces.current().ajax().update("form:dt-students");
 	}
 
@@ -105,22 +87,16 @@ public class ManageStudentBean {
 		this.selectedStudent = new StudentDTO();
 	}
 
-	// Permite eliminar un estudiante
 	public void deleteStudent() {
 		try {
-			// delete student
 			studentService.deleteStudent(this.selectedStudent.getId());
 			this.selectedStudent = new StudentDTO();
 
 			// load datatable again with new values
-			students = studentService.getStudents();
+			students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
 
-			// JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO,
-			// "message_student_removed");
-			PrimeFaces.current().ajax().update("form:dt-students");// Este code es para refrescar el componente con id
-																	// dt-students que se encuentra dentro del
-																	// formulario
-																	// con id form
+			PrimeFaces.current().ajax().update("form:dt-students");
+			
 		} catch (Exception e) {
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
 		}
@@ -144,10 +120,25 @@ public class ManageStudentBean {
 	}
 
 	public List<StudentDTO> getStudents() {
-//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-//		String url = request.getRequestURL().toString() + "?" + request.getQueryString();
-//		System.out.println(url);
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String url = request.getRequestURL().toString().substring(39);
+		System.out.println(url);
 		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+		switch(url) {
+//			Vista de Sandy
+			case "students":
+				students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+				break;
+//			Vista de Ernesto
+			case "init-course/selection-student":
+//				students = new ArrayList<>();
+				students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+				break;
+//			Vista de Daniel
+			case "":
+				students = studentService.getStudents() ;
+				break;
+		}
 		return students;
 	}
 

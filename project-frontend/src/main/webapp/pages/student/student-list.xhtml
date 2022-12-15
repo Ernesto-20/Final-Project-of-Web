@@ -85,7 +85,7 @@
 							<span style="font-weight: bold">#{msgs.header_table_studentList}</span>
 							<span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
 								<p:inputText id="globalFilter" onkeyup="PF('dtStudents').filter()"
-									placeholder="Buscar" />
+									placeholder="#{msgs.ph_search}" />
 							</span>
 
 						</div>
@@ -131,10 +131,10 @@
 							<p:confirm header="#{msgs.btn_confirmDelete}" message="#{msgs.btn_studentList_delete_msg}"
 								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
-						<!-- 						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this" -->
-						<!-- 							action="manageStudentGradeBean.getStudentGrade" -->
-						<!-- 							update=":student-grades:grades-student-content" oncomplete="PF('gradesStudentDialog').show()"> -->
-						<!-- 						</p:commandButton> -->
+						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this"
+							action="#{manageStudentGradeBean.searchStudentGrades(student.id, manageStudentBean.year)}"
+							update=":student-grades:grades-student-content" oncomplete="PF('gradesStudentDialog').show()">
+						</p:commandButton>
 					</p:column>
 
 				</p:dataTable>
@@ -156,9 +156,9 @@
 			<ui:include src="student-form.xhtml"></ui:include>
 		</h:form>
 
-		<!-- 		<h:form id="student-grades"> -->
-		<!-- 				<ui:include src="student-grades.xhtml"></ui:include> -->
-		<!-- 		</h:form> -->
+		<h:form id="student-grades">
+			<ui:include src="student-grades.xhtml"></ui:include>
+		</h:form>
 
 		<h:form id="student-dropout-form">
 			<ui:include src="student_dropout_form.xhtml"></ui:include>

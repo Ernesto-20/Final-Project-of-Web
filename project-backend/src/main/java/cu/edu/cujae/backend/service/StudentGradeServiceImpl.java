@@ -53,7 +53,7 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		StudentGradeDTO studentGrade = null;
 
 		while (rs.next()) {
-			studentGrade = new StudentGradeDTO(rs.getInt("id"), yearId, studentId, getStudentFullName(studentId),
+			studentGrade = new StudentGradeDTO(yearId, studentId, getStudentFullName(studentId),
 					rs.getInt("subject_id"), getSubject(), getGradeValue());
 			studentGrades.add(studentGrade);
 

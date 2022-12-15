@@ -7,6 +7,9 @@ public class StudentInBrigadeDTO {
     private int brigadeId;
     private Integer numberScale;
 
+    public StudentInBrigadeDTO() {
+    }
+    
     public StudentInBrigadeDTO(int studentId, int courseId, int brigadeId) {
         this.studentId = studentId;
         this.courseId = courseId;

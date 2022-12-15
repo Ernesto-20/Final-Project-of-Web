@@ -47,8 +47,6 @@ public class StudentController {
     public ResponseEntity<List<StudentDTO>> getStudents(@RequestParam Integer brigadeId, @RequestParam Integer courseId, @RequestParam Integer yearId) throws SQLException {
     	List<StudentDTO> student;
 //    	List<StudentDTO> student = studentService.getStudentsByBrigadeCourseYearIds(brigadeId, courseId, yearId);
-    	System.out.println(brigadeId);
-    	System.out.println(courseId);
     	
     	if(brigadeId == 0 || courseId == 0 || yearId == 0)
     		student = studentService.getStudents();

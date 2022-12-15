@@ -11,36 +11,26 @@ import org.springframework.stereotype.Component;
 import cu.edu.cujae.pweb.dto.StudentGradeDTO;
 import cu.edu.cujae.pweb.service.StudentGradeService;
 
-@Component // Le indica a spring es un componente registrado
+@Component
 @ManagedBean
-@ViewScoped // Este es el alcance utilizado para trabajar con Ajax
+@ViewScoped
 public class ManageStudentGradeBean {
 
 	private List<StudentGradeDTO> studentGrades;
 
-	@Autowired
-	private ManageStudentBean studentBean;
-	/*
-	 * @Autowired es la manera para inyectar una dependencia/clase anotada
-	 * con @service en spring
-	 * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
-	 */
 	@Autowired
 	private StudentGradeService studentGradeService;
 
 	public ManageStudentGradeBean() {
 
 	}
-
-	// public void setStudentGrades(Integer studentId, Integer yearId) {
-	// this.studentGrades = studentGradeService.getStudentGradesByYearId(studentId,
-	// yearId);
-	// }
-
-	public List<StudentGradeDTO> getStudentGrade() {
-
-		studentGrades = studentGradeService.getStudentGradesByYearId(studentBean.getSelectedStudent().getId(),
-				studentBean.getYear());
+	
+	public void searchStudentGrades(Integer studentId, Integer yearId) {
+		studentGrades = studentGradeService.getStudentGradesByYearId(studentId, yearId);
+//		return studentGrades;
+	}
+	
+	public List<StudentGradeDTO> getStudentGrades() {
 		return studentGrades;
 	}
 

@@ -9,7 +9,12 @@ public class StudentDropOutNamedDTO {
     private int dropoutId;
     private String dropoutName;
 
-    public StudentDropOutNamedDTO(int studentId, String studentName, int courseId, String courseName, int dropoutId, String dropoutName) {
+    public StudentDropOutNamedDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public StudentDropOutNamedDTO(int studentId, String studentName, int courseId, String courseName, int dropoutId, String dropoutName) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.courseId = courseId;

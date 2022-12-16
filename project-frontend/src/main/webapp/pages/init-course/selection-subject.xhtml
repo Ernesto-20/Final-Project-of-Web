@@ -4,29 +4,29 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui" template="/pages/init-course/init-course-template.xhtml">
 
-    <ui:define name="selection-subject-title">
-        Nuevo programa de asignaturas
+    <ui:define name="selection-list-title">
+        #{msgs.title_selection_subject}
     </ui:define>
-    <ui:define name="selection-subject-content">
+    <ui:define name="selection-list-content">
         <h:form id="formSelectionSubject">
-            <p:panelGrid id="panelGridId" columns="3" layout="grid" contentStyleClass="ui-fluid">
-                <f:facet name="Nuevo curso universitario">
+            <p:panelGrid id="panelGridId" columns="3" class="p-grid">
+                <f:facet name="#{msgs.title_selection_subject}">
                     <p:graphicImage name="demo/images/misc/kobe.png"/>
                 </f:facet>
 
                 <ui:include src="subject-list-component.xhtml"></ui:include>
 
-                <p:panelGrid columns="1" layout="grid" style="align-items: center" contentStyleClass="ui-fluid">
-                    <p:commandButton value="Asignar" icon="pi pi-arrow-right" iconPos="right"
+                <p:panelGrid columns="1" class="p-col-4" layout="grid" style="align-items: center">
+                    <p:commandButton value="#{msgs.btn_subject_assign}" icon="pi pi-arrow-right" iconPos="right"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
                     </p:commandButton>
-                    <p:commandButton value="Retirar" icon="pi pi-arrow-left"
+                    <p:commandButton value="#{msgs.btn_subject_remove}" icon="pi pi-arrow-left"
                                      styleClass="ui-button-warning" style="margin-right: .5rem">
                     </p:commandButton>
                 </p:panelGrid>
-                <p:panel>
 
-                </p:panel>
+                <ui:include src="year-tab-view.xhtml"></ui:include>
+
             </p:panelGrid>
         </h:form>
     </ui:define>

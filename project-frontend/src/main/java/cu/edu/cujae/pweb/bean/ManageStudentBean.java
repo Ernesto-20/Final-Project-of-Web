@@ -1,26 +1,32 @@
 package cu.edu.cujae.pweb.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.pweb.dto.StudentInBrigadeDTO;
 import cu.edu.cujae.pweb.service.BrigadeService;
 import cu.edu.cujae.pweb.service.CourseService;
+import cu.edu.cujae.pweb.service.StudentInBrigadeService;
 import cu.edu.cujae.pweb.service.StudentService;
 import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
-@Component // Le indica a spring es un componente registrado
+@Component 
 @ManagedBean
-@ViewScoped // Este es el alcance utilizado para trabajar con Ajax
+@ViewScoped 
 public class ManageStudentBean {
 
 	private StudentDTO studentDTO;
@@ -33,27 +39,19 @@ public class ManageStudentBean {
 	private Integer brigade = 1;
 	
 	public void reloadListStudent() {
-		System.out.println("Brigada:" + brigade);
-		System.out.println("Curso:" + course);
-		System.out.println("Año:" + year);
 		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
-		System.out.println("Estudiantes:" + students);
 		PrimeFaces.current().ajax().update("form:dt-students");
 	}
-
-	/*
-	 * @Autowired es la manera para inyectar una dependencia/clase anotada
-	 * con @service en spring
-	 * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
-	 */
+	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private StudentInBrigadeService studentInBrigadeService;
 
 	public ManageStudentBean() {
 	}
 
-	// Esta anotación permite que se ejecute code luego de haberse ejecuta el
-	// constructor de la clase.
 	@PostConstruct
 	public void init() {
 		this.selectedStudent = new StudentDTO();
@@ -63,67 +61,97 @@ public class ManageStudentBean {
 	// ! Este método nunca se llega a ejecutar, por algún error que desconozco
 	public void openNew() {
 		this.selectedStudent = new StudentDTO();
-		System.out.println(selectedStudent);
 	}
 
-	// Se ejecuta al dar clic en el button con el lapicito
 	public void openForEdit() {
 	}
 
-	// Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar
-	// al usuario
 	public void saveStudent() {
 		if (this.selectedStudent.getId() == null) {
-			studentService.createStudent(this.selectedStudent);
-			// Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO)
-			// obteniendo el mensaje
-			// desde el fichero de recursos, con la llave message_student_added
-			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
-		} else {
-			// register student
+			
+//			Si un estudiante con el mismo ID ya está en la bd no se crea el nuevo estudiante. 
+			if(!studentExist()) {
+					
+				studentService.createStudent(this.selectedStudent);
+			
+//			Crear el estudiante dentro de la tabla student_in_brigade
+			
+				System.out.println("Estudiante ID:" + studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId());
+				StudentInBrigadeDTO studentInBrigade = new StudentInBrigadeDTO(studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId(), course, brigade, 2);
+				System.out.println("Estudiante en Brigada:" + studentInBrigade);
+				studentInBrigadeService.createStudentInBrigade(studentInBrigade);
+			
+				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
+				
+			} 
+			else
+				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_student_already_exist");
+		} 
+		else 
+		{
 			studentService.updateStudent(this.selectedStudent);
 
 			this.selectedStudent = new StudentDTO();
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_edited");
 		}
-		// load datatable again with new values
-		students = studentService.getStudents();
+		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
 
 		this.selectedStudent = new StudentDTO();
-		// Este code permite cerrar el dialog cuyo id es managestudentDialog. Este
-		// identificador es el widgetVar
 		PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
-		// Este code es para refrescar el componente con id dt-students que se encuentra
-		// dentro del formulario con id form
 		PrimeFaces.current().ajax().update("form:dt-students");
+	}
+
+	public void deleteStudent() {
+		try {
+			studentService.deleteStudent(this.selectedStudent.getId());
+			this.selectedStudent = new StudentDTO();
+
+			// load datatable again with new values
+			students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+
+			PrimeFaces.current().ajax().update("form:dt-students");
+			
+		} catch (Exception e) {
+			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
+		}
+
+	}
+	
+	private boolean studentExist() {
+		return studentService.getStudentByIdNum(selectedStudent.getIdNum()) != null;
 	}
 
 	public void cancel() {
 		this.selectedStudent = new StudentDTO();
 	}
 
-	// Permite eliminar un estudiante
-	public void deleteStudent() {
-		try {
-			// delete student
-			studentService.deleteStudent(this.selectedStudent.getId());
-			this.selectedStudent = new StudentDTO();
-
-			// load datatable again with new values
-			students = studentService.getStudents();
-
-			// JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO,
-			// "message_student_removed");
-			PrimeFaces.current().ajax().update("form:dt-students");// Este code es para refrescar el componente con id
-																	// dt-students que se encuentra dentro del
-																	// formulario
-																	// con id form
-		} catch (Exception e) {
-			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
+	public List<StudentDTO> getStudents() {
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String url = request.getRequestURL().toString().substring(39);
+//	System.out.println(url);
+		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+		switch(url) {
+//		Vista de Sandy
+		case "students":
+			students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+			break;
+//		Vista de Ernesto
+		case "init-course/selection-student":
+			students = new ArrayList<>();
+//			students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+			break;
+//		Vista de Daniel
+		case "":
+			students = studentService.getStudents() ;
+			break;
 		}
-
+		return students;
 	}
-
+	
+	public void setStudents(List<StudentDTO> students) {
+		this.students = students;
+	}
+	
 	public StudentDTO getStudentDto() {
 		return studentDTO;
 	}
@@ -140,14 +168,6 @@ public class ManageStudentBean {
 		this.selectedStudent = selectedStudent;
 	}
 
-	public List<StudentDTO> getStudents() {
-		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
-		return students;
-	}
-
-	public void setStudents(List<StudentDTO> students) {
-		this.students = students;
-	}
 
 	public Integer getBrigade() {
 		return brigade;

@@ -13,9 +13,9 @@
                      rows="10" paginatorPosition="bottom">
             <f:facet name="header">
                 <div class="products-table-header">
-                    <span style="font-weight: bold">Asignaturas del año</span>
+                    <span style="font-weight: bold">#{msgs.span_subjects_of_year}</span>
                     <span class="filter-container ui-input-icon-left"><i class="pi pi-search"></i>
-                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjectsInCourse').filter()" placeholder="Buscar" />
+                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjectsInCourse').filter()" placeholder="#{msgs.ph_search}" />
 							</span>
                 </div>
             </f:facet>
@@ -24,12 +24,12 @@
                 <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
             </p:column>
 
-            <p:column headerText="Asignatura asignada" sortBy="#{subject.subjectInCourse.subjectId}"
+            <p:column headerText="#{msgs.column_subject_assigned}" sortBy="#{subject.subjectInCourse.subjectId}"
                       filterBy="#{subjectInCourse.subjectId}">
                 <h:outputText value="#{subjectInCourse.subjectId}" />
             </p:column>
 
-            <p:column headerText="Horas" sortBy="#{subjectInCourse.hoursLong}" filterBy="#{subjectInCourse.hoursLong}">
+            <p:column headerText="#{msgs.column_subject_hours}" sortBy="#{subjectInCourse.hoursLong}" filterBy="#{subjectInCourse.hoursLong}">
                 <h:outputText value="#{subjectInCourse.hoursLong}" />
             </p:column>
 
@@ -48,16 +48,16 @@
                                  action="#{manageSubjectInCourseBean.deleteSubjectInCourse}" >
                     <f:setPropertyActionListener value="#{subjectInCourse}"
                                                  target="#{manageSubjectInCourseBean.selectedSubjectInCourse}" />
-                    <p:confirm header="Confirmar" message="Está seguro de eliminar la asignatura?" icon="pi pi-exclamation-triangle"/>
+                    <p:confirm header="#{msgs.btn_confirmDelete}" message="#{msgs.message_confirm_delete_subject}" icon="pi pi-exclamation-triangle"/>
                 </p:commandButton>
             </p:column>
 
         </p:dataTable>
 
         <p:confirmDialog global="true" showEffect="fade" width="300">
-            <p:commandButton value="Si" type="button"
+            <p:commandButton value="#{msgs.btn_delete_yes}" type="button"
                              styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-            <p:commandButton value="No" type="button"
+            <p:commandButton value="#{msgs.btn_delete_no}" type="button"
                              styleClass="ui-confirmdialog-no ui-button-secondary"
                              icon="pi pi-times" />
         </p:confirmDialog>

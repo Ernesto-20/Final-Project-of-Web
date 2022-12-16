@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog header="#{msgs.header_studentDropoutForm}" showEffect="fade" modal="true"
+              widgetVar="studentDropoutFormDialog" responsive="true">
+        <p:outputPanel id="student-dropout-form-content" class="ui-fluid">
+            <p:selectOneMenu id="dropount-cause-select" value="#{dropOutBean.dropout}" style="width: 300px;" placeholder="#{msgs.ph_studentDropoutForm_select_cause}">
+                <f:selectItems value="#{dropOutBean.dropouts}" var="dropout" itemLabel="#{dropout.cause}"
+								itemValue="#{dropout.id}" />
+            </p:selectOneMenu>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+       		<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times"
+				onclick="PF('studentDropoutDialog').hide()" class="ui-button-secondary" />
+        </f:facet>
+    </p:dialog>
+</ui:composition>

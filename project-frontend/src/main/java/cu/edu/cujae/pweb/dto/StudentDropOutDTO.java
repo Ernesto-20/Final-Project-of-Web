@@ -2,37 +2,41 @@ package cu.edu.cujae.pweb.dto;
 
 public class StudentDropOutDTO {
 
-    private int studentId;
-    private int courseId;
-    private int dropoutId;
+    private Integer studentId;
+    private Integer courseId;
+    private Integer dropoutId;
+    
+    public StudentDropOutDTO() {
+		super();
+	}
 
-    public StudentDropOutDTO(int dropoutId, int courseId, int studentId) {
+	public StudentDropOutDTO(Integer dropoutId, Integer courseId, Integer studentId) {
         this.studentId = studentId;
         this.courseId = courseId;
         this.dropoutId = dropoutId;
     }
-
-    public int getStudentId() {
+	
+    public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
-    public int getCourseId() {
+    public Integer getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(Integer courseId) {
         this.courseId = courseId;
     }
 
-    public int getDropoutId() {
+    public Integer getDropoutId() {
         return dropoutId;
     }
 
-    public void setDropoutId(int dropoutId) {
+	public void setDropoutId(Integer dropoutId) {
         this.dropoutId = dropoutId;
     }
 

@@ -17,7 +17,7 @@ public class DropOutController {
     private DropOutService dropOutService;
 
     @GetMapping("")
-    public ResponseEntity<List<DropOutDTO>> getDropOut() throws SQLException {
+    public ResponseEntity<List<DropOutDTO>> getDropOuts() throws SQLException {
         List<DropOutDTO> dropOutDTOList = dropOutService.findAll();
         return ResponseEntity.ok(dropOutDTOList);
     }

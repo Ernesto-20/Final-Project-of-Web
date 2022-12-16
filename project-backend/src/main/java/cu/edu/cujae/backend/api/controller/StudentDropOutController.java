@@ -44,21 +44,21 @@ public class StudentDropOutController {
         return ResponseEntity.ok(studentDropOutList);
     }
 
-    @GetMapping("/student/named/{studentId}")
+    @GetMapping("/named/student/{studentId}")
     public ResponseEntity<List<StudentDropOutNamedDTO>> getNamedStudentDropOutByStudentId(@PathVariable String studentId)
             throws SQLException {
         List<StudentDropOutNamedDTO> studentDropOutList = studentDropOutService.findNamedByStudentId(Integer.parseInt(studentId));
         return ResponseEntity.ok(studentDropOutList);
     }
 
-    @GetMapping("course/{courseId}")
+    @GetMapping("/course/{courseId}")
     public ResponseEntity<List<StudentDropOutDTO>> getStudentDropOutByCourseId(@PathVariable String courseId)
             throws SQLException {
         List<StudentDropOutDTO> studentDropOutList = studentDropOutService.findByCourseId(Integer.parseInt(courseId));
         return ResponseEntity.ok(studentDropOutList);
     }
 
-    @GetMapping("course/named/{courseId}")
+    @GetMapping("/named/course/{courseId}")
     public ResponseEntity<List<StudentDropOutNamedDTO>> getNamedStudentDropOutByCourseId(@PathVariable String courseId)
             throws SQLException {
         List<StudentDropOutNamedDTO> studentDropOutList = studentDropOutService.findNamedByCourseId(Integer.parseInt(courseId));
@@ -80,19 +80,19 @@ public class StudentDropOutController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> create(@RequestBody StudentDropOutDTO studentDropOut) throws SQLException {
+    public ResponseEntity<String> createStudentDropOut(@RequestBody StudentDropOutDTO studentDropOut) throws SQLException {
         studentDropOutService.insert(studentDropOut);
         return ResponseEntity.ok("StudentDropOut Created");
     }
 
     @PutMapping("")
-    public ResponseEntity<String> update(@RequestBody StudentDropOutDTO studentDropOut) throws SQLException {
+    public ResponseEntity<String> updateStudentDropOut(@RequestBody StudentDropOutDTO studentDropOut) throws SQLException {
         studentDropOutService.updateDropOut(studentDropOut);
         return ResponseEntity.ok("StudentDropOut Updated");
     }
 
     @DeleteMapping("")
-    public ResponseEntity<String> delete(@RequestBody StudentDropOutDTO studentDropOut) throws SQLException {
+    public ResponseEntity<String> deleteStudentDropOut(@RequestBody StudentDropOutDTO studentDropOut) throws SQLException {
         studentDropOutService.delete(studentDropOut);
         return ResponseEntity.ok("StudentDropOut deleted");
     }

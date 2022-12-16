@@ -14,41 +14,26 @@
 
         <div class="layout-menu">
 
-            <!-- <sec:authorize access="hasAnyAuthority('admin')"> -->
-            <div class="menu-category">#{msgs.menu_administration}
-                <div class="menu-items">
-                    <ul>
-                        <li>
-                            <h:link outcome="/pages/init-course/#{manageInitCourse.viewSelected}">
-                                #{msgs.menu_administration_new_course}
-                            </h:link>
-                        </li>
-                        <li>
-                            <h:link outcome="/pages/security/users/user-list.xhtml">
-                                #{msgs.menu_administration_manage_users}
-                            </h:link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- </sec:authorize> -->
-            <div class="menu-category">#{msgs.menu_menu}</div>
-
-            <div class="menu-items">
-                <p:outputPanel>
-                    <a tabindex="0" class="submenu-link">
-                        #{msgs.menu_menu_students}
-                    </a>
-                    <div class="submenu">
-                        <ul>
-                            <li>
-                                <h:link outcome="/pages/student/student-list.xhtml">
-                                    #{msgs.menu_menu_students_new}
-                                </h:link>
-                            </li>
-                        </ul>
+            <sec:authorize access="hasAnyAuthority('admin')">
+                <div class="menu-category">#{msgs.menu_administration}
+                    <div class="menu-items">
+                        <h:link outcome="/pages/init-course/#{manageInitCourse.viewSelected}">
+                            #{msgs.menu_administration_new_course}
+                        </h:link>
                     </div>
-                </p:outputPanel>
+                    <div class="menu-items">
+                        <h:link outcome="/pages/security/users/user-list.xhtml">
+                            #{msgs.menu_administration_manage_users}
+                        </h:link>
+                    </div>
+                </div>
+            </sec:authorize>
+            <div class="menu-category">#{msgs.menu_menu}
+                <div class="menu-items">
+                    <h:link outcome="/pages/student/student-list.xhtml">
+                        #{msgs.menu_menu_students}
+                    </h:link>
+                </div>
                 <div class="menu-items">
                     <h:link outcome="/pages/subjects/subjects.xhtml">
                         #{msgs.menu_menu_subjects}
@@ -59,24 +44,6 @@
                         #{msgs.menu_menu_escalafon}
                     </h:link>
                 </div>
-                <!--                    <p:outputPanel >-->
-                <!--                        <a tabindex="0" class="submenu-link">-->
-                <!--                            Escalafón-->
-                <!--                        </a>-->
-                <!--                        <div class="submenu">-->
-                <!--                            <ul>-->
-                <!--                                <li><h:link >-->
-                <!--                                    Submenu_item_2_1-->
-                <!--                                </h:link></li>-->
-                <!--                                <li><h:link>-->
-                <!--                                    Submenu_item_2_2-->
-                <!--                                </h:link></li>-->
-                <!--                                <li><h:link>-->
-                <!--                                    Submenu_item_2_2-->
-                <!--                                </h:link></li>-->
-                <!--                            </ul>-->
-                <!--                        </div>-->
-                <!--                    </p:outputPanel>-->
             </div>
         </div>
     </div>

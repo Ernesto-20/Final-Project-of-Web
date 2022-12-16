@@ -71,7 +71,7 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
 
     @Override
     public List<StudentDropOutNamedDTO> findAllNamed() throws SQLException {
-        LinkedList<StudentDropOutDTO> students = new LinkedList<>();
+        LinkedList<StudentDropOutDTO> students = findAll();
         List<StudentDropOutNamedDTO> namedStudents = new LinkedList<>();
 
 
@@ -86,6 +86,8 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
 
             CourseDTO courseDTO = courseService.findById(student.getCourseId());
             if(courseDTO != null) student.setCourseName(courseDTO.getIdentifier());
+            
+            namedStudents.add(student);
         }
 
         return namedStudents;

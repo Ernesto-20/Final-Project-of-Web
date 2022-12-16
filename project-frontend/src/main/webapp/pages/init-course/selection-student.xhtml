@@ -9,6 +9,9 @@
         #{msgs.title_selection_student}
     </ui:define>
     <ui:define name="selection-list-content">
+            <h:form style="display: flex; flex-direction: row-reverse; margin-right: -12px; margin-top:-10px;">
+                <p:commandButton value="Limpiar Datos" action="#{manageSelectionStudentBean.restore}" style="margin-right:20px;"></p:commandButton>
+            </h:form>
             <h:form id="form">
                 <p:tabView id="panelView" dynamic="true"  value="#{manageSelectionStudentBean.studentsList}" var="brigade">
                     <p:ajax event="tabChange" listener="#{manageSelectionStudentBean.changeGroup}" />

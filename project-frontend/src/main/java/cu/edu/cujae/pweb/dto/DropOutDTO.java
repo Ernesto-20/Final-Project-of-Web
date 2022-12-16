@@ -5,7 +5,11 @@ public class DropOutDTO {
     private Integer id;
     private String cause;
 
-    public DropOutDTO(Integer id, String cause) {
+    public DropOutDTO() {
+		super();
+	}
+
+	public DropOutDTO(Integer id, String cause) {
         this.id = id;
         this.cause = cause;
     }

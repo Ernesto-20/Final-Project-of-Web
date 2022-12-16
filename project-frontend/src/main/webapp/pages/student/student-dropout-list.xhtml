@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="#{msgs.header_studentDropoutList}" showEffect="fade" modal="true" widgetVar="studentDropoutListDialog"
+	responsive="true">
+	<p:outputPanel id="student-dropout-list-content" class="ui-fluid">
+		<p:outputPanel rendered="#{true}">
+			<p:panelGrid layout="grid" columns="1">
+				<h:panelGroup>
+					<p:dataTable id="dt-students-dropouts" widgetVar="dtStudentsDropouts" var="studentDropout"
+						value="#{dropOutBean.studentDropouts}" reflow="true" paginator="true" rows="10"
+						paginatorPosition="bottom">
+
+							<p:column headerText="#{msgs.column_studentDropoutList_studentFullName}"
+								sortBy="#{studentDropout.studentName}">
+									<h:outputText value="#{studentDropout.studentName}" />
+							</p:column>
+							<p:column headerText="#{msgs.column_studentDropoutList_course}"
+								sortBy="#{studentDropout.courseName}">
+									<h:outputText value="#{studentDropout.courseName}" />
+							</p:column>
+							<p:column headerText="#{msgs.column_studentDropoutList_dropoutCause}"
+								sortBy="#{studentDropout.dropoutName}">
+								<h:outputText value="#{studentDropout.dropoutName}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:outputPanel>
+
+		<f:facet name="footer">
+			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times" onclick="PF('studentDropoutListDialog').hide()"
+				class="ui-button-secondary" />
+		</f:facet>
+	</p:dialog>
+</ui:composition>

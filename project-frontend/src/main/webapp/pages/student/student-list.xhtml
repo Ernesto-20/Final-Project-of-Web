@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
 
 <ui:composition template="/pages/template/layout.xhtml">
 	<ui:define name="title">#{msgs.title_studentList}</ui:define>
@@ -16,21 +17,28 @@
 					    * La propiedad onComplete ejecuta un code en Javascript una vez finalizada el action del button. También es posible ejecutar
 					      code en Javascript desde el bean de Jsf
 					    -->
-						<p:commandButton value="#{msgs.btn_studentList_new}" icon="pi pi-plus"
-							actionListener="#{manageStudentBean.openNew}" update=":student-form:manage-student-content"
-							oncomplete="PF('manageStudentDialog').show()" styleClass="ui-button-success"
+						<sec:authorize access="hasAnyAuthority('admin')">
+							<p:commandButton value="#{msgs.btn_studentList_new}" icon="pi pi-plus"
+								actionListener="#{manageStudentBean.openNew}"
+								update=":student-form:manage-student-content"
+								oncomplete="PF('manageStudentDialog').show()" styleClass="ui-button-success"
+								style="margin-right: .5rem">
+								<p:resetInput target=":student-form:manage-student-content" />
+							</p:commandButton>
+							<p:commandButton value="#{msgs.btn_studentList_dar_baja}"
+								actionListener="#{manageStudentBean.openNew}"
+								update=":student-dropout-form:student-dropout-form-content"
+								oncomplete="PF('studentDropoutFormDialog').show()" styleClass="ui-button-secondary"
+								style="margin-right: .5rem">
+								<p:resetInput target=":student-dropout-form:student-dropout-form-content" />
+							</p:commandButton>
+						</sec:authorize>
+
+						<p:commandButton value="#{msgs.btn_studentList_ver_baja}"
+							actionListener="#{dropOutBean.setCourse(manageStudentBean.course)}"
+							update=":student-dropout-list:student-dropout-list-content"
+							oncomplete="PF('studentDropoutListDialog').show()" styleClass="ui-button-secondary"
 							style="margin-right: .5rem">
-							<p:resetInput target=":student-form:manage-student-content" />
-						</p:commandButton>
-						<p:commandButton value="#{msgs.btn_studentList_dar_baja}"
-							actionListener="#{manageStudentBean.openNew}"
-							update=":student-dropout-form:student-dropout-content"
-							oncomplete="PF('studentDropoutDialog').show()" styleClass="ui-button-secondary"
-							style="margin-right: .5rem">
-							<p:resetInput target=":student-dropout-form:student-dropout-content" />
-						</p:commandButton>
-						<p:commandButton value="#{msgs.btn_studentList_ver_baja}" styleClass="ui-button-secondary"
-							ajax="false" style="margin-right: .5rem">
 						</p:commandButton>
 
 						<p:outputLabel for="course" value="#{msgs.label_course}" style="margin-right: .5rem" />
@@ -53,8 +61,7 @@
 						<p:selectOneMenu id="brigade" value="#{manageStudentBean.brigade}" style="margin-right: .5rem">
 							<f:selectItems value="#{manageBrigadeBean.brigades}" var="brigade"
 								itemLabel="#{brigade.name}" itemValue="#{brigade.id}" />
-							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
-								></p:ajax>
+							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"></p:ajax>
 						</p:selectOneMenu>
 					</p:toolbarGroup>
 
@@ -117,24 +124,31 @@
 					</p:column>
 
 					<p:column exportable="false">
-						<p:commandButton icon="pi pi-pencil" action="#{manageStudentBean.openForEdit}"
-							update=":student-form:manage-student-content" oncomplete="PF('manageStudentDialog').show()"
-							styleClass="edit-button rounded-button ui-button-success" process="@this">
-							<f:setPropertyActionListener value="#{student}"
-								target="#{manageStudentBean.selectedStudent}" />
-							<p:resetInput target=":student-form:manage-student-content" />
-						</p:commandButton>
-						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
-							action="#{manageStudentBean.deleteStudent}">
-							<f:setPropertyActionListener value="#{student}"
-								target="#{manageStudentBean.selectedStudent}" />
-							<p:confirm header="#{msgs.btn_confirmDelete}" message="#{msgs.btn_studentList_delete_msg}"
-								icon="pi pi-exclamation-triangle" />
-						</p:commandButton>
+
+						<sec:authorize access="hasAnyAuthority('admin')">
+							<p:commandButton icon="pi pi-pencil" action="#{manageStudentBean.openForEdit}"
+								update=":student-form:manage-student-content"
+								oncomplete="PF('manageStudentDialog').show()"
+								styleClass="edit-button rounded-button ui-button-success" process="@this">
+								<f:setPropertyActionListener value="#{student}"
+									target="#{manageStudentBean.selectedStudent}" />
+								<p:resetInput target=":student-form:manage-student-content" />
+							</p:commandButton>
+							<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+								action="#{manageStudentBean.deleteStudent}">
+								<f:setPropertyActionListener value="#{student}"
+									target="#{manageStudentBean.selectedStudent}" />
+								<p:confirm header="#{msgs.btn_confirmDelete}"
+									message="#{msgs.btn_studentList_delete_msg}" icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</sec:authorize>
+
 						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this"
 							action="#{manageStudentGradeBean.searchStudentGrades(student.id, manageStudentBean.year)}"
-							update=":student-grades:grades-student-content" oncomplete="PF('gradesStudentDialog').show()">
+							update=":student-grades:grades-student-content"
+							oncomplete="PF('gradesStudentDialog').show()">
 						</p:commandButton>
+
 					</p:column>
 
 				</p:dataTable>
@@ -161,7 +175,11 @@
 		</h:form>
 
 		<h:form id="student-dropout-form">
-			<ui:include src="student_dropout_form.xhtml"></ui:include>
+			<ui:include src="student-dropout-form.xhtml"></ui:include>
+		</h:form>
+
+		<h:form id="student-dropout-list">
+			<ui:include src="student-dropout-list.xhtml"></ui:include>
 		</h:form>
 	</ui:define>
 </ui:composition>

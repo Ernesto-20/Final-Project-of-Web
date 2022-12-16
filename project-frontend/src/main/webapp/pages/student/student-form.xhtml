@@ -10,7 +10,7 @@
 					<h:panelGroup>
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_id}" />
-							<p:inputText id="idNum" required="true" value="#{manageStudentBean.selectedStudent.idNum}"
+							<p:inputText id="idNum" required="true" value="#{manageBean.selectedStudent.idNum}"
 								maxlength="11">
 								<p:keyFilter mask="num" />
 							</p:inputText>
@@ -19,13 +19,13 @@
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_firstName}" />
 							<p:inputText id="firstName" required="true"
-								value="#{manageStudentBean.selectedStudent.firstName}" />
+								value="#{manageBean.selectedStudent.firstName}" />
 							<p:message for="@previous"></p:message>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_lastName}" />
 							<p:inputText id="lastName" required="true"
-								value="#{manageStudentBean.selectedStudent.lastName}" />
+								value="#{manageBean.selectedStudent.lastName}" />
 							<p:message for="@previous"></p:message>
 						</div>
 					</h:panelGroup>
@@ -33,21 +33,21 @@
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_municipality}" />
 							<p:inputText id="municipality" required="true"
-								value="#{manageStudentBean.selectedStudent.municipality}">
+								value="#{manageBean.selectedStudent.municipality}">
 							</p:inputText>
 							<p:message for="@previous"></p:message>
 						</div>
 <!-- 						<div class="p-field"> -->
 <!-- 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_status}" /> -->
 <!-- 							<p:inputText id="statusDescription" required="true" -->
-<!-- 								value="#{manageStudentBean.selectedStudent.statusDescription}"> -->
+<!-- 								value="#{manageBean.selectedStudent.statusDescription}"> -->
 <!-- 							</p:inputText> -->
 <!-- 							<p:message for="@previous"></p:message> -->
 <!-- 						</div> -->
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_gender}" />
 							<p:selectOneRadio id="gender" required="true"
-								value="#{manageStudentBean.selectedStudent.gender}" unselectable="true">
+								value="#{manageBean.selectedStudent.gender}" unselectable="true">
 								<f:selectItem itemLabel="#{msgs.radiobtn_studentForm_gender_male}" itemValue="M" />
 								<f:selectItem itemLabel="#{msgs.radiobtn_studentForm_gender_female}" itemValue="F" />
 							</p:selectOneRadio>
@@ -61,9 +61,9 @@
 
 		<f:facet name="footer">
 			<p:commandButton value="#{msgs.btn_save}" icon="pi pi-check"
-				action="#{manageStudentBean.saveStudent}" update="manage-student-content"
+				action="#{manageBean.saveStudent}" update="manage-student-content"
 				process="manage-student-content @this" />
-			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times" action="#{manageStudentBean.cancel}"
+			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times" action="#{manageBean.cancel}"
 				onclick="PF('manageStudentDialog').hide()" class="ui-button-secondary" />
 		</f:facet>
 	</p:dialog>

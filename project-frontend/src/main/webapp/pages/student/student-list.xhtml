@@ -167,7 +167,9 @@
 
 		<h:form id="student-form">
 			<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-			<ui:include src="student-form.xhtml"></ui:include>
+			<ui:include src="student-form.xhtml">
+				<ui:param name="manageBean" value="#{manageStudentBean}" />
+			</ui:include>
 		</h:form>
 
 		<h:form id="student-grades">

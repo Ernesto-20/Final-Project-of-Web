@@ -15,25 +15,25 @@
         <div class="layout-menu">
 
             <sec:authorize access="hasAnyAuthority('admin')">
-            <div class="menu-category">#{msgs.menu_administration}
-                <div class="menu-items">
-                     <h:link outcome="/pages/init-course/selection-subject.xhtml">
-                         #{msgs.menu_administration_new_course}
-                      </h:link>
-                 </div>
-                     <div class="menu-items">
-                            <h:link outcome="/pages/security/users/user-list.xhtml">
-                                #{msgs.menu_administration_manage_users}
-                            </h:link>
-                      </div>
-            </div>
+                <div class="menu-category">#{msgs.menu_administration}
+                    <div class="menu-items">
+                        <h:link outcome="/pages/init-course/#{manageInitCourse.viewSelected}">
+                            #{msgs.menu_administration_new_course}
+                        </h:link>
+                    </div>
+                    <div class="menu-items">
+                        <h:link outcome="/pages/security/users/user-list.xhtml">
+                            #{msgs.menu_administration_manage_users}
+                        </h:link>
+                    </div>
+                </div>
             </sec:authorize>
             <div class="menu-category">#{msgs.menu_menu}
-            	<div class="menu-items">
+                <div class="menu-items">
                     <h:link outcome="/pages/student/student-list.xhtml">
                         #{msgs.menu_menu_students}
                     </h:link>
-            	</div>
+                </div>
                 <div class="menu-items">
                     <h:link outcome="/pages/subjects/subjects.xhtml">
                         #{msgs.menu_menu_subjects}

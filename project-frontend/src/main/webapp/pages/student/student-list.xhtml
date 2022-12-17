@@ -5,184 +5,186 @@
 <ui:composition template="/pages/template/layout.xhtml">
 	<ui:define name="title">#{msgs.title_studentList}</ui:define>
 	<ui:define name="layout">
-		<h:form id="form">
-			<div class="crud-demo">
-				<p:toolbar>
-					<p:toolbarGroup>
-						<!-- 
-					    * La propiedad action y actionListener de los botones apunta a un method en el bean de jsf, ese method
-					      por lo general es de tipo void porque se está trabajando con AJAX.
-					    * La propiedad update permite refrescar componentes luego de ejecutarse el code definido en el action. Si son varios
-					      componente poner los Ids separados por coma.
-					    * La propiedad onComplete ejecuta un code en Javascript una vez finalizada el action del button. También es posible ejecutar
-					      code en Javascript desde el bean de Jsf
-					    -->
-						<sec:authorize access="hasAnyAuthority('admin')">
-							<p:commandButton value="#{msgs.btn_studentList_new}" icon="pi pi-plus"
-								actionListener="#{manageStudentBean.openNew}"
-								update=":student-form:manage-student-content"
-								oncomplete="PF('manageStudentDialog').show()" styleClass="ui-button-success"
+		<p:card>
+			<h:form id="form">
+				<div class="crud-demo">
+					<p:toolbar>
+						<p:toolbarGroup>
+							<!--
+							* La propiedad action y actionListener de los botones apunta a un method en el bean de jsf, ese method
+							  por lo general es de tipo void porque se está trabajando con AJAX.
+							* La propiedad update permite refrescar componentes luego de ejecutarse el code definido en el action. Si son varios
+							  componente poner los Ids separados por coma.
+							* La propiedad onComplete ejecuta un code en Javascript una vez finalizada el action del button. También es posible ejecutar
+							  code en Javascript desde el bean de Jsf
+							-->
+							<sec:authorize access="hasAnyAuthority('admin')">
+								<p:commandButton value="#{msgs.btn_studentList_new}" icon="pi pi-plus"
+									actionListener="#{manageStudentBean.openNew}"
+									update=":student-form:manage-student-content"
+									oncomplete="PF('manageStudentDialog').show()" styleClass="ui-button-success"
+									style="margin-right: .5rem">
+									<p:resetInput target=":student-form:manage-student-content" />
+								</p:commandButton>
+								<p:commandButton value="#{msgs.btn_studentList_dar_baja}"
+									actionListener="#{manageStudentBean.openNew}"
+									update=":student-dropout-form:student-dropout-form-content"
+									oncomplete="PF('studentDropoutFormDialog').show()" styleClass="ui-button-secondary"
+									style="margin-right: .5rem">
+									<p:resetInput target=":student-dropout-form:student-dropout-form-content" />
+								</p:commandButton>
+							</sec:authorize>
+
+							<p:commandButton value="#{msgs.btn_studentList_ver_baja}"
+								actionListener="#{dropOutBean.setCourse(manageStudentBean.course)}"
+								update=":student-dropout-list:student-dropout-list-content"
+								oncomplete="PF('studentDropoutListDialog').show()" styleClass="ui-button-secondary"
 								style="margin-right: .5rem">
-								<p:resetInput target=":student-form:manage-student-content" />
 							</p:commandButton>
-							<p:commandButton value="#{msgs.btn_studentList_dar_baja}"
-								actionListener="#{manageStudentBean.openNew}"
-								update=":student-dropout-form:student-dropout-form-content"
-								oncomplete="PF('studentDropoutFormDialog').show()" styleClass="ui-button-secondary"
-								style="margin-right: .5rem">
-								<p:resetInput target=":student-dropout-form:student-dropout-form-content" />
+
+							<p:outputLabel for="course" value="#{msgs.label_course}" style="margin-right: .5rem" />
+							<p:selectOneMenu id="course" value="#{manageStudentBean.course}" style="margin-right: .5rem">
+								<f:selectItems value="#{manageCourseBean.courses}" var="course"
+									itemLabel="#{course.identifier}" itemValue="#{course.id}" />
+								<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
+									update="dt-students"></p:ajax>
+							</p:selectOneMenu>
+
+							<p:outputLabel for="year" value="#{msgs.label_year}" style="margin-right: .5rem" />
+							<p:selectOneMenu id="year" value="#{manageStudentBean.year}" style="margin-right: .5rem">
+								<f:selectItems value="#{manageYearBean.years}" var="year" itemLabel="#{year.id}"
+									itemValue="#{year.id}" />
+								<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
+									update="dt-students"></p:ajax>
+							</p:selectOneMenu>
+
+							<p:outputLabel for="brigade" value="#{msgs.label_brigade}" style="margin-right: .5rem" />
+							<p:selectOneMenu id="brigade" value="#{manageStudentBean.brigade}" style="margin-right: .5rem">
+								<f:selectItems value="#{manageBrigadeBean.brigades}" var="brigade"
+									itemLabel="#{brigade.name}" itemValue="#{brigade.id}" />
+								<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"></p:ajax>
+							</p:selectOneMenu>
+						</p:toolbarGroup>
+
+						<p:toolbarGroup align="right">
+							<!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
+								 del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
+							<p:commandButton value="#{msgs.btn_export}" icon="pi pi-upload" styleClass="ui-button-help"
+								ajax="false">
+								<p:dataExporter type="pdf" target="dt-students" fileName="users" />
 							</p:commandButton>
-						</sec:authorize>
+						</p:toolbarGroup>
+					</p:toolbar>
 
-						<p:commandButton value="#{msgs.btn_studentList_ver_baja}"
-							actionListener="#{dropOutBean.setCourse(manageStudentBean.course)}"
-							update=":student-dropout-list:student-dropout-list-content"
-							oncomplete="PF('studentDropoutListDialog').show()" styleClass="ui-button-secondary"
-							style="margin-right: .5rem">
-						</p:commandButton>
+					<!-- Componente usado para mostrar tablas con datos y ejecutar operaciones
+						* La propiedad value: apunta a una lista de objetos de tipo UserDto que está en el bean de jsf
+						* La propiedad var: es una instancia de esta lista para poder extaer los objetos, es como iterador
+						  que luego permite poder decir user.<propiedad del objeto>.
+						* La propiedad paginator: define si se quiere paginar o no y es posible definir la position del mismo usando
+						  la propiedad pagePosition.
+						* La propiedad rows: define la cantidad de filas
+						* El facet header define un encabezado y agrega un button para filtrar. Por defecto esto lo hace el solo, si quieren algo
+						  con mayor detalle ver el showcase.
+					 -->
+					<p:dataTable id="dt-students" widgetVar="dtStudents" var="student" value="#{manageStudentBean.students}"
+						reflow="true" paginator="true" rows="10" paginatorPosition="bottom">
+						<f:facet name="header">
+							<div class="products-table-header">
+								<span style="font-weight: bold">#{msgs.header_table_studentList}</span>
+								<span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+									<p:inputText id="globalFilter" onkeyup="PF('dtStudents').filter()"
+										placeholder="#{msgs.ph_search}" />
+								</span>
 
-						<p:outputLabel for="course" value="#{msgs.label_course}" style="margin-right: .5rem" />
-						<p:selectOneMenu id="course" value="#{manageStudentBean.course}" style="margin-right: .5rem">
-							<f:selectItems value="#{manageCourseBean.courses}" var="course"
-								itemLabel="#{course.identifier}" itemValue="#{course.id}" />
-							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
-								update="dt-students"></p:ajax>
-						</p:selectOneMenu>
+							</div>
+						</f:facet>
 
-						<p:outputLabel for="year" value="#{msgs.label_year}" style="margin-right: .5rem" />
-						<p:selectOneMenu id="year" value="#{manageStudentBean.year}" style="margin-right: .5rem">
-							<f:selectItems value="#{manageYearBean.years}" var="year" itemLabel="#{year.id}"
-								itemValue="#{year.id}" />
-							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"
-								update="dt-students"></p:ajax>
-						</p:selectOneMenu>
+						<p:column headerText="#{msgs.column_studentList_id}" sortBy="#{student.idNum}"
+							filterBy="#{student.idNum}">
+							<h:outputText value="#{student.idNum}" />
+						</p:column>
+						<p:column headerText="#{msgs.column_studentList_firstName}" sortBy="#{student.firstName}"
+							filterBy="#{student.firstName}">
+							<h:outputText value="#{student.firstName}" />
+						</p:column>
+						<p:column headerText="#{msgs.column_studentList_lastName}" sortBy="#{student.lastName}"
+							filterBy="#{student.lastName}">
+							<h:outputText value="#{student.lastName}" />
+						</p:column>
+						<p:column headerText="#{msgs.column_studentList_gender}" sortBy="#{student.gender}"
+							filterBy="#{student.gender}">
+							<h:outputText value="#{student.gender}" />
+						</p:column>
+						<p:column headerText="#{msgs.column_studentList_municipality}" sortBy="#{student.municipality}"
+							filterBy="#{student.municipality}">
+							<h:outputText value="#{student.municipality}" />
+						</p:column>
+						<p:column headerText="#{msgs.column_studentList_status}" sortBy="#{student.statusDescription}"
+							filterBy="#{student.statusDescription}">
+							<h:outputText value="#{student.statusDescription}" />
+						</p:column>
 
-						<p:outputLabel for="brigade" value="#{msgs.label_brigade}" style="margin-right: .5rem" />
-						<p:selectOneMenu id="brigade" value="#{manageStudentBean.brigade}" style="margin-right: .5rem">
-							<f:selectItems value="#{manageBrigadeBean.brigades}" var="brigade"
-								itemLabel="#{brigade.name}" itemValue="#{brigade.id}" />
-							<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"></p:ajax>
-						</p:selectOneMenu>
-					</p:toolbarGroup>
+						<p:column exportable="false">
 
-					<p:toolbarGroup align="right">
-						<!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
-					         del componente dataExporter. En este caso dt-users es el identificador del componente datatable -->
-						<p:commandButton value="#{msgs.btn_export}" icon="pi pi-upload" styleClass="ui-button-help"
-							ajax="false">
-							<p:dataExporter type="pdf" target="dt-students" fileName="users" />
-						</p:commandButton>
-					</p:toolbarGroup>
-				</p:toolbar>
+							<sec:authorize access="hasAnyAuthority('admin')">
+								<p:commandButton icon="pi pi-pencil" action="#{manageStudentBean.openForEdit}"
+									update=":student-form:manage-student-content"
+									oncomplete="PF('manageStudentDialog').show()"
+									styleClass="edit-button rounded-button ui-button-success" process="@this">
+									<f:setPropertyActionListener value="#{student}"
+										target="#{manageStudentBean.selectedStudent}" />
+									<p:resetInput target=":student-form:manage-student-content" />
+								</p:commandButton>
+								<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+									action="#{manageStudentBean.deleteStudent}">
+									<f:setPropertyActionListener value="#{student}"
+										target="#{manageStudentBean.selectedStudent}" />
+									<p:confirm header="#{msgs.btn_confirmDelete}"
+										message="#{msgs.btn_studentList_delete_msg}" icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+							</sec:authorize>
 
-				<!-- Componente usado para mostrar tablas con datos y ejecutar operaciones
-                	* La propiedad value: apunta a una lista de objetos de tipo UserDto que está en el bean de jsf
-                	* La propiedad var: es una instancia de esta lista para poder extaer los objetos, es como iterador
-                	  que luego permite poder decir user.<propiedad del objeto>.
-                	* La propiedad paginator: define si se quiere paginar o no y es posible definir la position del mismo usando
-                	  la propiedad pagePosition.
-                    * La propiedad rows: define la cantidad de filas
-                	* El facet header define un encabezado y agrega un button para filtrar. Por defecto esto lo hace el solo, si quieren algo
-                	  con mayor detalle ver el showcase.  
-                 -->
-				<p:dataTable id="dt-students" widgetVar="dtStudents" var="student" value="#{manageStudentBean.students}"
-					reflow="true" paginator="true" rows="10" paginatorPosition="bottom">
-					<f:facet name="header">
-						<div class="products-table-header">
-							<span style="font-weight: bold">#{msgs.header_table_studentList}</span>
-							<span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
-								<p:inputText id="globalFilter" onkeyup="PF('dtStudents').filter()"
-									placeholder="#{msgs.ph_search}" />
-							</span>
-
-						</div>
-					</f:facet>
-
-					<p:column headerText="#{msgs.column_studentList_id}" sortBy="#{student.idNum}"
-						filterBy="#{student.idNum}">
-						<h:outputText value="#{student.idNum}" />
-					</p:column>
-					<p:column headerText="#{msgs.column_studentList_firstName}" sortBy="#{student.firstName}"
-						filterBy="#{student.firstName}">
-						<h:outputText value="#{student.firstName}" />
-					</p:column>
-					<p:column headerText="#{msgs.column_studentList_lastName}" sortBy="#{student.lastName}"
-						filterBy="#{student.lastName}">
-						<h:outputText value="#{student.lastName}" />
-					</p:column>
-					<p:column headerText="#{msgs.column_studentList_gender}" sortBy="#{student.gender}"
-						filterBy="#{student.gender}">
-						<h:outputText value="#{student.gender}" />
-					</p:column>
-					<p:column headerText="#{msgs.column_studentList_municipality}" sortBy="#{student.municipality}"
-						filterBy="#{student.municipality}">
-						<h:outputText value="#{student.municipality}" />
-					</p:column>
-					<p:column headerText="#{msgs.column_studentList_status}" sortBy="#{student.statusDescription}"
-						filterBy="#{student.statusDescription}">
-						<h:outputText value="#{student.statusDescription}" />
-					</p:column>
-
-					<p:column exportable="false">
-
-						<sec:authorize access="hasAnyAuthority('admin')">
-							<p:commandButton icon="pi pi-pencil" action="#{manageStudentBean.openForEdit}"
-								update=":student-form:manage-student-content"
-								oncomplete="PF('manageStudentDialog').show()"
-								styleClass="edit-button rounded-button ui-button-success" process="@this">
-								<f:setPropertyActionListener value="#{student}"
-									target="#{manageStudentBean.selectedStudent}" />
-								<p:resetInput target=":student-form:manage-student-content" />
+							<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this"
+								action="#{manageStudentGradeBean.searchStudentGrades(student.id, manageStudentBean.year)}"
+								update=":student-grades:grades-student-content"
+								oncomplete="PF('gradesStudentDialog').show()">
 							</p:commandButton>
-							<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
-								action="#{manageStudentBean.deleteStudent}">
-								<f:setPropertyActionListener value="#{student}"
-									target="#{manageStudentBean.selectedStudent}" />
-								<p:confirm header="#{msgs.btn_confirmDelete}"
-									message="#{msgs.btn_studentList_delete_msg}" icon="pi pi-exclamation-triangle" />
-							</p:commandButton>
-						</sec:authorize>
 
-						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this"
-							action="#{manageStudentGradeBean.searchStudentGrades(student.id, manageStudentBean.year)}"
-							update=":student-grades:grades-student-content"
-							oncomplete="PF('gradesStudentDialog').show()">
-						</p:commandButton>
+						</p:column>
 
-					</p:column>
-
-				</p:dataTable>
+					</p:dataTable>
 
 
-				<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
-				su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se define dentro del button -->
-				<p:confirmDialog global="true" showEffect="fade" width="300">
-					<p:commandButton value="#{msgs.btn_delete_yes}" type="button" styleClass="ui-confirmdialog-yes"
-						icon="pi pi-check" />
-					<p:commandButton value="#{msgs.btn_delete_no}" type="button"
-						styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
-				</p:confirmDialog>
-			</div>
-		</h:form>
+					<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
+					su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se define dentro del button -->
+					<p:confirmDialog global="true" showEffect="fade" width="300">
+						<p:commandButton value="#{msgs.btn_delete_yes}" type="button" styleClass="ui-confirmdialog-yes"
+							icon="pi pi-check" />
+						<p:commandButton value="#{msgs.btn_delete_no}" type="button"
+							styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+					</p:confirmDialog>
+				</div>
+			</h:form>
 
-		<h:form id="student-form">
-			<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
-			<ui:include src="student-form.xhtml">
-				<ui:param name="manageBean" value="#{manageStudentBean}" />
-			</ui:include>
-		</h:form>
+			<h:form id="student-form">
+				<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
+				<ui:include src="student-form.xhtml">
+					<ui:param name="manageBean" value="#{manageStudentBean}" />
+				</ui:include>
+			</h:form>
 
-		<h:form id="student-grades">
-			<ui:include src="student-grades.xhtml"></ui:include>
-		</h:form>
+			<h:form id="student-grades">
+				<ui:include src="student-grades.xhtml"></ui:include>
+			</h:form>
 
-		<h:form id="student-dropout-form">
-			<ui:include src="student-dropout-form.xhtml"></ui:include>
-		</h:form>
+			<h:form id="student-dropout-form">
+				<ui:include src="student-dropout-form.xhtml"></ui:include>
+			</h:form>
 
-		<h:form id="student-dropout-list">
-			<ui:include src="student-dropout-list.xhtml"></ui:include>
-		</h:form>
+			<h:form id="student-dropout-list">
+				<ui:include src="student-dropout-list.xhtml"></ui:include>
+			</h:form>
+		</p:card>
 	</ui:define>
 </ui:composition>
 

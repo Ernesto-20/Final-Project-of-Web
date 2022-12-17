@@ -35,15 +35,13 @@ public class ManageInitCourse {
     private InitCourseTransactionService initCourseTransactionService;
 
     public void startCourse()throws IOException{
-        System.out.println("STAR COURSE");
+
 //            Validar Primera y Segunda Vista (llamar a metodo validate() de su bean).
 //        if(manageSelectionStudentBean.isCorrect()) {
             if (!manageSelectionStudentBean.iCorrect()) {
-                System.out.println("FALTAN DATOS");
                 //            Mostrar mensaje de error
                 JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error_brigade_without_students");
             } else {
-                System.out.println("OK");
                 //            Obtener los datos.
                 //            Llamar a servicion de unica transacción.
             }

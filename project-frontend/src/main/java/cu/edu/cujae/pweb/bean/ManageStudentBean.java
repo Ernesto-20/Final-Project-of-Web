@@ -76,9 +76,9 @@ public class ManageStudentBean {
 			
 //			Crear el estudiante dentro de la tabla student_in_brigade
 			
-				System.out.println("Estudiante ID:" + studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId());
+
 				StudentInBrigadeDTO studentInBrigade = new StudentInBrigadeDTO(studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId(), course, brigade, 2);
-				System.out.println("Estudiante en Brigada:" + studentInBrigade);
+
 				studentInBrigadeService.createStudentInBrigade(studentInBrigade);
 			
 				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
@@ -128,7 +128,6 @@ public class ManageStudentBean {
 	public List<StudentDTO> getStudents() {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		String url = request.getRequestURL().toString().substring(39);
-//	System.out.println(url);
 		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
 		switch(url) {
 //		Vista de Sandy

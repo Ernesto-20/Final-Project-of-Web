@@ -48,23 +48,18 @@ public class ManageUserBean {
 	private RoleService roleService;
 
 	public ManageUserBean() {
-
 	}
 
-	// Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
 		this.selectedUser = new UserDTO();
 		this.selectedRoles = null;
 	}
 
-	// Se ejecuta al dar clic en el button con el lapicito
 	public void openForEdit() {
 		List<RoleDTO> roles = this.selectedUser.getRoles();
 		this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
 	}
 
-	// Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar
-	// al usuario
 	public void saveUser() {
 		if (this.selectedUser.getId() == null) {
 			this.selectedUser.setId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
@@ -155,7 +150,8 @@ public class ManageUserBean {
 	}
 
 	public List<RoleDTO> getRoles() {
-		roles = roleService.getRoles();
+		roles = roles == null ? roleService.getRoles() : roles;
+
 		return roles;
 	}
 

@@ -7,6 +7,7 @@ import org.primefaces.event.TabChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
@@ -29,10 +30,15 @@ public class ManageSelectionStudentBean {
     private StudentService studentService;
 
     public ManageSelectionStudentBean() {
-        init();
+        initialize();
     }
 
-    private void init() {
+    @PostConstruct
+    public void init() {
+        this.selectedStudent = new StudentDTO();
+    }
+
+    private void initialize() {
         selectedStudent = new StudentDTO();
         students = new ArrayList<>();
         studentsList = new ArrayList<>();
@@ -58,11 +64,12 @@ public class ManageSelectionStudentBean {
     }
 
     public void refresh(){
+        this.selectedStudent = new StudentDTO();
         this.students.clear();
         this.studentsList.get(0).forEach(element -> students.add(element));
 //        this.students = this.studentsList.get(index);
         this.currentIndex = 0;
-        PrimeFaces.current().ajax().update("form:panelView");
+//        PrimeFaces.current().ajax().update("form:panelView");
     }
 
     public String index(List<StudentDTO> brigade){
@@ -77,22 +84,23 @@ public class ManageSelectionStudentBean {
 
     public void openNew() {
         this.selectedStudent = new StudentDTO();
+
+        PrimeFaces.current().ajax().update("dialog");
+//        PrimeFaces.current().executeScript("PF('manageStudentDialog').show()");
     }
 
     public void openForEdit() {
+        PrimeFaces.current().ajax().update("dialog");
+//        PrimeFaces.current().executeScript("PF('manageStudentDialog').show()");
     }
+
 
     public void changeGroup(TabChangeEvent event){
         this.selectedStudent = new StudentDTO();
         int index = Integer.parseInt(event.getTab().getTitle().substring(event.getTab().getTitle().length()-1)) -1;
-//        List<StudentDTO> listClone = new ArrayList<>();
-//        students.forEach((element) -> {listClone.add(element);} );
-
-//        this.studentsList.set(currentIndex, listClone);
 
         this.students.clear();
         this.studentsList.get(index).forEach(element -> students.add(element));
-//        this.students = this.studentsList.get(index);
         this.currentIndex = index;
         PrimeFaces.current().ajax().update("form:panelView");
     }
@@ -108,8 +116,7 @@ public class ManageSelectionStudentBean {
             this.studentsList.get(currentIndex).forEach(element -> students.add(element));
 
 
-//            studentService.createStudent(this.selectedStudent);
-//            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
+
         } else {
             for(int i=0; i<students.size(); i++){
                 if(students.get(i).getId() == this.selectedStudent.getId()){
@@ -122,13 +129,10 @@ public class ManageSelectionStudentBean {
                     break;
                 }
             }
-//            studentService.updateStudent(this.selectedStudent);
-//
-//            this.selectedStudent = new StudentDTO();
-//            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_edited");
         }
-//        students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
-//
+
+
+        this.selectedStudent = new StudentDTO();
         PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
         PrimeFaces.current().ajax().update("form:panelView");
     }

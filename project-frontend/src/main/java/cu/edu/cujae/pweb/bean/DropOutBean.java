@@ -79,11 +79,7 @@ public class DropOutBean {
 	
 	public List<StudentDropOutNamedDTO> getStudentDropouts() {
 		studentDropouts = studentDropoutService.getNamedStudentDropOutByCourseId(course);
-		System.out.println(studentDropouts);
-		System.out.println("Size:" + studentDropouts.size());
-		
-		for(StudentDropOutNamedDTO st: studentDropouts)
-			System.out.println("Size:" + st.getStudentName());
+
 		return studentDropouts;
 	}
 

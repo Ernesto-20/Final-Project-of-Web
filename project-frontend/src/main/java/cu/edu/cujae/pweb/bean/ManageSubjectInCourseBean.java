@@ -68,11 +68,10 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public void onCourseChange(){
-		System.out.println("Hubo un cambio en el select del curso");
 	}
 
 	public void openForEditNamed() {
-		System.out.println("Aqui se supone que se abra para edit algun NamedDTO");
+
 	}
 	
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
@@ -117,7 +116,7 @@ public class ManageSubjectInCourseBean {
     }
 
 	public void deleteSubjectInCourseNamed(){
-		System.out.println("Aqui se supone que se va a borrar algo I believe");
+
 		this.subjectsInCourseNamed.remove(this.selectedSubjectInCourseNamed);
 		subjectInCourseService.deleteSubjectInCourse(
 				selectedSubjectInCourseNamed.getSubjectId(),

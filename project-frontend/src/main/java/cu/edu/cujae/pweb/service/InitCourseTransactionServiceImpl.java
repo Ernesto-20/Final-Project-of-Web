@@ -3,7 +3,9 @@ package cu.edu.cujae.pweb.service;
 import cu.edu.cujae.pweb.dto.InitCourseTransactionDTO;
 import cu.edu.cujae.pweb.utils.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class InitCourseTransactionServiceImpl implements InitCourseTransactionService{
 
     @Autowired

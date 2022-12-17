@@ -39,7 +39,6 @@ public class BrigadeServiceImpl implements BrigadeService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(brigades);
 		return brigades;
 	}
 

@@ -56,14 +56,6 @@ public class ManageSubjectInCourseBean {
 //	}
 	
 
-	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
-	@PostConstruct
-    public void init() {
-	    subjectsInCourse = subjectsInCourse == null ? subjectInCourseService.getSubjectsInCourse() : subjectsInCourse;
-    	subjectsInCourseNamed = subjectsInCourseNamed == null ? subjectInCourseService.getSubjectsInCourseNamed() : subjectsInCourseNamed;
-		
-    }
-
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
         this.selectedSubjectInCourse = new SubjectInCourseDTO();
@@ -76,11 +68,10 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public void onCourseChange(){
-		System.out.println("Hubo un cambio en el select del curso");
 	}
 
 	public void openForEditNamed() {
-		System.out.println("Aqui se supone que se abra para edit algun NamedDTO");
+
 	}
 	
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
@@ -125,7 +116,7 @@ public class ManageSubjectInCourseBean {
     }
 
 	public void deleteSubjectInCourseNamed(){
-		System.out.println("Aqui se supone que se va a borrar algo I believe");
+
 		this.subjectsInCourseNamed.remove(this.selectedSubjectInCourseNamed);
 		subjectInCourseService.deleteSubjectInCourse(
 				selectedSubjectInCourseNamed.getSubjectId(),
@@ -162,10 +153,12 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public List<SubjectInCourseDTO> getSubjectsInCourse() {
+		subjectsInCourse = subjectsInCourse == null ? subjectInCourseService.getSubjectsInCourse() : subjectsInCourse;
 		return subjectsInCourse;
 	}
 
 	public List<SubjectInCourseNamedDTO> getSubjectsInCourseNamed() {
+		subjectsInCourseNamed = subjectsInCourseNamed == null ? subjectInCourseService.getSubjectsInCourseNamed() : subjectsInCourseNamed;
 		return subjectsInCourseNamed;
 	}
 

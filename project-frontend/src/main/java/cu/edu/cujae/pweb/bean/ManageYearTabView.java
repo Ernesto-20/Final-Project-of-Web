@@ -1,5 +1,7 @@
 package cu.edu.cujae.pweb.bean;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import cu.edu.cujae.pweb.dto.SubjectDTO;
 import cu.edu.cujae.pweb.dto.SubjectInCourseDTO;
 import cu.edu.cujae.pweb.dto.SubjectInCourseNamedDTO;
 import cu.edu.cujae.pweb.dto.YearDTO;
@@ -23,14 +25,15 @@ import java.util.UUID;
 @ViewScoped //Este es el alcance utilizado para trabajar con Ajax
 public class ManageYearTabView {
 
-	private SubjectInCourseDTO subjectInCourseDTO;
-	private SubjectInCourseDTO selectedSubjectInCourse;
-	private List<SubjectInCourseDTO> subjectsInCourse;
-	private List<SubjectInCourseNamedDTO> subjectsInCourseNamed;
-
-
-
+	private SubjectInCourseNamedDTO subjectInCourseDTO;
+	private SubjectInCourseNamedDTO selectedSubjectInCourse;
+	private List<SubjectInCourseNamedDTO> subjectsInCourse;
+	private List<SubjectInCourseNamedDTO> selectedSubjectsInCourse;
 	private List<YearDTO> years;
+
+	private List<List<SubjectInCourseNamedDTO>> subjectsInCourseList;
+	private int currentIndex;
+
 
 	/* @Autowired es la manera para inyectar una dependencia/clase anotada con @service en spring
 	 * Tener en cuenta que lo que se inyecta siempre es la interfaz y no la clase
@@ -41,20 +44,17 @@ public class ManageYearTabView {
 	@Autowired
 	private YearService yearService;
 
+	@Autowired
+	private ManageSubjectBean manageSubjectBean;
+
+
 	public ManageYearTabView() {
 		
 	}
-	
-
-	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
-	@PostConstruct
-    public void init() {
-		years = years == null ? yearService.getYears() : years;
-    }
 
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
-        this.selectedSubjectInCourse = new SubjectInCourseDTO();
+        this.selectedSubjectInCourse = new SubjectInCourseNamedDTO();
     }
 	
 	//Se ejecuta al dar clic en el button con el lapicito
@@ -67,7 +67,11 @@ public class ManageYearTabView {
 	public void saveSubjectInCourse() {
         if (this.selectedSubjectInCourse.getSubjectId() == null && this.selectedSubjectInCourse.getCourseId() == null
 		&& this.selectedSubjectInCourse.getYearId() == null) {
-        	subjectInCourseService.createSubjectInCourse(selectedSubjectInCourse);
+            this.selectedSubjectInCourse.setSubjectId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
+			this.selectedSubjectInCourse.setCourseId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
+			this.selectedSubjectInCourse.setYearId(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
+            
+            this.subjectsInCourse.add(this.selectedSubjectInCourse);
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_added"); //Este code permite mostrar un mensaje exitoso (FacesMessage.SEVERITY_INFO) obteniendo el mensage desde el fichero de recursos, con la llave message_user_added
         }
         else {
@@ -91,39 +95,76 @@ public class ManageYearTabView {
         
     }
 
-	public SubjectInCourseDTO getSubjectInCourseDTO() {
+	public boolean hasSelectedSubjectsInCourse() {
+		return this.selectedSubjectsInCourse != null && !this.selectedSubjectsInCourse.isEmpty();
+	}
+
+	public void subjectRemove() {
+
+	}
+
+    public void subjectAssign(List<SubjectDTO> subjectsToAssign) {
+        
+    }
+
+	public List<List<SubjectInCourseNamedDTO>> getSubjectsInCourseList() {
+		return subjectsInCourseList;
+	}
+
+	public void setSubjectsInCourseList(List<List<SubjectInCourseNamedDTO>> subjectsInCourseList) {
+		this.subjectsInCourseList = subjectsInCourseList;
+	}
+
+	public int getCurrentIndex() {
+		return currentIndex;
+	}
+
+	public void setCurrentIndex(int currentIndex) {
+		this.currentIndex = currentIndex;
+	}
+
+	public ManageSubjectBean getManageSubjectBean() {
+		return manageSubjectBean;
+	}
+
+	public void setManageSubjectBean(ManageSubjectBean manageSubjectBean) {
+		this.manageSubjectBean = manageSubjectBean;
+	}
+
+	public SubjectInCourseNamedDTO getSubjectInCourseDTO() {
 		return subjectInCourseDTO;
 	}
 
-	public void setSubjectInCourseDTO(SubjectInCourseDTO subjectInCourseDTO) {
+	public void setSubjectInCourseDTO(SubjectInCourseNamedDTO subjectInCourseDTO) {
 		this.subjectInCourseDTO = subjectInCourseDTO;
 	}
 
-	public SubjectInCourseDTO getSelectedSubjectInCourse() {
+	public SubjectInCourseNamedDTO getSelectedSubjectInCourse() {
 		return selectedSubjectInCourse;
 	}
 
-	public void setSelectedSubjectInCourse(SubjectInCourseDTO selectedSubjectInCourse) {
+	public void setSelectedSubjectInCourse(SubjectInCourseNamedDTO selectedSubjectInCourse) {
 		this.selectedSubjectInCourse = selectedSubjectInCourse;
 	}
 
-	public List<SubjectInCourseDTO> getSubjectsInCourse() {
+	public List<SubjectInCourseNamedDTO> getSubjectsInCourse() {
 		return subjectsInCourse;
 	}
 
-	public List<SubjectInCourseNamedDTO> getSubjectsInCourseNamed() {
-		return subjectsInCourseNamed;
-	}
-
-	public void setSubjectsInCourse(List<SubjectInCourseDTO> subjectsInCourse) {
+	public void setSubjectsInCourse(List<SubjectInCourseNamedDTO> subjectsInCourse) {
 		this.subjectsInCourse = subjectsInCourse;
 	}
 
-	public void setSubjectsInCourseNamed(List<SubjectInCourseNamedDTO> subjectsInCourseNamed) {
-		this.subjectsInCourseNamed = subjectsInCourseNamed;
+	public List<SubjectInCourseNamedDTO> getSelectedSubjectsInCourse() {
+		return selectedSubjectsInCourse;
+	}
+
+	public void setSelectedSubjectsInCourse(List<SubjectInCourseNamedDTO> selectedSubjectsInCourse) {
+		this.selectedSubjectsInCourse = selectedSubjectsInCourse;
 	}
 
 	public List<YearDTO> getYears() {
+		years = years == null ? yearService.getYears() : years;
 		return years;
 	}
 

@@ -13,8 +13,9 @@
                     <ui:include src="subject-in-course-form.xhtml"></ui:include>
 
                     <p:dataTable id="#{year.id}dt-subjectsInCourse" widgetVar="dtSubjectsInCourse" var="subjectInCourse"
-                                 value="#{manageYearTabView.subjectsInCourse}" reflow="true" paginator="true"
-                                 rows="10" paginatorPosition="bottom">
+                                 value="#{manageYearTabView.subjectsInCourse}" reflow="true" paginator="true" rows="10"
+                                 selection="#{manageYearTabView.selectedSubjectsInCourse}"
+                                 rowKey="#{subjectInCourse.id}" rowSelectMode="add" paginatorPosition="bottom">
                         <f:facet name="header">
                             <div class="products-table-header">
                                 <span style="font-weight: bold">#{msgs.span_subjects_of_year}:#{year.id}</span>
@@ -24,9 +25,14 @@
                             </div>
                         </f:facet>
 
-                        <p:column exportable="false">
-                            <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
-                        </p:column>
+                        <p:ajax event="rowSelect" update=":formSelectionSubject:remove-subjects-button " />
+                        <p:ajax event="rowUnselect" update=":formSelectionSubject:remove-subjects-button" />
+                        <p:ajax event="rowSelectCheckbox" update=":formSelectionSubject:remove-subjects-button" />
+                        <p:ajax event="rowUnselectCheckbox" update=":formSelectionSubject:remove-subjects-button" />
+                        <p:ajax event="toggleSelect" update=":formSelectionSubject:remove-subjects-button" />
+
+
+                        <p:column selectionMode="multiple" exportable="false"></p:column>
 
                         <p:column headerText="#{msgs.column_subject_assigned}" sortBy="#{subject.subjectInCourse.subjectId}">
                             <h:outputText value="#{subjectInCourse.subjectId}" />

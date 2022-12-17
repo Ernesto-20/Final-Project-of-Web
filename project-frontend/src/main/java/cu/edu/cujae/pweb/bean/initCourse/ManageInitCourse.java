@@ -27,6 +27,7 @@ public class ManageInitCourse {
     private ManageSelectionStudentBean manageSelectionStudentBean;
 
 
+
     public String getViewSelected(){
         manageSelectionStudentBean.refresh();
 

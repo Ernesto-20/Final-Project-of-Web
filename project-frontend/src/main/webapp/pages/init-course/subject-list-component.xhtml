@@ -22,6 +22,14 @@
                                          styleClass="ui-button-success" style="margin-right: .5rem">
                             <p:resetInput target="formSelectionSubject:manage-subject-content" />
                         </p:commandButton>
+                        <p:commandButton id="delete-subjects-button" value="#{manageSubjectBean.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{manageSubjectBean.deleteSelectedSubjects}"
+                                         styleClass="ui-button-danger"
+                                         disabled="#{!manageSubjectBean.hasSelectedSubjects()}"
+                                         process="@this" update="@this">
+                            <p:confirm header="Confirmation" message="Delete the selected subjects?"
+                                       icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <!-- Este es un button que tiene como objetivo exportar el contenido de la tabla que apunta a propiedad target
@@ -43,22 +51,34 @@
                 	* El facet header define un encabezado y agrega un button para filtrar. Por defecto esto lo hace el solo, si quieren algo
                 	  con mayor detalle ver el showcase.
                  -->
-                <p:dataTable id="dt-subjects" widgetVar="dtSubjects" var="subject"
-                             value="#{manageSubjectBean.subjects}" reflow="true" paginator="true"
-                             rows="10" paginatorPosition="bottom"
+
+                <p:dataTable id="dt-subjects" widgetVar="dtSubjects" var="subject" value="#{manageSubjectBean.subjects}"
+                             reflow="true" selection="#{manageSubjectBean.selectedSubjects}" rowKey="#{subject.id}"
+                             paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom"
                              emptyMessage="No subjects found">
-                    <f:facet name="header">
+                    <f:facet name="header" exportable="false">
                         <div class="products-table-header">
                             <span style="font-weight: bold">#{msgs.span_subjects}</span>
                             <span class="filter-container ui-input-icon-left"><i class="pi pi-search"></i>
-                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjects').filter()" placeholder="#{msgs.ph_search}"/>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtSubjects').filter()"
+                                             placeholder="#{msgs.ph_search}" exportable="false"/>
 							</span>
                         </div>
                     </f:facet>
 
-                    <p:column exportable="false" filterable="false">
-                        <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
-                    </p:column>
+                    <p:ajax event="rowSelect" update=":formSelectionSubject:delete-subjects-button " />
+                    <p:ajax event="rowUnselect" update=":formSelectionSubject:delete-subjects-button" />
+                    <p:ajax event="rowSelectCheckbox" update=":formSelectionSubject:delete-subjects-button" />
+                    <p:ajax event="rowUnselectCheckbox" update=":formSelectionSubject:delete-subjects-button" />
+                    <p:ajax event="toggleSelect" update=":formSelectionSubject:delete-subjects-button" />
+
+                    <p:ajax event="rowSelect" update=":formSelectionSubject:assign-subjects-button " />
+                    <p:ajax event="rowUnselect" update=":formSelectionSubject:assign-subjects-button" />
+                    <p:ajax event="rowSelectCheckbox" update=":formSelectionSubject:assign-subjects-button" />
+                    <p:ajax event="rowUnselectCheckbox" update=":formSelectionSubject:assign-subjects-button" />
+                    <p:ajax event="toggleSelect" update=":formSelectionSubject:assign-subjects-button" />
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
 
                     <p:column headerText="#{msgs.column_subject}" sortBy="#{subject.name}"
                               filterBy="#{subject.name}"

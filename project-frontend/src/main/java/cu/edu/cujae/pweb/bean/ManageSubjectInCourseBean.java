@@ -54,15 +54,8 @@ public class ManageSubjectInCourseBean {
 //	public void setManageCourseBean(ManageCourseBean manageCourseBean) {
 //		this.manageCourseBean = manageCourseBean;
 //	}
-	
 
-	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
-	@PostConstruct
-    public void init() {
-	    subjectsInCourse = subjectsInCourse == null ? subjectInCourseService.getSubjectsInCourse() : subjectsInCourse;
-    	subjectsInCourseNamed = subjectsInCourseNamed == null ? subjectInCourseService.getSubjectsInCourseNamed() : subjectsInCourseNamed;
-		
-    }
+
 
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
@@ -138,6 +131,7 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public SubjectInCourseDTO getSubjectInCourseDTO() {
+
 		return subjectInCourseDTO;
 	}
 
@@ -162,10 +156,12 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public List<SubjectInCourseDTO> getSubjectsInCourse() {
+		subjectsInCourse = subjectsInCourse == null ? subjectInCourseService.getSubjectsInCourse() : subjectsInCourse;
 		return subjectsInCourse;
 	}
 
 	public List<SubjectInCourseNamedDTO> getSubjectsInCourseNamed() {
+		subjectsInCourseNamed = subjectsInCourseNamed == null ? subjectInCourseService.getSubjectsInCourseNamed() : subjectsInCourseNamed;
 		return subjectsInCourseNamed;
 	}
 

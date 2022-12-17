@@ -1,11 +1,13 @@
 package cu.edu.cujae.pweb.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,12 +26,13 @@ import cu.edu.cujae.pweb.utils.JsfUtils;
 public class DropOutBean {
 
 	private List<DropOutDTO> dropouts;
-	private DropOutDTO dropout;
 	
 	private List<StudentDropOutNamedDTO> studentDropouts;
 	private StudentDropOutNamedDTO studentDropout;
+	private StudentDropOutNamedDTO selectedStudentDropout;
 
 	private Integer course = 1;
+	private Integer dropout = 1;
 	
 	@Autowired
 	private DropOutService dropoutService;
@@ -44,22 +47,62 @@ public class DropOutBean {
 
 	}
 	
-//	public void dropStudents(Integer courseId, List<StudentDTO> students) {
-////		if(dropout.getCause())
-//		for(StudentDTO student: students) {
-//			studentDropoutService.createStudentDropOut(new StudentDropOutDTO(dropout.getId(), courseId, student.getId()));
-//			
-////			Change students status to "Baja". 
-//			student.setStatusID(4);
-//			studentService.updateStudent(student);
-//		}
-//		
-//		if(students.size() == 1)
-//			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_studentDropOut_added");
-//		else
-//			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_studentDropOuts_added");		
-//	}
+	public void dropStudents(Integer courseId, List<StudentDTO> selectedStudents) {
+		try {
+			System.out.println("Size:" + selectedStudents.size());
+			
+			for (StudentDTO student: selectedStudents) {
+				System.out.println("Nombre:" + student.getFullName());
+				System.out.println("Dropout:" + dropout);
+				
+//				Si el estudiante existe en la tabla de 'student_dropout' en el curso dado, entonces no crearlo
+				if(!studentDropoutExist(courseId, student)) {
+					studentDropoutService.createStudentDropOut(new StudentDropOutDTO(dropout, courseId, student.getId()));
+					
+//					Change students status to "Baja". 
+					student.setStatusID(4);
+					studentService.updateStudent(student);
+				}
+			}
+			
+			if(selectedStudents.size() == 1)
+				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_studentDropOut_added");
+			else if(selectedStudents.size() > 1)
+				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_studentDropOuts_added");
+			
+			PrimeFaces.current().ajax().update(":form:dt-students");
+		} catch (Exception e) {
+			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
+		}
+		
+		PrimeFaces.current().executeScript("PF('studentDropoutDialog').hide()");
+	}
 	
+	private boolean studentDropoutExist(Integer courseId, StudentDTO student) {
+		return studentDropoutService.getNamedStudentDropOutByStudentId(student.getId()).stream().anyMatch(st -> st.getCourseId() == courseId);
+	}
+	
+	public void openForEdit() {
+	}
+	
+	public void deleteStudentDropOut() {
+		try {
+			studentDropoutService.deleteStudentDropOut(this.selectedStudentDropout);
+			this.selectedStudentDropout = new StudentDropOutNamedDTO();
+
+			// load datatable again with new values
+			studentDropouts = studentDropoutService.getNamedStudentDropOutByCourseId(course);
+
+			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_studentDropOut_deleted");
+			PrimeFaces.current().ajax().update("student-dropout-list:dt-students-dropouts");
+			
+		} catch (Exception e) {
+			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
+		}
+
+	}
+	
+
 	public List<DropOutDTO> getDropouts() {
 		dropouts = dropoutService.getDropOuts();
 		return dropouts;
@@ -69,21 +112,16 @@ public class DropOutBean {
 		this.dropouts = dropouts;
 	}
 	
-	public DropOutDTO getDropout() {
+	public Integer getDropout() {
 		return dropout;
 	}
 
-	public void setDropout(DropOutDTO dropout) {
+	public void setDropout(Integer dropout) {
 		this.dropout = dropout;
 	}
 	
 	public List<StudentDropOutNamedDTO> getStudentDropouts() {
 		studentDropouts = studentDropoutService.getNamedStudentDropOutByCourseId(course);
-		System.out.println(studentDropouts);
-		System.out.println("Size:" + studentDropouts.size());
-		
-		for(StudentDropOutNamedDTO st: studentDropouts)
-			System.out.println("Size:" + st.getStudentName());
 		return studentDropouts;
 	}
 
@@ -105,5 +143,13 @@ public class DropOutBean {
 
 	public void setCourse(Integer course) {
 		this.course = course;
+	}
+
+	public StudentDropOutNamedDTO getSelectedStudentDropout() {
+		return selectedStudentDropout;
+	}
+
+	public void setSelectedStudentDropout(StudentDropOutNamedDTO selectedStudentDropout) {
+		this.selectedStudentDropout = selectedStudentDropout;
 	}
 }

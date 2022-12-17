@@ -25,9 +25,10 @@
 								style="margin-right: .5rem">
 								<p:resetInput target=":student-form:manage-student-content" />
 							</p:commandButton>
-							<p:commandButton value="#{msgs.btn_studentList_dar_baja}"
+							<p:commandButton id="btn_studentList_dar_baja" value="#{msgs.btn_studentList_dar_baja}"
 								actionListener="#{manageStudentBean.openNew}"
-								update=":student-dropout-form:student-dropout-form-content"
+								disabled="#{!manageStudentBean.hasSelectedStudents()}"
+								update="@this"
 								oncomplete="PF('studentDropoutFormDialog').show()" styleClass="ui-button-secondary"
 								style="margin-right: .5rem">
 								<p:resetInput target=":student-dropout-form:student-dropout-form-content" />
@@ -86,7 +87,8 @@
                 	  con mayor detalle ver el showcase.  
                  -->
 				<p:dataTable id="dt-students" widgetVar="dtStudents" var="student" value="#{manageStudentBean.students}"
-					reflow="true" paginator="true" rows="10" paginatorPosition="bottom">
+					reflow="true" paginator="true" rows="10" paginatorPosition="bottom" 
+					rowSelectMode="add" selection="#{manageStudentBean.selectedStudents}" rowKey="#{student.id}">
 					<f:facet name="header">
 						<div class="products-table-header">
 							<span style="font-weight: bold">#{msgs.header_table_studentList}</span>
@@ -97,6 +99,15 @@
 
 						</div>
 					</f:facet>
+					
+					<p:ajax event="rowSelect" update=":form:btn_studentList_dar_baja" />
+                    <p:ajax event="rowUnselect" update=":form:btn_studentList_dar_baja" />
+                    <p:ajax event="rowSelectCheckbox" update=":form:btn_studentList_dar_baja" />
+                    <p:ajax event="rowUnselectCheckbox" update=":form:btn_studentList_dar_baja" />
+                    <p:ajax event="toggleSelect" update=":form:btn_studentList_dar_baja" />
+					
+					
+					<p:column selectionMode="multiple" exportable="false" style="width:10px;"></p:column>
 
 					<p:column headerText="#{msgs.column_studentList_id}" sortBy="#{student.idNum}"
 						filterBy="#{student.idNum}">
@@ -134,7 +145,7 @@
 									target="#{manageStudentBean.selectedStudent}" />
 								<p:resetInput target=":student-form:manage-student-content" />
 							</p:commandButton>
-							<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+							<p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
 								action="#{manageStudentBean.deleteStudent}">
 								<f:setPropertyActionListener value="#{student}"
 									target="#{manageStudentBean.selectedStudent}" />
@@ -153,9 +164,6 @@
 
 				</p:dataTable>
 
-
-				<!-- Este comoponente se utiliza mucho para el caso de los eliminar, que es donde casi siempre se necesita confirmation,
-				su uso es bien sencillo, cada confirmDialog va atado a un p:confirm que es el que se define dentro del button -->
 				<p:confirmDialog global="true" showEffect="fade" width="300">
 					<p:commandButton value="#{msgs.btn_delete_yes}" type="button" styleClass="ui-confirmdialog-yes"
 						icon="pi pi-check" />
@@ -166,7 +174,6 @@
 		</h:form>
 
 		<h:form id="student-form">
-			<!-- ui:include es una etiqueta de facelet que permite incluir pages y de esta forma el code no se carga tanto -->
 			<ui:include src="student-form.xhtml">
 				<ui:param name="manageBean" value="#{manageStudentBean}" />
 			</ui:include>

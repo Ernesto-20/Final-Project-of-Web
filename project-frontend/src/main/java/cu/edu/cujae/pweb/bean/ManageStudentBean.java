@@ -32,16 +32,12 @@ public class ManageStudentBean {
 	private StudentDTO studentDTO;
 	private StudentDTO selectedStudent;
 	private List<StudentDTO> students;
-	
+	private List<StudentDTO> selectedStudents;
+
 	// Por defecto mostrar los estudiantes del curso, grupo y año con id = 1
 	private Integer course = 1;
 	private Integer year = 1;
 	private Integer brigade = 1;
-	
-	public void reloadListStudent() {
-		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
-		PrimeFaces.current().ajax().update("form:dt-students");
-	}
 	
 	@Autowired
 	private StudentService studentService;
@@ -76,9 +72,7 @@ public class ManageStudentBean {
 			
 //			Crear el estudiante dentro de la tabla student_in_brigade
 			
-				System.out.println("Estudiante ID:" + studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId());
 				StudentInBrigadeDTO studentInBrigade = new StudentInBrigadeDTO(studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId(), course, brigade, 2);
-				System.out.println("Estudiante en Brigada:" + studentInBrigade);
 				studentInBrigadeService.createStudentInBrigade(studentInBrigade);
 			
 				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
@@ -109,6 +103,7 @@ public class ManageStudentBean {
 			// load datatable again with new values
 			students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
 
+			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_deleted");
 			PrimeFaces.current().ajax().update("form:dt-students");
 			
 		} catch (Exception e) {
@@ -116,6 +111,17 @@ public class ManageStudentBean {
 		}
 
 	}
+	
+	public void reloadListStudent() {
+		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+		PrimeFaces.current().ajax().update("form:dt-students");
+	}
+	
+//	Usado para deshabilitar el botón de Dar Baja
+	public boolean hasSelectedStudents() {
+		return this.selectedStudents != null && !this.selectedStudents.isEmpty();
+	}
+	
 	
 	private boolean studentExist() {
 		return studentService.getStudentByIdNum(selectedStudent.getIdNum()) != null;
@@ -168,6 +174,13 @@ public class ManageStudentBean {
 		this.selectedStudent = selectedStudent;
 	}
 
+	public List<StudentDTO> getSelectedStudents() {
+		return selectedStudents;
+	}
+
+	public void setSelectedStudents(List<StudentDTO> selectedStudents) {
+		this.selectedStudents = selectedStudents;
+	}
 
 	public Integer getBrigade() {
 		return brigade;

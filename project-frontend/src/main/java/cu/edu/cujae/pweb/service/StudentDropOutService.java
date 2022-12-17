@@ -16,7 +16,7 @@ public interface StudentDropOutService {
 //
 //    List<StudentDropOutDTO> findByStudentId(int id);
 //
-//    List<StudentDropOutNamedDTO> findNamedByStudentId(int id);
+    List<StudentDropOutNamedDTO> getNamedStudentDropOutByStudentId(Integer studentId);
 //
 //    List<StudentDropOutDTO> findByCourseId(int id);
 //
@@ -31,5 +31,5 @@ public interface StudentDropOutService {
 //    // ! Este método es innecesario
 //    void updateCourse(int dropOutId, int studentId, int newCourseId) throws SQLException;
 //
-//    void delete(StudentDropOutDTO studentDropOut) throws SQLException;
+    void deleteStudentDropOut(StudentDropOutNamedDTO studentDropOut);
 }

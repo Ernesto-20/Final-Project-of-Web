@@ -71,9 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/")
                 	.permitAll()
                 .antMatchers("/api/v1/auth/**")
-                	.permitAll();
-//                .anyRequest()
-//                	.authenticated();
+                	.permitAll()
+                .anyRequest()
+                	.authenticated();
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

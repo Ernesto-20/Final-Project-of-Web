@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cu.edu.cujae.backend.core.dto.StudentDropOutDTO;
@@ -92,8 +93,10 @@ public class StudentDropOutController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<String> deleteStudentDropOut(@RequestBody StudentDropOutDTO studentDropOut) throws SQLException {
-        studentDropOutService.delete(studentDropOut);
+    public ResponseEntity<String> deleteStudentDropOut(@RequestParam Integer dropoutId, @RequestParam Integer courseId, @RequestParam Integer studentId) throws SQLException {
+    	StudentDropOutDTO studentDropOut = new StudentDropOutDTO(dropoutId, courseId, studentId);
+    	
+    	studentDropOutService.delete(studentDropOut);
         return ResponseEntity.ok("StudentDropOut deleted");
     }
 }

@@ -79,7 +79,6 @@ public class ManageCourseBean {
 
 	public void setSelectOption(String selectOption) {
 		this.selectOption = selectOption;
-		System.out.println("Selected course is:");
-		System.out.println(selectOption);
+
 	}
 }

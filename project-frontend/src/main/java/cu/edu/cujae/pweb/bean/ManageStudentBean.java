@@ -24,28 +24,24 @@ import cu.edu.cujae.pweb.service.StudentService;
 import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 
-@Component 
+@Component
 @ManagedBean
-@ViewScoped 
+@ViewScoped
 public class ManageStudentBean {
 
 	private StudentDTO studentDTO;
 	private StudentDTO selectedStudent;
 	private List<StudentDTO> students;
-	
+	private List<StudentDTO> selectedStudents;
+
 	// Por defecto mostrar los estudiantes del curso, grupo y año con id = 1
 	private Integer course = 1;
 	private Integer year = 1;
 	private Integer brigade = 1;
-	
-	public void reloadListStudent() {
-		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
-		PrimeFaces.current().ajax().update("form:dt-students");
-	}
-	
+
 	@Autowired
 	private StudentService studentService;
-	
+
 	@Autowired
 	private StudentInBrigadeService studentInBrigadeService;
 
@@ -68,27 +64,24 @@ public class ManageStudentBean {
 
 	public void saveStudent() {
 		if (this.selectedStudent.getId() == null) {
-			
-//			Si un estudiante con el mismo ID ya está en la bd no se crea el nuevo estudiante. 
-			if(!studentExist()) {
-					
+
+			// Si un estudiante con el mismo ID ya está en la bd no se crea el nuevo
+			// estudiante.
+			if (!studentExist()) {
+
 				studentService.createStudent(this.selectedStudent);
-			
-//			Crear el estudiante dentro de la tabla student_in_brigade
-			
-				System.out.println("Estudiante ID:" + studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId());
-				StudentInBrigadeDTO studentInBrigade = new StudentInBrigadeDTO(studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId(), course, brigade, 2);
-				System.out.println("Estudiante en Brigada:" + studentInBrigade);
+
+				// Crear el estudiante dentro de la tabla student_in_brigade
+
+				StudentInBrigadeDTO studentInBrigade = new StudentInBrigadeDTO(
+						studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId(), course, brigade, 2);
 				studentInBrigadeService.createStudentInBrigade(studentInBrigade);
-			
+
 				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
-				
-			} 
-			else
+
+			} else
 				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_student_already_exist");
-		} 
-		else 
-		{
+		} else {
 			studentService.updateStudent(this.selectedStudent);
 
 			this.selectedStudent = new StudentDTO();
@@ -109,14 +102,25 @@ public class ManageStudentBean {
 			// load datatable again with new values
 			students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
 
+			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_deleted");
 			PrimeFaces.current().ajax().update("form:dt-students");
-			
+
 		} catch (Exception e) {
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
 		}
 
 	}
-	
+
+	public void reloadListStudent() {
+		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+		PrimeFaces.current().ajax().update("form:dt-students");
+	}
+
+	// Usado para deshabilitar el botón de Dar Baja
+	public boolean hasSelectedStudents() {
+		return this.selectedStudents != null && !this.selectedStudents.isEmpty();
+	}
+
 	private boolean studentExist() {
 		return studentService.getStudentByIdNum(selectedStudent.getIdNum()) != null;
 	}
@@ -126,32 +130,33 @@ public class ManageStudentBean {
 	}
 
 	public List<StudentDTO> getStudents() {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest();
 		String url = request.getRequestURL().toString().substring(39);
-//	System.out.println(url);
 		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
-		switch(url) {
-//		Vista de Sandy
-		case "students":
-			students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
-			break;
-//		Vista de Ernesto
-		case "init-course/selection-student":
-			students = new ArrayList<>();
-//			students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
-			break;
-//		Vista de Daniel
-		case "":
-			students = studentService.getStudents() ;
-			break;
+		switch (url) {
+			// Vista de Sandy
+			case "students":
+				students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+				break;
+			// Vista de Ernesto
+			case "init-course/selection-student":
+				students = new ArrayList<>();
+				// students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade,
+				// course);
+				break;
+			// Vista de Daniel
+			case "":
+				students = studentService.getStudents();
+				break;
 		}
 		return students;
 	}
-	
+
 	public void setStudents(List<StudentDTO> students) {
 		this.students = students;
 	}
-	
+
 	public StudentDTO getStudentDto() {
 		return studentDTO;
 	}
@@ -168,6 +173,13 @@ public class ManageStudentBean {
 		this.selectedStudent = selectedStudent;
 	}
 
+	public List<StudentDTO> getSelectedStudents() {
+		return selectedStudents;
+	}
+
+	public void setSelectedStudents(List<StudentDTO> selectedStudents) {
+		this.selectedStudents = selectedStudents;
+	}
 
 	public Integer getBrigade() {
 		return brigade;

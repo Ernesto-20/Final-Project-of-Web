@@ -23,7 +23,7 @@
                     <p:commandButton id="assign-subjects-button" value="#{msgs.btn_subject_assign}"
                                      icon="pi pi-arrow-right" iconPos="right"
                                      actionListener="#{manageSubjectBean.subjectAssign}"
-                                     disabled="#{!manageSubjectBean.hasSelectedSubjects}" update="@this"
+                                     disabled="#{!manageSubjectBean.hasSelectedSubjects()}" update="@this"
                                      styleClass="ui-button-success" style="margin-right: .5rem" process="@this">
 <!--                        <f:setPropertyActionListener value="#{student}" target="#{manageStudentBean.selectedStudent}" />-->
                     </p:commandButton>
@@ -31,7 +31,7 @@
                     <p:commandButton id="remove-subjects-button" value="#{msgs.btn_subject_remove}"
                                      icon="pi pi-arrow-left"
                                      actionListener="#{manageYearTabView.subjectRemove}"
-                                     disabled="#{!manageYearTabView.hasSelectedSubjectsInCourse}" update="@this"
+                                     disabled="#{!manageYearTabView.hasSelectedSubjectsInCourse()}" update="@this"
                                      styleClass="ui-button-warning" style="margin-right: .5rem" process="@this">
                     </p:commandButton>
                 </p:panelGrid>
@@ -39,6 +39,9 @@
                 <ui:include src="year-tab-view.xhtml"></ui:include>
 
             </p:panelGrid>
+        </h:form>
+        <h:form id="formSubjectInCourse">
+            <ui:include src="subject-in-course-complete-form.xhtml"></ui:include>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -78,7 +78,7 @@
                     <p:ajax event="rowUnselectCheckbox" update=":formSelectionSubject:assign-subjects-button" />
                     <p:ajax event="toggleSelect" update=":formSelectionSubject:assign-subjects-button" />
 
-                    <p:column selectionMode="multiple" exportable="false"></p:column>
+                    <p:column selectionMode="multiple" exportable="false" style="width:10px;" ></p:column>
 
                     <p:column headerText="#{msgs.column_subject}" sortBy="#{subject.name}"
                               filterBy="#{subject.name}"

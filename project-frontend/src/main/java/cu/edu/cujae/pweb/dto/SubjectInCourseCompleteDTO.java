@@ -3,12 +3,24 @@ package cu.edu.cujae.pweb.dto;
 public class SubjectInCourseCompleteDTO {
     private CourseDTO courseDTO;
     private String yearID;
+    private Integer amountHours;
     private SubjectDTO subjectDTO;
 
-    public SubjectInCourseCompleteDTO(CourseDTO courseDTO, String yearID, SubjectDTO subjectDTO) {
+    public SubjectInCourseCompleteDTO(){}
+
+    public SubjectInCourseCompleteDTO(CourseDTO courseDTO, String yearID, Integer amountHours, SubjectDTO subjectDTO) {
         this.courseDTO = courseDTO;
         this.yearID = yearID;
+        this.amountHours = amountHours;
         this.subjectDTO = subjectDTO;
+    }
+
+    public Integer getAmountHours() {
+        return amountHours;
+    }
+
+    public void setAmountHours(Integer amountHours) {
+        this.amountHours = amountHours;
     }
 
     public CourseDTO getCourseDTO() {

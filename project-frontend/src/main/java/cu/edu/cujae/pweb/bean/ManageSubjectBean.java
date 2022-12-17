@@ -1,9 +1,14 @@
 package cu.edu.cujae.pweb.bean;
 
+import cu.edu.cujae.pweb.dto.CourseDTO;
 import cu.edu.cujae.pweb.dto.SubjectDTO;
+import cu.edu.cujae.pweb.dto.SubjectInCourseCompleteDTO;
 import cu.edu.cujae.pweb.service.SubjectService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import org.primefaces.PrimeFaces;
+import org.primefaces.behavior.ajax.AjaxBehavior;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +16,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,9 +152,14 @@ public class ManageSubjectBean {
 				}
 			}
 		}
-		this.selectedSubjects = new ArrayList<SubjectDTO>();
-		PrimeFaces.current().ajax().update("formSelectionSubject");
+
+		setSelectedSubjects(new ArrayList<SubjectDTO>());
 		manageYearTabView.subjectAssign(subjectsToAssign);
+	}
+
+	public void subjectRemove(List<SubjectDTO> subjectsToRemove) {
+		subjectsToRemove.forEach(element-> {subjects.add(element);});
+		PrimeFaces.current().ajax().update("formSelectionSubject");
 	}
 
 	public ManageYearTabView getManageYearTabView() {

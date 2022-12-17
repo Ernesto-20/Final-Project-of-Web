@@ -56,7 +56,6 @@ public class ManageSubjectInCourseBean {
 //	}
 
 
-
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
         this.selectedSubjectInCourse = new SubjectInCourseDTO();

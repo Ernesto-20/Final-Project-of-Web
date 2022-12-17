@@ -15,8 +15,8 @@
         <div class="layout-menu">
 
             <sec:authorize access="hasAnyAuthority('admin')">
-                <div class="menu-category">#{msgs.menu_administration}
-                    <div class="menu-items">
+                <div class="menu-category" >#{msgs.menu_administration}
+                    <div class="menu-items" style="margin-top: 10px;">
                         <h:link outcome="/pages/init-course/#{manageInitCourse.viewSelected}">
                             #{msgs.menu_administration_new_course}
                         </h:link>
@@ -29,7 +29,7 @@
                 </div>
             </sec:authorize>
             <div class="menu-category">#{msgs.menu_menu}
-                <div class="menu-items">
+                <div class="menu-items" style="margin-top: 10px;">
                     <h:link outcome="/pages/student/student-list.xhtml">
                         #{msgs.menu_menu_students}
                     </h:link>

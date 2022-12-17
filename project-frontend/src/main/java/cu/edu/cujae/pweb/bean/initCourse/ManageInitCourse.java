@@ -1,11 +1,13 @@
 package cu.edu.cujae.pweb.bean.initCourse;
 
 import cu.edu.cujae.pweb.service.InitCourseTransactionService;
+import cu.edu.cujae.pweb.utils.JsfUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -21,7 +23,6 @@ public class ManageInitCourse {
     private String colorStart = "rgb(161,156,156)";
 
     public ManageInitCourse(){
-
     }
 
     @Autowired
@@ -33,14 +34,14 @@ public class ManageInitCourse {
     @Autowired
     private InitCourseTransactionService initCourseTransactionService;
 
-    public void starCourse()throws IOException{
+    public void startCourse()throws IOException{
         System.out.println("STAR COURSE");
 //            Validar Primera y Segunda Vista (llamar a metodo validate() de su bean).
 //        if(manageSelectionStudentBean.isCorrect()) {
             if (!manageSelectionStudentBean.iCorrect()) {
                 System.out.println("FALTAN DATOS");
                 //            Mostrar mensaje de error
-                //            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_error_brigade_without_students");
+                JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error_brigade_without_students");
             } else {
                 System.out.println("OK");
                 //            Obtener los datos.

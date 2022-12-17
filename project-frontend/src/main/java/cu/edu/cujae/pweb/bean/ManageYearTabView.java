@@ -46,11 +46,6 @@ public class ManageYearTabView {
 	}
 	
 
-	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase. 
-	@PostConstruct
-    public void init() {
-		years = years == null ? yearService.getYears() : years;
-    }
 
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
@@ -124,6 +119,7 @@ public class ManageYearTabView {
 	}
 
 	public List<YearDTO> getYears() {
+		years = years == null ? yearService.getYears() : years;
 		return years;
 	}
 

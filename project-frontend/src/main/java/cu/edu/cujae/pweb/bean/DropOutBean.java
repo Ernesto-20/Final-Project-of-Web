@@ -90,7 +90,9 @@ public class DropOutBean {
 
 	public void deleteStudentDropOut() {
 		try {
+			System.out.println("ANtes de borrar");
 			studentDropoutService.deleteStudentDropOut(this.selectedStudentDropout);
+			System.out.println("Despues de borrar");
 			this.selectedStudentDropout = new StudentDropOutNamedDTO();
 
 			// load datatable again with new values

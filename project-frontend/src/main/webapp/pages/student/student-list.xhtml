@@ -18,11 +18,11 @@
 									style="margin-right: .5rem">
 									<p:resetInput target=":student-form:manage-student-content" />
 								</p:commandButton>
-								<p:commandButton value="#{msgs.btn_studentList_dar_baja}"
-									actionListener="#{manageStudentBean.openNew}"
-									update=":student-dropout-form:student-dropout-form-content"
-									oncomplete="PF('studentDropoutFormDialog').show()" styleClass="ui-button-secondary"
-									style="margin-right: .5rem">
+								<p:commandButton id="btn_studentList_dar_baja" value="#{msgs.btn_studentList_dar_baja}"
+												 actionListener="#{manageStudentBean.openNew}"
+												 disabled="#{!manageStudentBean.hasSelectedStudents()}" update="@this"
+												 oncomplete="PF('studentDropoutFormDialog').show()" styleClass="ui-button-secondary"
+												 style="margin-right: .5rem">
 									<p:resetInput target=":student-dropout-form:student-dropout-form-content" />
 								</p:commandButton>
 							</sec:authorize>
@@ -33,12 +33,7 @@
 								oncomplete="PF('studentDropoutListDialog').show()" styleClass="ui-button-secondary"
 								style="margin-right: .5rem">
 							</p:commandButton>
-							<p:commandButton id="btn_studentList_dar_baja" value="#{msgs.btn_studentList_dar_baja}"
-								actionListener="#{manageStudentBean.openNew}"
-								disabled="#{!manageStudentBean.hasSelectedStudents()}" update="@this"
-								oncomplete="PF('studentDropoutFormDialog').show()" styleClass="ui-button-secondary"
-								style="margin-right: .5rem">
-								<p:resetInput target=":student-dropout-form:student-dropout-form-content" />
+
 
 								<p:outputLabel for="course" value="#{msgs.label_course}" style="margin-right: .5rem" />
 								<p:selectOneMenu id="course" value="#{manageStudentBean.course}"

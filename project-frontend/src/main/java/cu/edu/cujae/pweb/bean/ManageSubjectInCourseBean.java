@@ -54,7 +54,7 @@ public class ManageSubjectInCourseBean {
 //	public void setManageCourseBean(ManageCourseBean manageCourseBean) {
 //		this.manageCourseBean = manageCourseBean;
 //	}
-	
+
 
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
@@ -129,6 +129,7 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public SubjectInCourseDTO getSubjectInCourseDTO() {
+
 		return subjectInCourseDTO;
 	}
 

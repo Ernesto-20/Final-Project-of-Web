@@ -13,7 +13,7 @@ public class InitCourseTransactionServiceImpl implements InitCourseTransactionSe
 
     @Override
     public void initCourse(InitCourseTransactionDTO initCourseTransactionDTO) {
-        restService.POST("/api/v1/init-course", initCourseTransactionDTO, String.class).getBody();
+        restService.POST("/api/v1/initcourse", initCourseTransactionDTO, String.class).getBody();
     }
 
 }

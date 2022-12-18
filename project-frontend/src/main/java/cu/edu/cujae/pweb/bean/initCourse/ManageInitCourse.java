@@ -1,8 +1,12 @@
 package cu.edu.cujae.pweb.bean.initCourse;
 
 import cu.edu.cujae.pweb.bean.ManageYearTabView;
+import cu.edu.cujae.pweb.dto.InitCourseTransactionDTO;
+import cu.edu.cujae.pweb.dto.StudentDTO;
+import cu.edu.cujae.pweb.dto.SubjectInCourseCompleteDTO;
 import cu.edu.cujae.pweb.service.InitCourseTransactionService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+import cu.edu.cujae.pweb.utils.ValidateInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -14,6 +18,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @ManagedBean
@@ -38,17 +44,22 @@ public class ManageInitCourse {
     public void startCourse()throws IOException{
 
 //            Validar Primera y Segunda Vista (llamar a metodo validate() de su bean).
-//        if(manageSelectionStudentBean.isCorrect()) {
-            if (!manageSelectionStudentBean.iCorrect()) {
-                //            Mostrar mensaje de error
-                JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error_brigade_without_students");
-            } else {
-                //            Obtener los datos.
-                //            Llamar a servicion de unica transacción.
-            }
-//        }else{
-//            System.out.println("Faltan años por asignar asignaturas");
-//        }
+        if (!manageSelectionStudentBean.isCorrect()) {
+            //            Mostrar mensaje de error
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error_brigade_without_students");
+        } else{
+            //            Obtener los datos.
+            List<SubjectInCourseCompleteDTO> listSubjects = new ArrayList<>();
+            manageYearTabView.getSubjectsInCourseList().forEach(subjectsInCourseByYear -> {
+                for(SubjectInCourseCompleteDTO temp: subjectsInCourseByYear)
+                    listSubjects.add(temp);
+            });
+            List<List<StudentDTO>> listStudents =  manageSelectionStudentBean.getStudentsList();
+
+            //            Llamar a servicion de unica transacción.
+            InitCourseTransactionDTO initCourseTransactionDTO = new InitCourseTransactionDTO(listSubjects, listStudents);
+            initCourseTransactionService.initCourse(initCourseTransactionDTO);
+        }
     }
 
 
@@ -70,13 +81,19 @@ public class ManageInitCourse {
     public void moveAction() throws IOException {
 
         if(actionLabel.equals("Siguiente")) {
-            String url = "http://localhost:8085/project-frontend/init-course/selection-student"; //url donde se redirige la pantalla
-            FacesContext fc = FacesContext.getCurrentInstance();
-            fc.getExternalContext().redirect(url);
 
-            this.actionLabel = "Atras";
-            this.disableStart = "false";
-            this.colorStart = "rgb(13,213,120)";
+            if(manageYearTabView.isCorrect()) {
+                String url = "http://localhost:8085/project-frontend/init-course/selection-student"; //url donde se redirige la pantalla
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.getExternalContext().redirect(url);
+
+                this.actionLabel = "Atras";
+                this.disableStart = "false";
+                this.colorStart = "rgb(13,213,120)";
+            }else{
+                System.out.println("ERROR: AÑOS ASIGNATURAS");
+            }
+
         }else {
             String url = "http://localhost:8085/project-frontend/init-course/selection-subject";
             FacesContext fc = FacesContext.getCurrentInstance();

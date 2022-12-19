@@ -144,7 +144,7 @@ public class ManageSubjectInYearBean {
     public void subjectAssign(List<SubjectDTO> subjectsToAssign) {
 		List<CourseDTO> courses = courseService.getCourses();
 		CourseDTO courseDTO = courses.get(courses.size()-1);
-		subjectsToAssign.forEach(element-> {subjectsInCourseList.get(currentIndex).add(new SubjectInCourseCompleteDTO(courseDTO, (currentIndex+1)+"",72 , element));});
+		subjectsToAssign.forEach(element-> {subjectsInCourseList.get(currentIndex).add(new SubjectInCourseCompleteDTO(courseDTO, (currentIndex+1),72 , element));});
 		subjectsInCourse.clear();
 		subjectsInCourseList.get(currentIndex).forEach(element->subjectsInCourse.add(element));
 		PrimeFaces.current().ajax().update("formSelectionSubject");
@@ -226,5 +226,22 @@ public class ManageSubjectInYearBean {
 
 	public void setYears(List<YearDTO> years) {
 		this.years = years;
+	}
+
+	public List<List<SubjectInCourseCompleteDTO>> test(){
+		subjectsInCourseList = new ArrayList<List<SubjectInCourseCompleteDTO>>();
+		List<CourseDTO> courses = courseService.getCourses();
+		CourseDTO courseDTO = courses.get(courses.size() - 1);
+		List<SubjectDTO> s = manageSubjectBean.getSubjects();
+		int count = s.get(s.size() - 1).getId() + 1;
+		for (int i = 0; i < 4; i++) {
+			ArrayList<SubjectInCourseCompleteDTO> l = new ArrayList<>();
+			SubjectDTO subjectDTO = new SubjectDTO(count++, "Calculo" + (count + 1));
+			manageSubjectBean.getSubjectService().createSubject(subjectDTO);
+			l.add(new SubjectInCourseCompleteDTO(courseDTO, (i + 1), 72, subjectDTO));
+			subjectsInCourseList.add(l);
+		}
+
+		return subjectsInCourseList;
 	}
 }

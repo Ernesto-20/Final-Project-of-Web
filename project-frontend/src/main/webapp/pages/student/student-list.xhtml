@@ -128,13 +128,14 @@
 								<p:commandButton icon="pi pi-pencil" action="#{manageStudentBean.openForEdit}"
 									update=":student-form:manage-student-content"
 									oncomplete="PF('manageStudentDialog').show()"
-									styleClass="edit-button rounded-button ui-button-success" process="@this">
+									styleClass="edit-button rounded-button ui-button-warning" process="@this">
 									<f:setPropertyActionListener value="#{student}"
 										target="#{manageStudentBean.selectedStudent}" />
 									<p:resetInput target=":student-form:manage-student-content" />
 								</p:commandButton>
 								<p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash"
-									process="@this" action="#{manageStudentBean.deleteStudent}">
+									process="@this" action="#{manageStudentBean.deleteStudent}"
+									style="margin-right: .5rem">
 									<f:setPropertyActionListener value="#{student}"
 										target="#{manageStudentBean.selectedStudent}" />
 									<p:confirm header="#{msgs.btn_confirmDelete}"
@@ -142,7 +143,7 @@
 										icon="pi pi-exclamation-triangle" />
 								</p:commandButton>
 							</sec:authorize>
-							<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-book" process="@this"
+							<p:commandButton class="ui-button-info rounded-button" icon="pi pi-book" process="@this"
 								action="#{manageStudentGradeBean.searchStudentGrades(student.id, manageStudentBean.year)}"
 								update=":student-grades:grades-student-content"
 								oncomplete="PF('gradesStudentDialog').show()">

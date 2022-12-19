@@ -2,13 +2,17 @@ package cu.edu.cujae.pweb.bean.initCourse;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.service.StudentService;
+import cu.edu.cujae.pweb.utils.ValidateInput;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.TabChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,26 +48,26 @@ public class ManageSelectionStudentBean {
         studentsList = new ArrayList<>();
         studentsList.add(new ArrayList<>());
         studentsList.add(new ArrayList<>());
-        studentsList.add(new ArrayList<>());
-        studentsList.add(new ArrayList<>());
+//        studentsList.add(new ArrayList<>());
+//        studentsList.add(new ArrayList<>());
         currentIndex = 0;
 
 //        HARDCODE
-        studentsList.get(0).add(new StudentDTO(0, "012", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(0).add(new StudentDTO(1, "013", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(0).add(new StudentDTO(2, "013", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(0).add(new StudentDTO(0, "012", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(0).add(new StudentDTO(1, "013", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(0).add(new StudentDTO(2, "013", "Ernesto", "Fariña", "M", "habana", 0));
 
-        studentsList.get(1).add(new StudentDTO(3, "014", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(1).add(new StudentDTO(4, "015", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(1).add(new StudentDTO(5, "016", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(1, "014", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(1, "015", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(1, "016", "Ernesto", "Fariña", "M", "habana", 0));
 
-        studentsList.get(2).add(new StudentDTO(6, "017", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(2).add(new StudentDTO(7, "018", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(2).add(new StudentDTO(8, "019", "Ernesto", "Fariña", "M", "habana", 0));
-
-        studentsList.get(3).add(new StudentDTO(9, "020", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(3).add(new StudentDTO(10, "021", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(3).add(new StudentDTO(11, "022", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(2, "017", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(2, "018", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(2, "019", "Ernesto", "Fariña", "M", "habana", 0));
+//
+//        studentsList.get(3).add(new StudentDTO(9, "020", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(3).add(new StudentDTO(10, "021", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(3).add(new StudentDTO(11, "022", "Ernesto", "Fariña", "M", "habana", 0));
     }
 
     public void restore(){
@@ -123,7 +127,14 @@ public class ManageSelectionStudentBean {
     }
 
     public void saveStudent() {
-        if(isCorrectIdNum()) {
+//        if(!ValidateInput.isName(this.selectedStudent.getFirstName())) {
+//            System.out.println("HERE");
+//            System.out.println(selectedStudent.getFirstName());
+//
+//            FacesContext.getCurrentInstance().addMessage("firstName", new FacesMessage("hola cara de bola", "hola cabron"));
+//            System.out.println("HERE 2");
+//        }
+        if(isCorrectIdNum()){
             if (this.selectedStudent.getId() == null) {
                 int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
                 this.selectedStudent.setId(idTemp);

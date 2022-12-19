@@ -80,6 +80,7 @@ public class ManageInitCourse {
             List<List<StudentDTO>> listStudents =  manageSelectionStudentBean.getStudentsList();
 
             //            Llamar a servicion de unica transacción.
+            System.out.println("INICIO DE NUEVO CURSO");
             InitCourseTransactionDTO initCourseTransactionDTO = new InitCourseTransactionDTO(listSubjects, listStudents);
             initCourseTransactionService.initCourse(initCourseTransactionDTO);
         }
@@ -110,7 +111,6 @@ public class ManageInitCourse {
     public void moveAction() throws IOException {
 
         if(actionLabel.equals("Siguiente")) {
-
             if(manageSubjectInYearBean.isCorrect()) {
                 String url = "http://localhost:8085/project-frontend/init-course/selection-student"; //url donde se redirige la pantalla
                 FacesContext fc = FacesContext.getCurrentInstance();

@@ -1,4 +1,4 @@
-package cu.edu.cujae.pweb.bean;
+package cu.edu.cujae.pweb.bean.student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,7 @@ import cu.edu.cujae.pweb.service.StudentInBrigadeService;
 import cu.edu.cujae.pweb.service.StudentService;
 import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+import cu.edu.cujae.pweb.utils.ValidateInput;
 
 @Component
 @ManagedBean
@@ -63,35 +64,37 @@ public class ManageStudentBean {
 	}
 
 	public void saveStudent() {
-		if (this.selectedStudent.getId() == null) {
-
-			// Si un estudiante con el mismo ID ya está en la bd no se crea el nuevo
-			// estudiante.
-			if (!studentExist()) {
-
-				studentService.createStudent(this.selectedStudent);
-
-				// Crear el estudiante dentro de la tabla student_in_brigade
-
-				StudentInBrigadeDTO studentInBrigade = new StudentInBrigadeDTO(
-						studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId(), course, brigade, 2);
-				studentInBrigadeService.createStudentInBrigade(studentInBrigade);
-
-				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
-
-			} else
+		// Si un estudiante con el mismo ID ya está en la bd no se crea el nuevo
+		// estudiante.
+		if (ValidateInput.validateStudent(selectedStudent)) {
+			if(studentByIdNumDontExist()) {
+				if (this.selectedStudent.getId() == null) {
+					
+					
+					studentService.createStudent(this.selectedStudent);
+					
+					// Crear el estudiante dentro de la tabla student_in_brigade
+					
+					StudentInBrigadeDTO studentInBrigade = new StudentInBrigadeDTO(
+							studentService.getStudentByIdNum(selectedStudent.getIdNum()).getId(), course, brigade, 2);
+					studentInBrigadeService.createStudentInBrigade(studentInBrigade);
+					
+					JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_added");
+					
+				} else {
+					studentService.updateStudent(this.selectedStudent);
+					
+					this.selectedStudent = new StudentDTO();
+					JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_edited");
+				}
+				students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+				
+				this.selectedStudent = new StudentDTO();
+				PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
+				PrimeFaces.current().ajax().update("form:dt-students");
+			} else 
 				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_student_already_exist");
-		} else {
-			studentService.updateStudent(this.selectedStudent);
-
-			this.selectedStudent = new StudentDTO();
-			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_edited");
-		}
-		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
-
-		this.selectedStudent = new StudentDTO();
-		PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
-		PrimeFaces.current().ajax().update("form:dt-students");
+		} 
 	}
 
 	public void deleteStudent() {
@@ -112,8 +115,12 @@ public class ManageStudentBean {
 	}
 
 	public void reloadListStudent() {
+		System.out.println("here 1");
 		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+		System.out.println("Size: "+students.size());
+		System.out.println("Student 1: " + students.get(0).getFirstName() + " ID: "+ students.get(0).getId());
 		PrimeFaces.current().ajax().update("form:dt-students");
+		System.out.println("here 2");
 	}
 
 	// Usado para deshabilitar el botón de Dar Baja
@@ -121,8 +128,10 @@ public class ManageStudentBean {
 		return this.selectedStudents != null && !this.selectedStudents.isEmpty();
 	}
 
-	private boolean studentExist() {
-		return studentService.getStudentByIdNum(selectedStudent.getIdNum()) != null;
+	private boolean studentByIdNumDontExist() {
+		StudentDTO student = studentService.getStudentByIdNum(selectedStudent.getIdNum());
+//		if(student != null || student.getId() != selectedStudent.getId())
+		return student == null || student.getId() != selectedStudent.getId();
 	}
 
 	public void cancel() {
@@ -133,11 +142,11 @@ public class ManageStudentBean {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest();
 		String url = request.getRequestURL().toString().substring(39);
-		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+		students = studentService.getStudentsByBrigadeCourseYearIds( brigade, course, year);
 		switch (url) {
 			// Vista de Sandy
 			case "students":
-				students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+				students = studentService.getStudentsByBrigadeCourseYearIds( brigade, course, year);
 				break;
 			// Vista de Ernesto
 			case "init-course/selection-student":

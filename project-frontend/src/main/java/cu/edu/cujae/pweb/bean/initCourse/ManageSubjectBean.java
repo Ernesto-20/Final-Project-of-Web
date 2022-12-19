@@ -204,4 +204,7 @@ public class ManageSubjectBean {
 		this.subjects = subjects;
 	}
 
+	public SubjectService getSubjectService() {
+		return subjectService;
+	}
 }

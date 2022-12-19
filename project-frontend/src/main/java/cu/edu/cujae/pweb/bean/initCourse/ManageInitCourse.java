@@ -1,11 +1,13 @@
 package cu.edu.cujae.pweb.bean.initCourse;
 
-import cu.edu.cujae.pweb.dto.InitCourseTransactionDTO;
-import cu.edu.cujae.pweb.dto.StudentDTO;
-import cu.edu.cujae.pweb.dto.SubjectInCourseCompleteDTO;
+import cu.edu.cujae.pweb.dto.*;
+import cu.edu.cujae.pweb.service.CourseService;
 import cu.edu.cujae.pweb.service.InitCourseTransactionService;
+import cu.edu.cujae.pweb.service.StudentGradeService;
+import cu.edu.cujae.pweb.service.StudentGradeServiceImpl;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import cu.edu.cujae.pweb.utils.ValidateInput;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -40,6 +42,28 @@ public class ManageInitCourse {
     @Autowired
     private InitCourseTransactionService initCourseTransactionService;
 
+    @Autowired
+    private StudentGradeService studentGradeService;
+
+    @Autowired
+    private CourseService courseService;
+
+    public boolean isCorrectStudentPromotion(){
+        boolean isCorrectStudentPromotion = false;
+        List<CourseDTO> courses = courseService.getCourses();
+        Integer courseId = courses.get(courses.size()-1).getId();
+        List<StudentGradeOnlyIdDTO> studentsLastCourse = studentGradeService.getStudentGradesByCourseId(courseId);
+        for (int i = 0; i < studentsLastCourse.size() && !isCorrectStudentPromotion; i++) {
+            if (studentsLastCourse.get(i).getGradeValue() != 2 &&
+                    studentsLastCourse.get(i).getGradeValue() != 3 &&
+                    studentsLastCourse.get(i).getGradeValue() != 4 &&
+                    studentsLastCourse.get(i).getGradeValue() != 5) {
+                isCorrectStudentPromotion = true;
+            }
+        }
+        return isCorrectStudentPromotion;
+    }
+
     public void startCourse()throws IOException{
 
 //            Validar Primera y Segunda Vista (llamar a metodo validate() de su bean).
@@ -61,20 +85,26 @@ public class ManageInitCourse {
         }
     }
 
-
     public String getViewSelected(){
-        manageSelectionStudentBean.refresh();
-        manageSubjectInYearBean.refresh();
+        if (isCorrectStudentPromotion()) {
+            manageSelectionStudentBean.refresh();
+            manageSubjectInYearBean.refresh();
 
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        String url = request.getRequestURL().toString().substring(39);
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String url = request.getRequestURL().toString().substring(39);
 
-        if(actionLabel.equals("Atras") && url.equals("init-course/selection-subject")){
-          actionLabel = "Siguiente";
-            disableStart = "true";
-            colorStart = "rgb(161,156,156)";
+            if (actionLabel.equals("Atras") && url.equals("init-course/selection-subject")) {
+                actionLabel = "Siguiente";
+                disableStart = "true";
+                colorStart = "rgb(161,156,156)";
+            }
+            return "/pages/init-course/selection-subject.xhtml";
         }
-        return "selection-subject.xhtml";
+        else {
+            //PrimeFaces.current().dialog().showMessageDynamic(
+                  //  new FacesMessage(FacesMessage.SEVERITY_WARN,"No se puede crear curso", "Faltan estudiantes por notas"));
+            return "/pages/welcome/welcome.xhtml";
+        }
     }
 
     public void moveAction() throws IOException {

@@ -157,17 +157,6 @@ public class ManageSubjectInYearBean {
 				subjectsInCourseList.add(new ArrayList<SubjectInCourseCompleteDTO>());
 			}
 		}
-//		subjectsInCourseList = new ArrayList<List<SubjectInCourseCompleteDTO>>();
-//		List<CourseDTO> courses = courseService.getCourses();
-//		CourseDTO courseDTO = courses.get(courses.size()-1);
-//		List<SubjectDTO> s = manageSubjectBean.getSubjects();
-//		int count = s.get(s.size()-1).getId()+1;
-//		for (int i = 0; i < 4; i++){
-//			ArrayList<SubjectInCourseCompleteDTO> l = new ArrayList<>();
-//			SubjectDTO subjectDTO = new SubjectDTO(count++, "Calculo"+(i+1));
-//			l.add(new SubjectInCourseCompleteDTO(courseDTO, (i+1)+"", 72, subjectDTO));
-//			subjectsInCourseList.add(l);
-//		}
 		return subjectsInCourseList;
 	}
 

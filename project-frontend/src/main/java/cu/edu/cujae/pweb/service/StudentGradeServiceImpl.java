@@ -1,5 +1,6 @@
 package cu.edu.cujae.pweb.service;
 
+import cu.edu.cujae.pweb.dto.StudentGradeOnlyIdDTO;
 import cu.edu.cujae.pweb.security.CurrentUserUtils;
 
 import java.io.IOException;
@@ -24,6 +25,29 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 
 	@Autowired
 	private RestService restService;
+
+	@Override
+	public List<StudentGradeOnlyIdDTO> getStudentGradesByCourseId(Integer courseId) {
+
+		List<StudentGradeOnlyIdDTO> studentGrades = new ArrayList<>();
+
+		try {
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			params.add("courseId", courseId.toString());
+			ApiRestMapper<StudentGradeOnlyIdDTO> apiRestMapper = new ApiRestMapper<>();
+
+			UriTemplate template = new UriTemplate("/api/v1/studentgrades/course/{courseId}");
+			String uri = template.expand(courseId).toString();
+			String response = (String) restService.GET(uri, params, String.class, CurrentUserUtils.getTokenBearer())
+					.getBody();
+
+			studentGrades = apiRestMapper.mapList(response, StudentGradeOnlyIdDTO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return studentGrades;
+	}
+
 
 	@Override
 	public List<StudentGradeDTO> getStudentGradesByYearId(Integer studentId, Integer yearId) {

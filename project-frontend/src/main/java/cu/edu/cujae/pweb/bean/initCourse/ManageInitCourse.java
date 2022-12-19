@@ -82,7 +82,7 @@ public class ManageInitCourse {
 
         if(actionLabel.equals("Siguiente")) {
 
-            if(manageYearTabView.isCorrect()) {
+            if(manageYearTabView.isCorrect() || true) {
                 String url = "http://localhost:8085/project-frontend/init-course/selection-student"; //url donde se redirige la pantalla
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.getExternalContext().redirect(url);

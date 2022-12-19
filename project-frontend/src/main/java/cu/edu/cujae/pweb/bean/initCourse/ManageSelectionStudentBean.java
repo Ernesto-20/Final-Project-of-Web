@@ -2,13 +2,17 @@ package cu.edu.cujae.pweb.bean.initCourse;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.service.StudentService;
+import cu.edu.cujae.pweb.utils.ValidateInput;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.TabChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,25 +127,32 @@ public class ManageSelectionStudentBean {
     }
 
     public void saveStudent() {
-        if(isCorrectIdNum()) {
-            if (this.selectedStudent.getId() == null) {
-                int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
-                this.selectedStudent.setId(idTemp);
-                StudentDTO clone = getClone();
+        if(!ValidateInput.isName(this.selectedStudent.getFirstName())) {
+            System.out.println("HERE");
+            System.out.println(selectedStudent.getFirstName());
 
-                studentsList.get(currentIndex).add(clone);
-                this.students.clear();
-                this.studentsList.get(currentIndex).forEach(element -> students.add(element));
-
-
-            }
-            selectedStudent = new StudentDTO();
-
-            PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
-            PrimeFaces.current().ajax().update("form:panelView");
-        }else{
-            System.out.println("mostrar mensaje de error");
+            FacesContext.getCurrentInstance().addMessage("firstName", new FacesMessage("hola cara de bola", "hola cabron"));
+            System.out.println("HERE 2");
         }
+//        if(isCorrectIdNum()){
+//            if (this.selectedStudent.getId() == null) {
+//                int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
+//                this.selectedStudent.setId(idTemp);
+//                StudentDTO clone = getClone();
+//
+//                studentsList.get(currentIndex).add(clone);
+//                this.students.clear();
+//                this.studentsList.get(currentIndex).forEach(element -> students.add(element));
+//
+//
+//            }
+//            selectedStudent = new StudentDTO();
+//
+//            PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
+//            PrimeFaces.current().ajax().update("form:panelView");
+//        }else{
+//            System.out.println("mostrar mensaje de error");
+//        }
     }
 
     private boolean isCorrectIdNum() {

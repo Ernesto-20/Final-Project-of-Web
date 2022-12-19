@@ -20,7 +20,7 @@
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_firstName}" />
 							<p:inputText id="firstName" required="true"
 								value="#{manageBean.selectedStudent.firstName}" />
-							<p:message for="@previous"></p:message>
+							<p:messages for="firstName" autoUpdate="true"></p:messages>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_lastName}" />

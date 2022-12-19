@@ -17,7 +17,7 @@ Daniel Fernández Lorenzo
     SubjectInCourseWithName classes
 
 Pedro Luis Gutiérrez Díaz
-    pages/init-course/year-tab-view.xhtml
+    pages/init-course/subject-in-year.xhtml
     pages/init-course/subject-list-component.xhtml
     pages/init-course/subject-in-course-list-component.xhtml
     pages/init-course/subject-in-course-form.xhtml

@@ -5,17 +5,17 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:panel class="crud-demo">
-            <p:tabView id="tabContent" value="#{manageYearTabView.subjectsInCourseList}" var="year" dynamic="true">
-                <p:ajax event="tabChange" listener="#{manageYearTabView.changeYear}" />
-                <p:tab title="#{msgs.tab_year}: #{manageYearTabView.index(year)+1}">
+            <p:tabView id="tabContent" value="#{manageSubjectInYearBean.subjectsInCourseList}" var="year" dynamic="true">
+                <p:ajax event="tabChange" listener="#{manageSubjectInYearBean.changeYear}" />
+                <p:tab title="#{msgs.tab_year}: #{manageSubjectInYearBean.index(year)+1}">
 
                     <p:dataTable id="dt-subjectsInCourse" widgetVar="dtSubjectsInCourse" var="subjectInCourse"
-                                 value="#{manageYearTabView.subjectsInCourse}" reflow="true" paginator="true" rows="10"
-                                 selection="#{manageYearTabView.selectedSubjectsInCourse}"
+                                 value="#{manageSubjectInYearBean.subjectsInCourse}" reflow="true" paginator="true" rows="10"
+                                 selection="#{manageSubjectInYearBean.selectedSubjectsInCourse}"
                                  rowKey="#{subjectInCourse.subjectDTO.id}" rowSelectMode="add" paginatorPosition="bottom">
                         <f:facet name="header">
                             <div class="products-table-header">
-                                <span style="font-weight: bold">#{msgs.span_subjects_of_year}:#{manageYearTabView.index(year)+1}</span>
+                                <span style="font-weight: bold">#{msgs.span_subjects_of_year}:#{manageSubjectInYearBean.index(year)+1}</span>
                                 <span class="filter-container ui-input-icon-left"><i class="pi pi-search"></i>
                                 <p:inputText id="globalFilter" onkeyup="PF('dtSubjectsInCourse').filter()" placeholder="#{msgs.ph_search}" />
 							    </span>
@@ -40,14 +40,14 @@
                         </p:column>
 
                         <p:column exportable="false">
-                            <p:commandButton icon="pi pi-pencil" action="#{manageYearTabView.openForEdit}"
-                                             update="formSelectionSubject:tabContent:#{manageYearTabView.index(year)}:dt-subjectsInCourse"
+                            <p:commandButton icon="pi pi-pencil" action="#{manageSubjectInYearBean.openForEdit}"
+                                             update="formSelectionSubject:tabContent:#{manageSubjectInYearBean.index(year)}:dt-subjectsInCourse"
                                              oncomplete="PF('manageSubjectInCourseDialog').show()"
                                              styleClass="edit-button rounded-button ui-button-success"
                                              process="@this">
                                 <f:setPropertyActionListener value="#{subjectInCourse}"
-                                                             target="#{manageYearTabView.selectedSubjectInCourse}" />
-                                <p:resetInput target="formSelectionSubject:tabContent:#{manageYearTabView.index(year)}:dt-subjectsInCourse"/>
+                                                             target="#{manageSubjectInYearBean.selectedSubjectInCourse}" />
+                                <p:resetInput target="formSelectionSubject:tabContent:#{manageSubjectInYearBean.index(year)}:dt-subjectsInCourse"/>
                             </p:commandButton>
                         </p:column>
 

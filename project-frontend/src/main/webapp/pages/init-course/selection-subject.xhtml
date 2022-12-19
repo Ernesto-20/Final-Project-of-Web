@@ -30,13 +30,13 @@
 
                     <p:commandButton id="remove-subjects-button" value="#{msgs.btn_subject_remove}"
                                      icon="pi pi-arrow-left"
-                                     actionListener="#{manageYearTabView.subjectRemove}"
-                                     disabled="#{!manageYearTabView.hasSelectedSubjectsInCourse()}" update="@this"
+                                     actionListener="#{manageSubjectInYearBean.subjectRemove}"
+                                     disabled="#{!manageSubjectInYearBean.hasSelectedSubjectsInCourse()}" update="@this"
                                      styleClass="ui-button-warning" style="margin-right: .5rem" process="@this">
                     </p:commandButton>
                 </p:panelGrid>
 
-                <ui:include src="year-tab-view.xhtml"></ui:include>
+                <ui:include src="subject-in-year.xhtml"></ui:include>
 
             </p:panelGrid>
         </h:form>

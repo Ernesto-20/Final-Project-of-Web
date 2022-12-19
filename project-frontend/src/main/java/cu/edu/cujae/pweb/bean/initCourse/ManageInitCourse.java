@@ -1,6 +1,5 @@
 package cu.edu.cujae.pweb.bean.initCourse;
 
-import cu.edu.cujae.pweb.bean.ManageYearTabView;
 import cu.edu.cujae.pweb.service.InitCourseTransactionService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class ManageInitCourse {
     private ManageSelectionStudentBean manageSelectionStudentBean;
 
     @Autowired
-    private ManageYearTabView manageYearTabView;
+    private ManageSubjectInYearBean manageSubjectInYearBean;
 
     @Autowired
     private InitCourseTransactionService initCourseTransactionService;
@@ -54,7 +53,7 @@ public class ManageInitCourse {
 
     public String getViewSelected(){
         manageSelectionStudentBean.refresh();
-        manageYearTabView.refresh();
+        manageSubjectInYearBean.refresh();
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String url = request.getRequestURL().toString().substring(39);

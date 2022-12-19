@@ -1,24 +1,15 @@
-package cu.edu.cujae.pweb.bean;
+package cu.edu.cujae.pweb.bean.initCourse;
 
-import cu.edu.cujae.pweb.dto.CourseDTO;
 import cu.edu.cujae.pweb.dto.SubjectDTO;
-import cu.edu.cujae.pweb.dto.SubjectInCourseCompleteDTO;
 import cu.edu.cujae.pweb.service.SubjectService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import org.primefaces.PrimeFaces;
-import org.primefaces.behavior.ajax.AjaxBehavior;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +24,7 @@ public class ManageSubjectBean {
 	private List<SubjectDTO> selectedSubjects;
 
 	@Autowired
-	private ManageYearTabView manageYearTabView;
+	private ManageSubjectInYearBean manageSubjectInYearBean;
 
 	/*
 	 * @Autowired es la manera para inyectar una dependencia/clase anotada
@@ -62,26 +53,40 @@ public class ManageSubjectBean {
 	// Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar
 	// al usuario
 	public void saveSubject() {
-		if (this.selectedSubject.getId() == null) {
+		if (!existSubjectName()) {
+			if (this.selectedSubject.getId() == null) {
+				// register subject
+				subjectService.createSubject(this.selectedSubject);
+				// load datatable again with new values
+				List<SubjectDTO> temp = subjectService.getSubjects();
+				subjects.add(temp.get(temp.size() - 1));
+				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_added");
+			}
+			else {
+				// register subject
+				subjectService.updateSubject(this.selectedSubject);
 
-			// register subject
-			subjectService.createSubject(this.selectedSubject);
-			// load datatable again with new values
-			List<SubjectDTO> temp = subjectService.getSubjects();
-			subjects.add(temp.get(temp.size()-1));
-			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_added");
-		} else {
-			// register subject
-			subjectService.updateSubject(this.selectedSubject);
-
-			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_edited");
+				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_edited");
+			}
+			PrimeFaces.current().executeScript("PF('manageSubjectDialog').hide()");// Este code permite cerrar el dialog
+			// cuyo id es manageUserDialog. Este
+			// identificador es el widgetVar
+			PrimeFaces.current().ajax().update("formSelectionSubject:dt-subjects");// Este code es para refrescar el componente con id
+			// dt-users que se encuentra dentro del formulario con
+			// id form
 		}
-		PrimeFaces.current().executeScript("PF('manageSubjectDialog').hide()");// Este code permite cerrar el dialog
-																				// cuyo id es manageUserDialog. Este
-																				// identificador es el widgetVar
-		PrimeFaces.current().ajax().update("formSelectionSubject:dt-subjects");// Este code es para refrescar el componente con id
-																// dt-users que se encuentra dentro del formulario con
-																// id form
+		else {
+			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_name_exist");
+		}
+	}
+
+	private boolean existSubjectName() {
+		boolean existSubjectName = false;
+		for (int i = 0; i < subjects.size()-1 && !existSubjectName; i++) {
+			if (selectedSubject.getName().equals(subjects.get(i).getName()))
+				existSubjectName = true;
+		}
+		return existSubjectName;
 	}
 
 	// Permite eliminar una asignatura
@@ -154,7 +159,7 @@ public class ManageSubjectBean {
 		}
 
 		setSelectedSubjects(new ArrayList<SubjectDTO>());
-		manageYearTabView.subjectAssign(subjectsToAssign);
+		manageSubjectInYearBean.subjectAssign(subjectsToAssign);
 	}
 
 	public void subjectRemove(List<SubjectDTO> subjectsToRemove) {
@@ -162,12 +167,12 @@ public class ManageSubjectBean {
 		PrimeFaces.current().ajax().update("formSelectionSubject");
 	}
 
-	public ManageYearTabView getManageYearTabView() {
-		return manageYearTabView;
+	public ManageSubjectInYearBean getManageSubjectInYearBean() {
+		return manageSubjectInYearBean;
 	}
 
-	public void setManageYearTabView(ManageYearTabView manageYearTabView) {
-		this.manageYearTabView = manageYearTabView;
+	public void setManageSubjectInYearBean(ManageSubjectInYearBean manageSubjectInYearBean) {
+		this.manageSubjectInYearBean = manageSubjectInYearBean;
 	}
 
 	public List<SubjectDTO> getSelectedSubjects() { return selectedSubjects; }

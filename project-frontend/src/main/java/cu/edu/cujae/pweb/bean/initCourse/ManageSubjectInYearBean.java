@@ -1,6 +1,5 @@
-package cu.edu.cujae.pweb.bean;
+package cu.edu.cujae.pweb.bean.initCourse;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import cu.edu.cujae.pweb.dto.*;
 import cu.edu.cujae.pweb.service.CourseService;
 import cu.edu.cujae.pweb.service.SubjectInCourseService;
@@ -11,19 +10,17 @@ import org.primefaces.event.TabChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 @Component //Le indica a spring es un componete registrado
 @ManagedBean
 @ViewScoped //Este es el alcance utilizado para trabajar con Ajax
-public class ManageYearTabView {
+public class ManageSubjectInYearBean {
 
 	private SubjectInCourseCompleteDTO subjectInCourseDTO;
 	private SubjectInCourseCompleteDTO selectedSubjectInCourse;
@@ -51,7 +48,7 @@ public class ManageYearTabView {
 	private ManageSubjectBean manageSubjectBean;
 
 
-	public ManageYearTabView() {
+	public ManageSubjectInYearBean() {
 		init();
 	}
 	private void init() {
@@ -106,7 +103,7 @@ public class ManageYearTabView {
 
 
 
-		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_user_edited");
+		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_edited");
 
 
         PrimeFaces.current().executeScript("PF('manageSubjectInCourseDialog').hide()");//Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
@@ -150,7 +147,6 @@ public class ManageYearTabView {
 		subjectsToAssign.forEach(element-> {subjectsInCourseList.get(currentIndex).add(new SubjectInCourseCompleteDTO(courseDTO, (currentIndex+1)+"",72 , element));});
 		subjectsInCourse.clear();
 		subjectsInCourseList.get(currentIndex).forEach(element->subjectsInCourse.add(element));
-		System.out.println(selectedSubjectsInCourse);
 		PrimeFaces.current().ajax().update("formSelectionSubject");
 	}
 
@@ -161,6 +157,17 @@ public class ManageYearTabView {
 				subjectsInCourseList.add(new ArrayList<SubjectInCourseCompleteDTO>());
 			}
 		}
+//		subjectsInCourseList = new ArrayList<List<SubjectInCourseCompleteDTO>>();
+//		List<CourseDTO> courses = courseService.getCourses();
+//		CourseDTO courseDTO = courses.get(courses.size()-1);
+//		List<SubjectDTO> s = manageSubjectBean.getSubjects();
+//		int count = s.get(s.size()-1).getId()+1;
+//		for (int i = 0; i < 4; i++){
+//			ArrayList<SubjectInCourseCompleteDTO> l = new ArrayList<>();
+//			SubjectDTO subjectDTO = new SubjectDTO(count++, "Calculo"+(i+1));
+//			l.add(new SubjectInCourseCompleteDTO(courseDTO, (i+1)+"", 72, subjectDTO));
+//			subjectsInCourseList.add(l);
+//		}
 		return subjectsInCourseList;
 	}
 

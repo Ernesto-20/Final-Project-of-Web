@@ -23,6 +23,7 @@ import cu.edu.cujae.pweb.service.StudentInBrigadeService;
 import cu.edu.cujae.pweb.service.StudentService;
 import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
+import cu.edu.cujae.pweb.utils.ValidateInput;
 
 @Component
 @ManagedBean
@@ -65,7 +66,7 @@ public class ManageStudentBean {
 	public void saveStudent() {
 		// Si un estudiante con el mismo ID ya está en la bd no se crea el nuevo
 		// estudiante.
-//		if (ValidateInput.isName()) {
+		if (ValidateInput.validateStudent(selectedStudent)) {
 			if(studentByIdNumDontExist()) {
 				if (this.selectedStudent.getId() == null) {
 					
@@ -93,9 +94,7 @@ public class ManageStudentBean {
 				PrimeFaces.current().ajax().update("form:dt-students");
 			} else 
 				JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_student_already_exist");
-//		} else 
-//			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_student_already_exist");
-		
+		} 
 	}
 
 	public void deleteStudent() {

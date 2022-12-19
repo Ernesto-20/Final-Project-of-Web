@@ -60,6 +60,22 @@ input[type="number"] {
     background-color: rgba(165, 165, 165, 0.3); }
   100% {
     background-color: rgba(165, 165, 165, 0.1); } }
+
+body .ui-messages ul .ui-messages-info-summary, body .ui-messages ul .ui-messages-warn-summary, 
+body .ui-messages ul .ui-messages-error-summary, body .ui-messages ul .ui-messages-fatal-summary{
+	font-weight: normal;
+	}
+
+.ui-messages-error.ui-corner-all{
+	margin: 0px 0px 0px 7px;
+	padding: 7px;	
+}
+
+.ui-messages-error-icon{
+	font-size: 2px;
+	margin: 0;
+}
+
 .p-toast.p-toast-topright,
 .p-toast.p-toast-topleft {
   top: 100px; }

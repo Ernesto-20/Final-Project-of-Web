@@ -76,11 +76,12 @@
 					<p:column exportable="false">
 						<p:commandButton icon="pi pi-pencil" action="#{manageUserBean.openForEdit}"
 							update=":form:manage-user-content" oncomplete="PF('manageUserDialog').show()"
-							styleClass="edit-button rounded-button ui-button-success" process="@this">
+							styleClass="edit-button rounded-button ui-button-warning" 
+							process="@this">
 							<f:setPropertyActionListener value="#{user}" target="#{manageUserBean.selectedUser}" />
 							<p:resetInput target=":form:manage-user-content" />
 						</p:commandButton>
-						<p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+						<p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
 							action="#{manageUserBean.deleteUser}">
 							<f:setPropertyActionListener value="#{user}" target="#{manageUserBean.selectedUser}" />
 							<p:confirm header="#{msgs.btn_confirmDelete}" message="#{msgs.btn_userList_delete_msg}"

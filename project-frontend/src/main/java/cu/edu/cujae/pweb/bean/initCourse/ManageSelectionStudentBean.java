@@ -47,6 +47,23 @@ public class ManageSelectionStudentBean {
         studentsList.add(new ArrayList<>());
         studentsList.add(new ArrayList<>());
         currentIndex = 0;
+
+//        HARDCODE
+        studentsList.get(0).add(new StudentDTO(0, "012", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(1, "013", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(2, "013", "Ernesto", "Fariña", "M", "habana", 0));
+
+        studentsList.get(1).add(new StudentDTO(3, "014", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(4, "015", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(5, "016", "Ernesto", "Fariña", "M", "habana", 0));
+
+        studentsList.get(2).add(new StudentDTO(6, "017", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(2).add(new StudentDTO(7, "018", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(2).add(new StudentDTO(8, "019", "Ernesto", "Fariña", "M", "habana", 0));
+
+        studentsList.get(3).add(new StudentDTO(9, "020", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(3).add(new StudentDTO(10, "021", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(3).add(new StudentDTO(11, "022", "Ernesto", "Fariña", "M", "habana", 0));
     }
 
     public void restore(){
@@ -55,7 +72,7 @@ public class ManageSelectionStudentBean {
 
     }
 
-    public boolean iCorrect(){
+    public boolean isCorrect(){
         for(List<StudentDTO> studentDTOS: studentsList)
             if(studentDTOS.size() <= 0)
                 return false;
@@ -106,22 +123,36 @@ public class ManageSelectionStudentBean {
     }
 
     public void saveStudent() {
-        if (this.selectedStudent.getId() == null) {
-            int idTemp = students.size() == 0 ? 0: students.get(students.size()-1).getId()+1;
-            this.selectedStudent.setId(idTemp);
-            StudentDTO clone = getClone();
+        if(isCorrectIdNum()) {
+            if (this.selectedStudent.getId() == null) {
+                int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
+                this.selectedStudent.setId(idTemp);
+                StudentDTO clone = getClone();
 
-            studentsList.get(currentIndex).add(clone);
-            this.students.clear();
-            this.studentsList.get(currentIndex).forEach(element -> students.add(element));
+                studentsList.get(currentIndex).add(clone);
+                this.students.clear();
+                this.studentsList.get(currentIndex).forEach(element -> students.add(element));
 
 
+            }
+            selectedStudent = new StudentDTO();
 
+            PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
+            PrimeFaces.current().ajax().update("form:panelView");
+        }else{
+            System.out.println("mostrar mensaje de error");
         }
-        selectedStudent = new StudentDTO();
+    }
 
-        PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
-        PrimeFaces.current().ajax().update("form:panelView");
+    private boolean isCorrectIdNum() {
+        for(List<StudentDTO> brigade: studentsList)
+            for(StudentDTO studentDTO: brigade)
+                if( studentDTO.getIdNum().equals(this.selectedStudent.getIdNum()) && !studentDTO.getId().equals(this.selectedStudent.getId())) {
+                    System.out.println("Este carne ya corresponde a un estudiante");
+                    return false;
+                }
+
+        return true;
     }
 
     public StudentDTO getClone(){
@@ -185,4 +216,6 @@ public class ManageSelectionStudentBean {
     public void setStudentService(StudentService studentService) {
         this.studentService = studentService;
     }
+
+
 }

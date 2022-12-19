@@ -8,6 +8,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.StudentGradeOnlyIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,44 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		}
 
 		return studentGrades;
+	}
+
+	@Override
+	public void insert(StudentGradeOnlyIdDTO studentGradeOnlyIdDTO) throws SQLException {
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+			String function = "{ call student_grade_insert(?, ?, ?, ?, ?)}";
+			CallableStatement preparedFunction = null;
+			preparedFunction = conn.prepareCall(function);
+			preparedFunction.setInt(1, studentGradeOnlyIdDTO.getStudentId());
+			preparedFunction.setInt(2, studentGradeOnlyIdDTO.getGradeValue());
+			preparedFunction.setInt(3, studentGradeOnlyIdDTO.getSubjectId());
+			preparedFunction.setInt(4, studentGradeOnlyIdDTO.getCourseId());
+			preparedFunction.setInt(5, studentGradeOnlyIdDTO.getYearId());
+			preparedFunction.execute();
+
+			preparedFunction.close();
+		}
+	}
+
+	@Override
+	public void updateGrade(StudentGradeOnlyIdDTO studentGradeOnlyIdDTO) throws SQLException {
+
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+			//Update hours_long in a row located by subjectId, courseId and yearId
+			String function = "{ call student_grade_update_grade(?, ?, ?, ?, ?)}";
+			CallableStatement preparedFunction = null;
+			//
+			preparedFunction = conn.prepareCall(function);
+			preparedFunction.setInt(1, studentGradeOnlyIdDTO.getStudentId());
+			preparedFunction.setInt(2, studentGradeOnlyIdDTO.getGradeValue());
+			preparedFunction.setInt(3, studentGradeOnlyIdDTO.getSubjectId());
+			preparedFunction.setInt(4, studentGradeOnlyIdDTO.getCourseId());
+			preparedFunction.setInt(5, studentGradeOnlyIdDTO.getYearId());
+			preparedFunction.execute();
+
+			preparedFunction.close();
+		}
+
 	}
 
 	private List<StudentGradeDTO> getStudentGrades(Integer studentId, Integer yearId) throws SQLException {

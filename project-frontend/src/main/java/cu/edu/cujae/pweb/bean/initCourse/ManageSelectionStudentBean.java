@@ -48,26 +48,26 @@ public class ManageSelectionStudentBean {
         studentsList = new ArrayList<>();
         studentsList.add(new ArrayList<>());
         studentsList.add(new ArrayList<>());
-        studentsList.add(new ArrayList<>());
-        studentsList.add(new ArrayList<>());
+//        studentsList.add(new ArrayList<>());
+//        studentsList.add(new ArrayList<>());
         currentIndex = 0;
 
 //        HARDCODE
-        studentsList.get(0).add(new StudentDTO(0, "012", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(0).add(new StudentDTO(1, "013", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(0).add(new StudentDTO(2, "013", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(0).add(new StudentDTO(0, "012", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(0).add(new StudentDTO(1, "013", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(0).add(new StudentDTO(2, "013", "Ernesto", "Fariña", "M", "habana", 0));
 
-        studentsList.get(1).add(new StudentDTO(3, "014", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(1).add(new StudentDTO(4, "015", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(1).add(new StudentDTO(5, "016", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(1, "014", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(1, "015", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(0).add(new StudentDTO(1, "016", "Ernesto", "Fariña", "M", "habana", 0));
 
-        studentsList.get(2).add(new StudentDTO(6, "017", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(2).add(new StudentDTO(7, "018", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(2).add(new StudentDTO(8, "019", "Ernesto", "Fariña", "M", "habana", 0));
-
-        studentsList.get(3).add(new StudentDTO(9, "020", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(3).add(new StudentDTO(10, "021", "Ernesto", "Fariña", "M", "habana", 0));
-        studentsList.get(3).add(new StudentDTO(11, "022", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(2, "017", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(2, "018", "Ernesto", "Fariña", "M", "habana", 0));
+        studentsList.get(1).add(new StudentDTO(2, "019", "Ernesto", "Fariña", "M", "habana", 0));
+//
+//        studentsList.get(3).add(new StudentDTO(9, "020", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(3).add(new StudentDTO(10, "021", "Ernesto", "Fariña", "M", "habana", 0));
+//        studentsList.get(3).add(new StudentDTO(11, "022", "Ernesto", "Fariña", "M", "habana", 0));
     }
 
     public void restore(){

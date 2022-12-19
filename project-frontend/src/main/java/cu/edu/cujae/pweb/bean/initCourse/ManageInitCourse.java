@@ -1,6 +1,5 @@
 package cu.edu.cujae.pweb.bean.initCourse;
 
-import cu.edu.cujae.pweb.bean.ManageYearTabView;
 import cu.edu.cujae.pweb.dto.InitCourseTransactionDTO;
 import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.dto.SubjectInCourseCompleteDTO;
@@ -36,7 +35,7 @@ public class ManageInitCourse {
     private ManageSelectionStudentBean manageSelectionStudentBean;
 
     @Autowired
-    private ManageYearTabView manageYearTabView;
+    private ManageSubjectInYearBean manageSubjectInYearBean;
 
     @Autowired
     private InitCourseTransactionService initCourseTransactionService;
@@ -50,13 +49,14 @@ public class ManageInitCourse {
         } else{
             //            Obtener los datos.
             List<SubjectInCourseCompleteDTO> listSubjects = new ArrayList<>();
-            manageYearTabView.getSubjectsInCourseList().forEach(subjectsInCourseByYear -> {
+            manageSubjectInYearBean.getSubjectsInCourseList().forEach(subjectsInCourseByYear -> {
                 for(SubjectInCourseCompleteDTO temp: subjectsInCourseByYear)
                     listSubjects.add(temp);
             });
             List<List<StudentDTO>> listStudents =  manageSelectionStudentBean.getStudentsList();
 
             //            Llamar a servicion de unica transacción.
+            System.out.println("INICIO DE NUEVO CURSO");
             InitCourseTransactionDTO initCourseTransactionDTO = new InitCourseTransactionDTO(listSubjects, listStudents);
             initCourseTransactionService.initCourse(initCourseTransactionDTO);
         }
@@ -65,7 +65,7 @@ public class ManageInitCourse {
 
     public String getViewSelected(){
         manageSelectionStudentBean.refresh();
-        manageYearTabView.refresh();
+        manageSubjectInYearBean.refresh();
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String url = request.getRequestURL().toString().substring(39);
@@ -81,8 +81,7 @@ public class ManageInitCourse {
     public void moveAction() throws IOException {
 
         if(actionLabel.equals("Siguiente")) {
-
-            if(manageYearTabView.isCorrect() || true) {
+            if(manageSubjectInYearBean.isCorrect()) {
                 String url = "http://localhost:8085/project-frontend/init-course/selection-student"; //url donde se redirige la pantalla
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.getExternalContext().redirect(url);

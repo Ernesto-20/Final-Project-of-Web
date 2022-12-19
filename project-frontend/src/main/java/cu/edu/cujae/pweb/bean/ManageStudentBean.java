@@ -112,8 +112,12 @@ public class ManageStudentBean {
 	}
 
 	public void reloadListStudent() {
+		System.out.println("here 1");
 		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
+		System.out.println("Size: "+students.size());
+		System.out.println("Student 1: " + students.get(0).getFirstName() + " ID: "+ students.get(0).getId());
 		PrimeFaces.current().ajax().update("form:dt-students");
+		System.out.println("here 2");
 	}
 
 	// Usado para deshabilitar el botón de Dar Baja
@@ -133,11 +137,11 @@ public class ManageStudentBean {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest();
 		String url = request.getRequestURL().toString().substring(39);
-		students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+		students = studentService.getStudentsByBrigadeCourseYearIds( brigade, course, year);
 		switch (url) {
 			// Vista de Sandy
 			case "students":
-				students = studentService.getStudentsByBrigadeCourseYearIds(year, brigade, course);
+				students = studentService.getStudentsByBrigadeCourseYearIds( brigade, course, year);
 				break;
 			// Vista de Ernesto
 			case "init-course/selection-student":

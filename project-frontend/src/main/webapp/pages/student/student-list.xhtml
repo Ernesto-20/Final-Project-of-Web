@@ -134,7 +134,7 @@
 									<p:resetInput target=":student-form:manage-student-content" />
 								</p:commandButton>
 								<p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash"
-									process="@this" action="#{manageStudentBean.deleteStudent}">
+									process="@this" action="#{manageStudentBean.deleteStudent}" style="margin-right: .5rem">
 									<f:setPropertyActionListener value="#{student}"
 										target="#{manageStudentBean.selectedStudent}" />
 									<p:confirm header="#{msgs.btn_confirmDelete}"

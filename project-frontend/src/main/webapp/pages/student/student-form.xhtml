@@ -14,19 +14,19 @@
 								maxlength="11">
 								<p:keyFilter mask="num" />
 							</p:inputText>
-							<p:message for="@previous"></p:message>
+							<p:messages for="idNum"></p:messages>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_firstName}" />
 							<p:inputText id="firstName" required="true"
 								value="#{manageBean.selectedStudent.firstName}" />
-							<p:messages for="firstName" autoUpdate="true"></p:messages>
+							<p:messages for="firstName"></p:messages>
 						</div>
 						<div class="p-field">
 							<p:outputLabel for="@next" value="#{msgs.label_studentForm_lastName}" />
 							<p:inputText id="lastName" required="true"
 								value="#{manageBean.selectedStudent.lastName}" />
-							<p:message for="@previous"></p:message>
+							<p:messages for="lastName"></p:messages>
 						</div>
 					</h:panelGroup>
 					<h:panelGroup>
@@ -51,7 +51,7 @@
 								<f:selectItem itemLabel="#{msgs.radiobtn_studentForm_gender_male}" itemValue="M" />
 								<f:selectItem itemLabel="#{msgs.radiobtn_studentForm_gender_female}" itemValue="F" />
 							</p:selectOneRadio>
-							<p:message for="@previous"></p:message>
+							<p:messages for="@previous"></p:messages>
 						</div>
 
 					</h:panelGroup>

@@ -127,32 +127,32 @@ public class ManageSelectionStudentBean {
     }
 
     public void saveStudent() {
-        if(!ValidateInput.isName(this.selectedStudent.getFirstName())) {
-            System.out.println("HERE");
-            System.out.println(selectedStudent.getFirstName());
-
-            FacesContext.getCurrentInstance().addMessage("firstName", new FacesMessage("hola cara de bola", "hola cabron"));
-            System.out.println("HERE 2");
-        }
-//        if(isCorrectIdNum()){
-//            if (this.selectedStudent.getId() == null) {
-//                int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
-//                this.selectedStudent.setId(idTemp);
-//                StudentDTO clone = getClone();
+//        if(!ValidateInput.isName(this.selectedStudent.getFirstName())) {
+//            System.out.println("HERE");
+//            System.out.println(selectedStudent.getFirstName());
 //
-//                studentsList.get(currentIndex).add(clone);
-//                this.students.clear();
-//                this.studentsList.get(currentIndex).forEach(element -> students.add(element));
-//
-//
-//            }
-//            selectedStudent = new StudentDTO();
-//
-//            PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
-//            PrimeFaces.current().ajax().update("form:panelView");
-//        }else{
-//            System.out.println("mostrar mensaje de error");
+//            FacesContext.getCurrentInstance().addMessage("firstName", new FacesMessage("hola cara de bola", "hola cabron"));
+//            System.out.println("HERE 2");
 //        }
+        if(isCorrectIdNum()){
+            if (this.selectedStudent.getId() == null) {
+                int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
+                this.selectedStudent.setId(idTemp);
+                StudentDTO clone = getClone();
+
+                studentsList.get(currentIndex).add(clone);
+                this.students.clear();
+                this.studentsList.get(currentIndex).forEach(element -> students.add(element));
+
+
+            }
+            selectedStudent = new StudentDTO();
+
+            PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
+            PrimeFaces.current().ajax().update("form:panelView");
+        }else{
+            System.out.println("mostrar mensaje de error");
+        }
     }
 
     private boolean isCorrectIdNum() {

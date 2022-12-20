@@ -75,7 +75,7 @@ public class ManageInitCourse {
             disableStart = "true";
             colorStart = "rgb(161,156,156)";
         }
-        return "selection-subject.xhtml";
+        return "selection-subject.xhtml" ;
     }
 
     public void moveAction() throws IOException {

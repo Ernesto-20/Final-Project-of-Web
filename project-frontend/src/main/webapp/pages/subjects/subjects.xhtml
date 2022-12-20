@@ -20,18 +20,20 @@
                         <div style="width: 45%; border: 1px solid #DDDDDD;">
                             <h:outputText value="#{msgs.subheader_subject_in_courses}" style="display: block; margin: 0.5rem;"/>
                             <div>
-                                <p:selectOneMenu id="course-select" value="#{manageCourseBean.selectOption}"
-                                                 hideNoSelectionOption="#{not empty manageCourseBean.selectOption}">
-                                    <p:ajax update="dt-subjects" process="@this" listener="#{manageSubjectInCourseBean.onCourseChange}"/>
-                                    <f:selectItem itemLabel="#{msgs.course_select_default_subject_in_courses}" itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems value="#{manageCourseBean.courses}"/>
-                                </p:selectOneMenu>
-                                <p:selectOneMenu id="year-select" value="#{manageYearBean.selectOption}"
-                                                 hideNoSelectionOption="#{not empty manageYearBean.selectOption}">
-                                    <p:ajax update="@this" process="@this"/>
-                                    <f:selectItem itemLabel="#{msgs.year_select_default_subject_in_courses}" itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems value="#{manageYearBean.years}"/>
-                                </p:selectOneMenu>
+                                <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem;">
+                                    <p:outputLabel for="course-select" value="#{msgs.course_select_default_subject_in_courses}" />
+                                    <p:selectOneMenu id="course-select" value="#{manageSubjectInCourseBean.courseSelectOption}">
+                                        <p:ajax update="dt-subjects" process="@this" listener="#{manageSubjectInCourseBean.onCourseOrYearChange}"/>
+                                        <f:selectItems value="#{manageCourseBean.courses}" var="course" itemLabel="#{course.identifier}" itemValue="#{course.id}" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem">
+                                    <p:outputLabel for="year-select" value="#{msgs.year_select_default_subject_in_courses}" />
+                                    <p:selectOneMenu id="year-select" value="#{manageSubjectInCourseBean.yearSelectOption}">
+                                        <p:ajax update="dt-subjects" process="@this" listener="#{manageSubjectInCourseBean.onCourseOrYearChange}"/>
+                                        <f:selectItems value="#{manageYearBean.years}" var="year" itemLabel="#{year.id}" itemValue="#{year.id}"/>
+                                    </p:selectOneMenu>
+                                </div>
                             </div>
                             <p:dataTable id="dt-subjects" widgetVar="dtSubjects" var="dto"
                                          value="#{manageSubjectInCourseBean.subjectsInCourseNamed}" reflow="true"

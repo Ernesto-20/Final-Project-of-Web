@@ -26,4 +26,10 @@ public class StudentGradeController {
         List<StudentGradeDTO> studentGrades = studentGradeService.getStudentGradesByYearId(studentId, yearId);
         return ResponseEntity.ok(studentGrades);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<StudentGradeDTO>> getAllStudentGrade() throws SQLException{
+        List<StudentGradeDTO> studentGrades = studentGradeService.getStudentGrades();
+        return ResponseEntity.ok(studentGrades);
+    }
 }

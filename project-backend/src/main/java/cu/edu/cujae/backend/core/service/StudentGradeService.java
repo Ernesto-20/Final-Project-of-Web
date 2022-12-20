@@ -8,4 +8,5 @@ import cu.edu.cujae.backend.core.dto.StudentGradeDTO;
 public interface StudentGradeService {
 
 	List<StudentGradeDTO> getStudentGradesByYearId(Integer studentId, Integer yearId) throws SQLException;
+	List<StudentGradeDTO> getStudentGrades() throws SQLException;
 }

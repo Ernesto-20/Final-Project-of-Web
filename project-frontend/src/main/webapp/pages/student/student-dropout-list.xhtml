@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
 
 <p:dialog header="#{msgs.header_studentDropoutList}" showEffect="fade" modal="true" widgetVar="studentDropoutListDialog"
 	responsive="true">
@@ -24,6 +25,19 @@
 								sortBy="#{studentDropout.dropoutName}">
 								<h:outputText value="#{studentDropout.dropoutName}" />
 							</p:column>
+							
+							<p:column exportable="false">
+								<sec:authorize access="hasAnyAuthority('admin')">
+									<p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
+										action="#{dropOutBean.deleteStudentDropOut}">
+										<f:setPropertyActionListener value="#{studentDropout}"
+											target="#{dropOutBean.selectedStudentDropout}" />
+										<p:confirm header="#{msgs.btn_confirmDelete}"
+											message="#{msgs.btn_studentList_delete_msg}" icon="pi pi-exclamation-triangle" />
+									</p:commandButton>
+								</sec:authorize>
+							</p:column>
+						
 						</p:dataTable>
 					</h:panelGroup>
 				</p:panelGrid>
@@ -33,6 +47,7 @@
 		<f:facet name="footer">
 			<p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times" onclick="PF('studentDropoutListDialog').hide()"
 				class="ui-button-secondary" />
+				
 		</f:facet>
 	</p:dialog>
 </ui:composition>

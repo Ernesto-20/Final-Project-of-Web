@@ -7,13 +7,14 @@
     <p:dialog header="#{msgs.header_subject}" showEffect="fade" modal="true"
               widgetVar="manageSubjectInCourseDialog" responsive="true">
         <p:outputPanel id="manage-subjectInCourse-content" class="ui-fluid">
-            <p:outputPanel rendered="#{not empty manageSubjectInCourseBean.selectedSubjectInCourse}">
+            <p:outputPanel rendered="#{not empty manageSubjectInYearBean.selectedSubjectInCourse}">
                 <p:panelGrid layout="grid" columns="1">
                     <h:panelGroup>
                         <div class="p-field">
                             <p:outputLabel for="@next">#{msgs.label_subject_hours}</p:outputLabel>
-                            <p:inputText id="hoursLong" required="true" value="#{manageSubjectInCourseBean.selectedSubjectInCourse.hoursLong}">
-                            </p:inputText>
+                            <p:inputNumber id="amountHours" required="true"
+                                           value="#{manageSubjectInYearBean.selectedSubjectInCourse.amountHours}">
+                            </p:inputNumber>
                             <p:message for="@previous"></p:message>
                         </div>
                     </h:panelGroup>
@@ -23,9 +24,9 @@
 
         <f:facet name="footer">
             <p:commandButton value="#{msgs.btn_save}" icon="pi pi-check"
-                             actionListener="#{manageSubjectInCourseBean.saveSubjectInCourse}"
+                             actionListener="#{manageSubjectInYearBean.saveSubjectInCourse}"
                              update="manage-subjectInCourse-content" process="manage-subjectInCourse-content @this" />
-            <p:commandButton value="#{btn_cancel}" icon="pi pi-times"
+            <p:commandButton value="#{msgs.btn_cancel}" icon="pi pi-times"
                              onclick="PF('manageSubjectInCourseDialog').hide()" class="ui-button-secondary" />
         </f:facet>
     </p:dialog>

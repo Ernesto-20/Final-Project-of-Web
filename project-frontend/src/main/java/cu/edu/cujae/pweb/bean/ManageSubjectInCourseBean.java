@@ -51,12 +51,6 @@ public class ManageSubjectInCourseBean {
 		
 	}
 
-	//Esta anotacioon permite que se ejecute code luego de haberse ejecuta el constructor de la clase.
-	@PostConstruct
-    public void init() {
-	    subjectsInCourse = subjectsInCourse == null ? subjectInCourseService.getSubjectsInCourse() : subjectsInCourse;
-    }
-
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
         this.selectedSubjectInCourse = new SubjectInCourseDTO();
@@ -83,8 +77,6 @@ public class ManageSubjectInCourseBean {
 
 	public void openForEditNamed() {
 
-		System.out.println("Aqui se supone que se abra para edit algun NamedDTO");
-		System.out.println(selectedSubjectInCourseNamed.getHoursLong());
 	}
 	
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
@@ -104,9 +96,9 @@ public class ManageSubjectInCourseBean {
 
 	public void saveSubjectInCourseNamed(){
 		subjectInCourseService.updateSubjectInCourse(new SubjectInCourseDTO(
-				String.valueOf(selectedSubjectInCourseNamed.getSubjectId()),
-				String.valueOf(selectedSubjectInCourseNamed.getCourseId()),
-				String.valueOf(selectedSubjectInCourseNamed.getYearId()),
+				selectedSubjectInCourseNamed.getSubjectId(),
+				selectedSubjectInCourseNamed.getCourseId(),
+				selectedSubjectInCourseNamed.getYearId(),
 				selectedSubjectInCourseNamed.getHoursLong()
 		));
 		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "edited_message_subject_in_courses");
@@ -129,12 +121,12 @@ public class ManageSubjectInCourseBean {
     }
 
 	public void deleteSubjectInCourseNamed(){
-		System.out.println("Aqui se supone que se va a borrar algo I believe");
+
 		this.subjectsInCourseNamed.remove(this.selectedSubjectInCourseNamed);
 		subjectInCourseService.deleteSubjectInCourse(
-				String.valueOf(selectedSubjectInCourseNamed.getSubjectId()),
-				String.valueOf(selectedSubjectInCourseNamed.getCourseId()),
-				String.valueOf(selectedSubjectInCourseNamed.getYearId())
+				selectedSubjectInCourseNamed.getSubjectId(),
+				selectedSubjectInCourseNamed.getCourseId(),
+				selectedSubjectInCourseNamed.getYearId()
 		);
 		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "deleted_message_subject_in_courses");
 		PrimeFaces.current().executeScript("PF('manageSubjectDialog').hide()");//Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar

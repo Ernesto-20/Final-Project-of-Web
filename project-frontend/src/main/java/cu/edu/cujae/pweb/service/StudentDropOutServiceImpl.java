@@ -12,6 +12,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriTemplate;
 
+import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.dto.StudentDropOutDTO;
 import cu.edu.cujae.pweb.dto.StudentDropOutNamedDTO;
 import cu.edu.cujae.pweb.utils.ApiRestMapper;
@@ -71,5 +72,38 @@ public class StudentDropOutServiceImpl implements StudentDropOutService {
 	public void createStudentDropOut(StudentDropOutDTO studentDropOut) {
 		restService.POST("/api/v1/studentdropouts", studentDropOut, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 		
+	}
+
+	@Override
+	public List<StudentDropOutNamedDTO> getNamedStudentDropOutByStudentId(Integer studentId) {
+
+		List<StudentDropOutNamedDTO> studentDropOut = new ArrayList<>();
+
+		try {
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			ApiRestMapper<StudentDropOutNamedDTO> apiRestMapper = new ApiRestMapper<>();
+			
+			UriTemplate template = new UriTemplate("/api/v1/studentdropouts/named/student/{studentId}");
+			String uri = template.expand(studentId.toString()).toString();
+
+			String response = (String) restService.GET(uri, params, String.class, CurrentUserUtils.getTokenBearer())
+					.getBody();
+			
+			studentDropOut = apiRestMapper.mapList(response, StudentDropOutNamedDTO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return studentDropOut;
+	}
+
+	@Override
+	public void deleteStudentDropOut(StudentDropOutNamedDTO studentDropOut) {
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("dropoutId", studentDropOut.getDropoutId().toString());
+		params.add("courseId", studentDropOut.getCourseId().toString());
+		params.add("studentId", studentDropOut.getStudentId().toString());
+
+		restService.DELETE("/api/v1/studentdropouts/", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
 	}
 }

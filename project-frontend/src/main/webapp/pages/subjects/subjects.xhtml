@@ -47,14 +47,14 @@
                                 <p:column exportable="false">
                                     <p:commandButton icon="pi pi-pencil" action="#{manageSubjectInCourseBean.openForEditNamed}"
                                                      update=":form:manage-subject-content"
+                                                     styleClass="edit-button rounded-button ui-button-warning"
                                                      oncomplete="PF('manageSubjectDialog').show()"
-                                                     styleClass="edit-button rounded-button ui-button-success"
                                                      process="@this">
                                         <f:setPropertyActionListener value="#{dto}"
                                                                      target="#{manageSubjectInCourseBean.selectedSubjectInCourseNamed}" />
                                         <p:resetInput target=":form:manage-subject-content" />
                                     </p:commandButton>
-                                    <p:commandButton class="ui-button-warning rounded-button"
+                                    <p:commandButton class="ui-button-danger rounded-button"
                                                      icon="pi pi-trash" process="@this"
                                                      action="#{manageSubjectInCourseBean.deleteSubjectInCourseNamed}" >
                                         <f:setPropertyActionListener value="#{dto}"

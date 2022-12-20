@@ -2,39 +2,39 @@
     xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    <div class="layout-topbar">
+    <div class="layout-topbar" style="padding: 0px;">
         <a class="menu-button" tabindex="0">
             <i class="pi pi-bars"></i>
         </a>
         <h:link styleClass="logo" outcome="/pages/welcome/welcome.xhtml">
-            <h2 style="color:black; margin-top:15px;">#{msgs.h2_topbar}</h2>
+            <h2 style="color:black; margin-top:15px; margin-left: 15px;">#{msgs.h2_topbar}</h2>
         </h:link>
 
-        <h:form styleClass="topbar-form">
-            <ul class="topbar-menu">
-                <li>
-                    <p:outputLabel style="padding-left:5px;"> #{userBean.userLogued}</p:outputLabel>
+        <h:form styleClass="topbar-form" style="margin: auto; margin-right: 0px; ">
+            <ul class="topbar-menu" style="display: flex; align-items: center; margin-right: 35px">
+                <li style="height:70%; display:flex; align-items: center; justify-content: center;">
+                    <p:outputLabel style="padding-right:5px; font-size: 1.2em;"> #{userBean.userLogued}</p:outputLabel>
                 </li>
-                <li>
-                    <p:commandLink action="#{userBean.logout}" ajax="false"><i class="pi pi-sign-out"></i>
-                        #{msgs.btn_logout}</p:commandLink>
-                </li>
-                <li>
+                <li style="height:70%;">
                     <p:growl id="messages" showDetail="true" />
 
-                    <p:commandButton id="dynaButton" type="button" value="#{msgs.btn_settings}" icon="pi pi-cog"
-                        styleClass="ui-button-flat ui-button-plain" />
+                    <p:commandLink onclick="return false;" id="dynaButton" ajax="false" style="height:100%; width: 60% ;margin: auto; display:flex; align-items: center; justify-content: center;"> <i class="pi pi-cog"></i>
+                        <div style="width: 5px;"></div>#{msgs.btn_settings}</p:commandLink>
                     <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">
                         <p:submenu label="#{msgs.btn_language}">
                             <p:menuitem value="#{msgs.btn_language_es}" action="#{languageBean.setLanguage('es')}"
-                                ajax="false" />
+                                        ajax="false" />
                             <p:menuitem value="#{msgs.btn_language_en}" action="#{languageBean.setLanguage('en')}"
-                                ajax="false" update="messages" />
+                                        ajax="false" update="messages" />
                         </p:submenu>
                     </p:menu>
-
+                </li>
+                <li style="height:70%;">
+                    <p:commandLink action="#{userBean.logout}" ajax="false" style="height:100%; margin: auto; display:flex; align-items: center; justify-content: center;"><i class="pi pi-sign-out"></i>
+                        <div style="width: 5px;"></div>#{msgs.btn_logout}</p:commandLink>
                 </li>
             </ul>
         </h:form>
+
     </div>
 </ui:composition>

@@ -45,8 +45,6 @@ public class StudentServiceImpl implements StudentService {
 
 	}
 
-	
-	
 	@Override
 	public List<StudentDTO> getStudents() throws SQLException {
 		List<StudentDTO> studentList = new ArrayList<StudentDTO>();
@@ -70,7 +68,6 @@ public class StudentServiceImpl implements StudentService {
 		return studentList;
 	}
 
-	
 	@Override
 	public StudentDTO getStudentById(Integer studentId) throws SQLException {
 

@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.StudentGradeOnlyIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,31 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	private ResultSet rs;
 
 	@Override
+	public List<StudentGradeOnlyIdDTO> getStudentGradesByCourseId(Integer courseId) throws SQLException {
+		LinkedList<StudentGradeOnlyIdDTO> studentGrades = new LinkedList<>();
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+			conn.setAutoCommit(false);
+			String function = "{?= call find_student_gradebycourse_id(?)}";
+
+			CallableStatement preparedFunction = conn.prepareCall(function);
+			preparedFunction.setInt(2, courseId);
+			preparedFunction.registerOutParameter(1, Types.OTHER);
+			preparedFunction.execute();
+			ResultSet resultSet = (ResultSet) preparedFunction.getObject(1);
+			while (resultSet.next()) {
+				Integer yearId = resultSet.getInt("year_id");
+				Integer studentId = resultSet.getInt("student_id");
+				Integer subjectId = resultSet.getInt("subject_id");
+				Integer gradeValue = resultSet.getInt("grade_value");
+				studentGrades.add(new StudentGradeOnlyIdDTO(yearId, studentId, subjectId, courseId, gradeValue));
+			}
+			resultSet.close();
+			preparedFunction.close();
+		}
+		return studentGrades;
+	}
+
+	@Override
 	public List<StudentGradeDTO> getStudentGradesByYearId(Integer studentId, Integer yearId) throws SQLException {
 
 		List<StudentGradeDTO> studentGrades = new ArrayList<>();
@@ -45,6 +72,44 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		}
 
 		return studentGrades;
+	}
+
+	@Override
+	public void insert(StudentGradeOnlyIdDTO studentGradeOnlyIdDTO) throws SQLException {
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+			String function = "{ call student_grade_insert(?, ?, ?, ?, ?)}";
+			CallableStatement preparedFunction = null;
+			preparedFunction = conn.prepareCall(function);
+			preparedFunction.setInt(1, studentGradeOnlyIdDTO.getStudentId());
+			preparedFunction.setInt(2, studentGradeOnlyIdDTO.getGradeValue());
+			preparedFunction.setInt(3, studentGradeOnlyIdDTO.getSubjectId());
+			preparedFunction.setInt(4, studentGradeOnlyIdDTO.getCourseId());
+			preparedFunction.setInt(5, studentGradeOnlyIdDTO.getYearId());
+			preparedFunction.execute();
+
+			preparedFunction.close();
+		}
+	}
+
+	@Override
+	public void updateGrade(StudentGradeOnlyIdDTO studentGradeOnlyIdDTO) throws SQLException {
+
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+			//Update hours_long in a row located by subjectId, courseId and yearId
+			String function = "{ call student_grade_update_grade(?, ?, ?, ?, ?)}";
+			CallableStatement preparedFunction = null;
+			//
+			preparedFunction = conn.prepareCall(function);
+			preparedFunction.setInt(1, studentGradeOnlyIdDTO.getStudentId());
+			preparedFunction.setInt(2, studentGradeOnlyIdDTO.getGradeValue());
+			preparedFunction.setInt(3, studentGradeOnlyIdDTO.getSubjectId());
+			preparedFunction.setInt(4, studentGradeOnlyIdDTO.getCourseId());
+			preparedFunction.setInt(5, studentGradeOnlyIdDTO.getYearId());
+			preparedFunction.execute();
+
+			preparedFunction.close();
+		}
+
 	}
 
 	@Override

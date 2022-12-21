@@ -28,7 +28,7 @@ public class ValidateInput {
 	
     public static boolean isAlpha(String text){
         for(int i=0; i<text.length(); i++)
-            if(!Character.isAlphabetic(text.charAt(i)))
+            if(!Character.isAlphabetic(text.charAt(i)) && !(text.charAt(i) == ' '))
                 return false;
         return true;
     }

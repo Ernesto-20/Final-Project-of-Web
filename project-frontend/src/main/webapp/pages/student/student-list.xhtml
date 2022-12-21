@@ -57,7 +57,7 @@
 									style="margin-right: .5rem" />
 								<p:selectOneMenu id="brigade" value="#{manageStudentBean.brigade}"
 									style="margin-right: .5rem">
-									<f:selectItems value="#{manageBrigadeBean.brigades}" var="brigade"
+									<f:selectItems value="#{manageStudentBean.brigadeList}" var="brigade"
 										itemLabel="#{brigade.name}" itemValue="#{brigade.id}" />
 									<p:ajax event="change" listener="#{manageStudentBean.reloadListStudent}"></p:ajax>
 								</p:selectOneMenu>

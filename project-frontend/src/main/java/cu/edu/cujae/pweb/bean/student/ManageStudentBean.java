@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
 
+import cu.edu.cujae.pweb.dto.BrigadeDTO;
+import cu.edu.cujae.pweb.service.*;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,11 +19,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.dto.StudentInBrigadeDTO;
-import cu.edu.cujae.pweb.service.BrigadeService;
-import cu.edu.cujae.pweb.service.CourseService;
-import cu.edu.cujae.pweb.service.StudentInBrigadeService;
-import cu.edu.cujae.pweb.service.StudentService;
-import cu.edu.cujae.pweb.service.YearService;
 import cu.edu.cujae.pweb.utils.JsfUtils;
 import cu.edu.cujae.pweb.utils.ValidateInput;
 
@@ -34,6 +31,7 @@ public class ManageStudentBean {
 	private StudentDTO selectedStudent;
 	private List<StudentDTO> students;
 	private List<StudentDTO> selectedStudents;
+	private List<BrigadeDTO> brigadeList;
 
 	// Por defecto mostrar los estudiantes del curso, grupo y año con id = 1
 	private Integer course = 1;
@@ -45,6 +43,9 @@ public class ManageStudentBean {
 
 	@Autowired
 	private StudentInBrigadeService studentInBrigadeService;
+
+	@Autowired
+	private BrigadeService brigadeService;
 
 	public ManageStudentBean() {
 	}
@@ -115,12 +116,9 @@ public class ManageStudentBean {
 	}
 
 	public void reloadListStudent() {
-		System.out.println("here 1");
+		brigadeList = brigadeService.findByYearId(year);
 		students = studentService.getStudentsByBrigadeCourseYearIds(this.brigade, this.course, this.year);
-		System.out.println("Size: "+students.size());
-		System.out.println("Student 1: " + students.get(0).getFirstName() + " ID: "+ students.get(0).getId());
-		PrimeFaces.current().ajax().update("form:dt-students");
-		System.out.println("here 2");
+		PrimeFaces.current().ajax().update("form");
 	}
 
 	// Usado para deshabilitar el botón de Dar Baja
@@ -214,4 +212,13 @@ public class ManageStudentBean {
 		this.year = year;
 	}
 
+	public List<BrigadeDTO> getBrigadeList() {
+		brigadeList = brigadeList == null ? brigadeService.findByYearId(year) : brigadeList;
+
+		return brigadeList;
+	}
+
+	public void setBrigadeList(List<BrigadeDTO> brigadeList) {
+		this.brigadeList = brigadeList;
+	}
 }

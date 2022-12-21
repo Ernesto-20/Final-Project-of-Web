@@ -1,9 +1,6 @@
 package cu.edu.cujae.pweb.bean;
 
-import cu.edu.cujae.pweb.dto.BrigadeDTO;
-import cu.edu.cujae.pweb.dto.StudentDTO;
-import cu.edu.cujae.pweb.dto.StudentGradeDTO;
-import cu.edu.cujae.pweb.dto.StudentGradeOnlyIdDTO;
+import cu.edu.cujae.pweb.dto.*;
 import cu.edu.cujae.pweb.service.BrigadeService;
 import cu.edu.cujae.pweb.service.StudentGradeService;
 import cu.edu.cujae.pweb.service.StudentService;
@@ -23,10 +20,10 @@ import java.util.stream.Collectors;
 @ViewScoped
 public class ManageAssignStudentGradeBean {
 
-    private List<StudentGradeDTO> studentGrades;
+    private List<StudentGradeCourseIdDTO> studentGrades;
     private List<BrigadeDTO> brigades;
     private List<StudentDTO> students;
-    private StudentGradeDTO selectedStudentGrade;
+    private StudentGradeCourseIdDTO selectedStudentGrade;
     private int courseSelectOption = 1;
     private int yearSelectOption = 1;
     private int brigadeSelectOption = 1;
@@ -45,12 +42,13 @@ public class ManageAssignStudentGradeBean {
 
     }
 
-    public List<StudentGradeDTO> filterStudentGrades(){
-        return studentGradeService.getStudentGradesAll()
+    public List<StudentGradeCourseIdDTO> filterStudentGrades(){
+        return studentGradeService.getStudentGradesAllCourseId()
                 .stream()
                 .filter(studentGrade ->
-                    studentGrade.getStudentId() == studentSelectOption &&
-                    studentGrade.getYearId() == yearSelectOption)
+                        studentGrade.getStudentId() == studentSelectOption &&
+                                studentGrade.getYearId() == yearSelectOption &&
+                                studentGrade.getCourseId() == courseSelectOption)
                 .collect(Collectors.toList());
     }
 
@@ -101,7 +99,7 @@ public class ManageAssignStudentGradeBean {
         PrimeFaces.current().ajax().update(":form");
     }
 
-    public List<StudentGradeDTO> getStudentGrades() {
+    public List<StudentGradeCourseIdDTO> getStudentGrades() {
         if(studentGrades == null) {
             brigades = brigadeService.findByYearId(yearSelectOption);
             if(brigades.size() > 0)
@@ -137,25 +135,23 @@ public class ManageAssignStudentGradeBean {
                 selectedStudentGrade.getGradeValue() == 4 ||
                 selectedStudentGrade.getGradeValue() == 5
         ){
-            System.out.println("Esta bueno");
             studentGradeService.updateStudentGrade(new StudentGradeOnlyIdDTO(
                     selectedStudentGrade.getYearId(),
                     selectedStudentGrade.getStudentId(),
                     selectedStudentGrade.getSubjectId(),
-                    courseSelectOption,
-                    Integer.parseInt(selectedStudentGrade.getGradeValue())
+                    selectedStudentGrade.getCourseId(),
+                    selectedStudentGrade.getGradeValue()
             ));
-            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_already_exist");
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "edited_message_assign_student_grades");
             PrimeFaces.current().executeScript("PF('manageStudentGradeDialog').hide()");
             PrimeFaces.current().ajax().update(":form");
         }
         else{
-            System.out.println("Esta malo");
-            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_FATAL, "message_student_already_exist");
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_FATAL, "error_message_assign_student_grades");
         }
     }
 
-    public void setStudentGrades(List<StudentGradeDTO> studentGrades) {
+    public void setStudentGrades(List<StudentGradeCourseIdDTO> studentGrades) {
         this.studentGrades = studentGrades;
     }
 
@@ -204,11 +200,11 @@ public class ManageAssignStudentGradeBean {
 
     public List<StudentDTO> getStudents() {
         if(students == null);
-            students = studentService.getStudentsByBrigadeCourseYearIds(
-                    brigadeSelectOption,
-                    courseSelectOption,
-                    yearSelectOption
-            );
+        students = studentService.getStudentsByBrigadeCourseYearIds(
+                brigadeSelectOption,
+                courseSelectOption,
+                yearSelectOption
+        );
 
         return students;
     }
@@ -217,11 +213,11 @@ public class ManageAssignStudentGradeBean {
         this.students = students;
     }
 
-    public StudentGradeDTO getSelectedStudentGrade() {
+    public StudentGradeCourseIdDTO getSelectedStudentGrade() {
         return selectedStudentGrade;
     }
 
-    public void setSelectedStudentGrade(StudentGradeDTO selectedStudentGrade) {
+    public void setSelectedStudentGrade(StudentGradeCourseIdDTO selectedStudentGrade) {
         this.selectedStudentGrade = selectedStudentGrade;
     }
 }

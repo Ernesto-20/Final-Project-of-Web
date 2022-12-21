@@ -127,7 +127,6 @@ public class ManageSubjectInYearBean {
 
 	public void subjectRemove() {
 		List<SubjectDTO> subjectsToRemove = new ArrayList<SubjectDTO>();
-		System.out.println("1 size: "+selectedSubjectsInCourse.size());
 		for (SubjectInCourseCompleteDTO s:selectedSubjectsInCourse) {
 			for (int i=0; i < subjectsInCourse.size(); i++) {
 				if(subjectsInCourse.get(i).getSubjectDTO().getId() == s.getSubjectDTO().getId()){
@@ -147,6 +146,8 @@ public class ManageSubjectInYearBean {
     public void subjectAssign(List<SubjectDTO> subjectsToAssign) {
 		List<CourseDTO> courses = courseService.getCourses();
 		CourseDTO courseDTO = courses.get(courses.size()-1);
+		courseDTO.setStart(courseDTO.getStart()+1);
+		courseDTO.setFinish(courseDTO.getStart()+1);
 		subjectsToAssign.forEach(element-> {subjectsInCourseList.get(currentIndex).add(new SubjectInCourseCompleteDTO(courseDTO, (currentIndex+1),72 , element));});
 		subjectsInCourse.clear();
 		subjectsInCourseList.get(currentIndex).forEach(element->subjectsInCourse.add(element));

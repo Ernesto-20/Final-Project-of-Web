@@ -8,8 +8,6 @@ public class ValidateInput {
 	
 	public static boolean validateStudent(StudentDTO student) {
 		boolean valid = true;
-		System.out.println(isAlpha(student.getFirstName()));
-		System.out.println(isAlpha(student.getLastName()));
 		if(student.getIdNum().length() != 11) {
 			JsfUtils.addMessageFromBundle("idNum", FacesMessage.SEVERITY_ERROR, "error_message_input_length_not_11");
 			valid = false;

@@ -1,5 +1,6 @@
 package cu.edu.cujae.pweb.bean.initCourse;
 
+import cu.edu.cujae.pweb.bean.ManageCourseBean;
 import cu.edu.cujae.pweb.dto.*;
 import cu.edu.cujae.pweb.service.CourseService;
 import cu.edu.cujae.pweb.service.InitCourseTransactionService;
@@ -45,12 +46,15 @@ public class ManageInitCourse {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private ManageCourseBean manageCourseBean;
+
     public boolean isCorrectStudentPromotion(){
         boolean isCorrectStudentPromotion = true;
         List<CourseDTO> courses = courseService.getCourses();
         Integer courseId = courses.get(courses.size()-1).getId();
         List<StudentGradeOnlyIdDTO> studentsLastCourse = studentGradeService.getStudentGradesByCourseId(courseId);
-        for (int i = 0; i < studentsLastCourse.size() && !isCorrectStudentPromotion; i++) {
+        for (int i = 0; i < studentsLastCourse.size() && isCorrectStudentPromotion; i++) {
             if (studentsLastCourse.get(i).getGradeValue() != 2 &&
                     studentsLastCourse.get(i).getGradeValue() != 3 &&
                     studentsLastCourse.get(i).getGradeValue() != 4 &&
@@ -91,6 +95,12 @@ public class ManageInitCourse {
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.getExternalContext().redirect(url);
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_course_added");
+
+//            Refrescar varios bean.
+
+            manageCourseBean.refresh();
+            manageSelectionStudentBean.restore();
+            manageSubjectInYearBean.restore();
         }
     }
 

@@ -161,11 +161,8 @@ public class ManageSubjectBean {
 	}
 
 	public void subjectRemove(List<SubjectDTO> subjectsToRemove) {
-		System.out.println("HERE remove");
-		System.out.println("size: "+ subjectsToRemove.size());
 		subjectsToRemove.forEach(element-> {
 			subjects.add(element);
-			System.out.println(element.getName());
 		});
 		PrimeFaces.current().ajax().update("formSelectionSubject");
 

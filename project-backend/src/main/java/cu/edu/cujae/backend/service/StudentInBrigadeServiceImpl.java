@@ -166,7 +166,7 @@ public class StudentInBrigadeServiceImpl implements StudentInBrigadeService {
             preparedFunction.execute();
             ResultSet resultSet = (ResultSet) preparedFunction.getObject(1);
             if (resultSet.next()) {
-                int brigadeId = resultSet.getInt("id");
+                int brigadeId = resultSet.getInt("brigade_id");
                 brigade = new StudentInBrigadeDTO(student_id, course_id, brigadeId);
             }
             resultSet.close();

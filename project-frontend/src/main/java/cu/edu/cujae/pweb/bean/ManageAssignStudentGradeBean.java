@@ -126,18 +126,14 @@ public class ManageAssignStudentGradeBean {
     }
 
     public void openForEdit(){
-        System.out.println("Abrir para editar");
-        System.out.println(selectedStudentGrade.getStudentName());
     }
 
     public void saveStudentGrade() {
-        System.out.println("Salvando nueva nota: " + selectedStudentGrade.getGradeValue());
         if (selectedStudentGrade.getGradeValue().equals("2") ||
                 selectedStudentGrade.getGradeValue().equals("3") ||
                 selectedStudentGrade.getGradeValue().equals("4") ||
                 selectedStudentGrade.getGradeValue().equals("5")
         ){
-            System.out.println("Esta bueno");
             studentGradeService.updateStudentGrade(new StudentGradeOnlyIdDTO(
                     selectedStudentGrade.getYearId(),
                     selectedStudentGrade.getStudentId(),
@@ -150,7 +146,6 @@ public class ManageAssignStudentGradeBean {
             PrimeFaces.current().ajax().update(":form");
         }
         else{
-            System.out.println("Esta malo");
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_FATAL, "message_student_already_exist");
         }
     }

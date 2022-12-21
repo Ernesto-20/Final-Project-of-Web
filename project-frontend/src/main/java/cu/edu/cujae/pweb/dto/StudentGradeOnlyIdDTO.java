@@ -1,4 +1,4 @@
-package cu.edu.cujae.backend.core.dto;
+package cu.edu.cujae.pweb.dto;
 
 public class StudentGradeOnlyIdDTO {
 

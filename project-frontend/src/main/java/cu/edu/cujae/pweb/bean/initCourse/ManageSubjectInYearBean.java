@@ -9,6 +9,7 @@ import org.primefaces.PrimeFaces;
 import org.primefaces.event.TabChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.RequestContext;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -96,8 +97,9 @@ public class ManageSubjectInYearBean {
 		PrimeFaces.current().ajax().update("formSubjectInCourse");
 //		List<RoleDto> roles = this.selectedUser.getRoles();
 //		this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
+//		this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
 	}
-	
+
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
 	public void saveSubjectInCourse() {
 
@@ -126,19 +128,20 @@ public class ManageSubjectInYearBean {
 
 	public void subjectRemove() {
 		List<SubjectDTO> subjectsToRemove = new ArrayList<SubjectDTO>();
+		System.out.println("1 size: "+selectedSubjectsInCourse.size());
 		for (SubjectInCourseCompleteDTO s:selectedSubjectsInCourse) {
-			boolean found = false;
-			for (int i=0; i < subjectsInCourse.size() && !found; i++) {
+			for (int i=0; i < subjectsInCourse.size(); i++) {
 				if(subjectsInCourse.get(i).getSubjectDTO().getId() == s.getSubjectDTO().getId()){
 					subjectsToRemove.add(s.getSubjectDTO());
 					subjectsInCourse.remove(i);
 					subjectsInCourseList.get(currentIndex).remove(i);
-					i--;
+					break;
 				}
 			}
 		}
 		setSelectedSubjectsInCourse(new ArrayList<SubjectInCourseCompleteDTO>());
 		manageSubjectBean.subjectRemove(subjectsToRemove);
+
 	}
 
     public void subjectAssign(List<SubjectDTO> subjectsToAssign) {
@@ -147,7 +150,11 @@ public class ManageSubjectInYearBean {
 		subjectsToAssign.forEach(element-> {subjectsInCourseList.get(currentIndex).add(new SubjectInCourseCompleteDTO(courseDTO, (currentIndex+1),72 , element));});
 		subjectsInCourse.clear();
 		subjectsInCourseList.get(currentIndex).forEach(element->subjectsInCourse.add(element));
+//		PrimeFaces.current().ajax().update("formSelectionSubject");
+//		PrimeFaces.current().executeScript("alert('see');");
+//		PrimeFaces.current().executeScript("PF('dtSubjectsInCourse').clearSelection();");
 		PrimeFaces.current().ajax().update("formSelectionSubject");
+
 	}
 
 	public List<List<SubjectInCourseCompleteDTO>> getSubjectsInCourseList() {
@@ -229,20 +236,4 @@ public class ManageSubjectInYearBean {
 		this.years = years;
 	}
 
-	public List<List<SubjectInCourseCompleteDTO>> test(){
-		subjectsInCourseList = new ArrayList<List<SubjectInCourseCompleteDTO>>();
-		List<CourseDTO> courses = courseService.getCourses();
-		CourseDTO courseDTO = courses.get(courses.size() - 1);
-		List<SubjectDTO> s = manageSubjectBean.getSubjects();
-		int count = s.get(s.size() - 1).getId() + 1;
-		for (int i = 0; i < 4; i++) {
-			ArrayList<SubjectInCourseCompleteDTO> l = new ArrayList<>();
-			SubjectDTO subjectDTO = new SubjectDTO(count++, "Calculo" + (count + 1));
-			manageSubjectBean.getSubjectService().createSubject(subjectDTO);
-			l.add(new SubjectInCourseCompleteDTO(courseDTO, (i + 1), 72, subjectDTO));
-			subjectsInCourseList.add(l);
-		}
-
-		return subjectsInCourseList;
-	}
 }

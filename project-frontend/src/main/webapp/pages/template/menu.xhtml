@@ -17,7 +17,7 @@
             <sec:authorize access="hasAnyAuthority('admin')">
                 <div class="menu-category" >#{msgs.menu_administration}
                     <div class="menu-items" style="margin-top: 10px;">
-                        <h:link outcome="/pages/init-course/#{manageInitCourse.viewSelected}">
+                        <h:link outcome="#{manageInitCourse.viewSelected}">
                             #{msgs.menu_administration_new_course}
                             <p:ajax listener="#{manageSubjectInYearBean.init}"></p:ajax>
                         </h:link>

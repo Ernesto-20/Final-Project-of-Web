@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import cu.edu.cujae.backend.core.dto.StudentGradeOnlyIdDTO;
@@ -31,6 +32,31 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	private SubjectService subjectService;
 
 	private ResultSet rs;
+
+	@Override
+	public List<StudentGradeOnlyIdDTO> getStudentGradesByCourseId(Integer courseId) throws SQLException {
+		LinkedList<StudentGradeOnlyIdDTO> studentGrades = new LinkedList<>();
+		try (Connection conn = jdbcTemplate.getDataSource().getConnection()) {
+			conn.setAutoCommit(false);
+			String function = "{?= call find_student_gradebycourse_id(?)}";
+
+			CallableStatement preparedFunction = conn.prepareCall(function);
+			preparedFunction.setInt(2, courseId);
+			preparedFunction.registerOutParameter(1, Types.OTHER);
+			preparedFunction.execute();
+			ResultSet resultSet = (ResultSet) preparedFunction.getObject(1);
+			while (resultSet.next()) {
+				Integer yearId = resultSet.getInt("year_id");
+				Integer studentId = resultSet.getInt("student_id");
+				Integer subjectId = resultSet.getInt("subject_id");
+				Integer gradeValue = resultSet.getInt("grade_value");
+				studentGrades.add(new StudentGradeOnlyIdDTO(yearId, studentId, subjectId, courseId, gradeValue));
+			}
+			resultSet.close();
+			preparedFunction.close();
+		}
+		return studentGrades;
+	}
 
 	@Override
 	public List<StudentGradeDTO> getStudentGradesByYearId(Integer studentId, Integer yearId) throws SQLException {

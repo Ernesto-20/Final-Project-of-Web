@@ -2,6 +2,7 @@ package cu.edu.cujae.pweb.bean.initCourse;
 
 import cu.edu.cujae.pweb.dto.StudentDTO;
 import cu.edu.cujae.pweb.service.StudentService;
+import cu.edu.cujae.pweb.utils.JsfUtils;
 import cu.edu.cujae.pweb.utils.ValidateInput;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.TabChangeEvent;
@@ -73,7 +74,6 @@ public class ManageSelectionStudentBean {
     public void restore(){
         init();
         PrimeFaces.current().ajax().update("form:panelView");
-
     }
 
     public boolean isCorrect(){
@@ -127,32 +127,26 @@ public class ManageSelectionStudentBean {
     }
 
     public void saveStudent() {
-//        if(!ValidateInput.isName(this.selectedStudent.getFirstName())) {
-//            System.out.println("HERE");
-//            System.out.println(selectedStudent.getFirstName());
-//
-//            FacesContext.getCurrentInstance().addMessage("firstName", new FacesMessage("hola cara de bola", "hola cabron"));
-//            System.out.println("HERE 2");
-//        }
-        if(isCorrectIdNum()){
-            if (this.selectedStudent.getId() == null) {
-                int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
-                this.selectedStudent.setId(idTemp);
-                StudentDTO clone = getClone();
+        if(ValidateInput.validateStudent(selectedStudent)) {
+            if (isCorrectIdNum()){
+                if (this.selectedStudent.getId() == null) {
+                    int idTemp = students.size() == 0 ? 0 : students.get(students.size() - 1).getId() + 1;
+                    this.selectedStudent.setId(idTemp);
+                    StudentDTO clone = getClone();
 
-                studentsList.get(currentIndex).add(clone);
-                this.students.clear();
-                this.studentsList.get(currentIndex).forEach(element -> students.add(element));
+                    studentsList.get(currentIndex).add(clone);
+                    this.students.clear();
+                    this.studentsList.get(currentIndex).forEach(element -> students.add(element));
 
+                }
+                selectedStudent = new StudentDTO();
 
-            }
-            selectedStudent = new StudentDTO();
-
-            PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
-            PrimeFaces.current().ajax().update("form:panelView");
-        }else{
-            System.out.println("mostrar mensaje de error");
+                PrimeFaces.current().executeScript("PF('manageStudentDialog').hide()");
+                PrimeFaces.current().ajax().update("form:panelView");
+            } else
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_student_already_exist");
         }
+
     }
 
     private boolean isCorrectIdNum() {
@@ -163,7 +157,9 @@ public class ManageSelectionStudentBean {
                     return false;
                 }
 
-        return true;
+//        Compare with data in BD
+        StudentDTO student = studentService.getStudentByIdNum(selectedStudent.getIdNum());
+        return student == null;
     }
 
     public StudentDTO getClone(){

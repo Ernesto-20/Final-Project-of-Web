@@ -1,4 +1,4 @@
-App = {
+clearSelectionApp = {
     init: function() {
         this.wrapper = $(document.body).children('.layout-wrapper');
         this.topbar = this.wrapper.children('.layout-topbar');

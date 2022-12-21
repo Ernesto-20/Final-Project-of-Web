@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import cu.edu.cujae.backend.core.dto.StudentDTO;
+import cu.edu.cujae.backend.core.dto.StudentGradeCourseIdDTO;
 import cu.edu.cujae.backend.core.dto.StudentGradeOnlyIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,12 @@ public class StudentGradeController {
     @GetMapping("/all")
     public ResponseEntity<List<StudentGradeDTO>> getAllStudentGrade() throws SQLException{
         List<StudentGradeDTO> studentGrades = studentGradeService.getStudentGrades();
+        return ResponseEntity.ok(studentGrades);
+    }
+
+    @GetMapping("/all_course_id")
+    public ResponseEntity<List<StudentGradeCourseIdDTO>> getAllStudentGradeCourseId() throws SQLException{
+        List<StudentGradeCourseIdDTO> studentGrades = studentGradeService.getStudentGradesCourseId();
         return ResponseEntity.ok(studentGrades);
     }
 

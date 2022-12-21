@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.StudentGradeCourseIdDTO;
 import cu.edu.cujae.backend.core.dto.StudentGradeOnlyIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -133,6 +134,35 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 						studentService.getStudentById(rs.getInt("student_id")).getFullName(),
 						rs.getInt("subject_id"),
 						subjectService.getSubjectById(rs.getInt("subject_id")).getName(),
+						rs.getInt("grade_value")
+				));
+			}
+		}
+
+		return studentGrades;
+	}
+
+	@Override
+	public List<StudentGradeCourseIdDTO> getStudentGradesCourseId() throws SQLException {
+		List<StudentGradeCourseIdDTO> studentGrades = new ArrayList<>();
+		try(Connection conn = jdbcTemplate.getDataSource().getConnection()){
+			conn.setAutoCommit(false);
+
+			CallableStatement CS = conn.prepareCall(
+					"{?= call select_all_student_grade()}");
+
+			CS.registerOutParameter(1, java.sql.Types.OTHER);
+			CS.execute();
+			ResultSet rs = (ResultSet) CS.getObject(1);
+
+			while (rs.next()) {
+				studentGrades.add(new StudentGradeCourseIdDTO(
+						rs.getInt("year_id"),
+						rs.getInt("student_id"),
+						studentService.getStudentById(rs.getInt("student_id")).getFullName(),
+						rs.getInt("subject_id"),
+						subjectService.getSubjectById(rs.getInt("subject_id")).getName(),
+						rs.getInt("course_id"),
 						rs.getInt("grade_value")
 				));
 			}

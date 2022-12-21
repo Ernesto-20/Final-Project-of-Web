@@ -8,8 +8,6 @@ public class ValidateInput {
 	
 	public static boolean validateStudent(StudentDTO student) {
 		boolean valid = true;
-		System.out.println(isAlpha(student.getFirstName()));
-		System.out.println(isAlpha(student.getLastName()));
 		if(student.getIdNum().length() != 11) {
 			JsfUtils.addMessageFromBundle("idNum", FacesMessage.SEVERITY_ERROR, "error_message_input_length_not_11");
 			valid = false;
@@ -28,7 +26,7 @@ public class ValidateInput {
 	
     public static boolean isAlpha(String text){
         for(int i=0; i<text.length(); i++)
-            if(!Character.isAlphabetic(text.charAt(i)))
+            if(!Character.isAlphabetic(text.charAt(i)) && !(text.charAt(i) == ' '))
                 return false;
         return true;
     }

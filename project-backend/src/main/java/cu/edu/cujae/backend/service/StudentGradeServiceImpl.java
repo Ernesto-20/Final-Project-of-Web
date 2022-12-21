@@ -213,4 +213,32 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	private int getGradeValue() throws SQLException {
 		return rs.getInt("grade_value");
 	}
+
+	@Override
+	public List<StudentGradeOnlyIdDTO> getStudentGradesOnlyId() throws SQLException {
+
+		List<StudentGradeOnlyIdDTO> studentGrades = new ArrayList<>();
+		try(Connection conn = jdbcTemplate.getDataSource().getConnection()){
+			conn.setAutoCommit(false);
+
+			CallableStatement CS = conn.prepareCall(
+					"{?= call select_all_student_grade()}");
+
+			CS.registerOutParameter(1, java.sql.Types.OTHER);
+			CS.execute();
+			ResultSet rs = (ResultSet) CS.getObject(1);
+
+			while (rs.next()) {
+				studentGrades.add(new StudentGradeOnlyIdDTO(
+						rs.getInt("year_id"),
+						rs.getInt("student_id"),
+						rs.getInt("subject_id"),
+						rs.getInt("course_id"),
+						rs.getInt("grade_value")
+				));
+			}
+		}
+
+		return studentGrades;
+	}
 }

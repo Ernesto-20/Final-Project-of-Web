@@ -80,7 +80,11 @@ public class ManageCourseBean {
 
 	public void setSelectOption(String selectOption) {
 		this.selectOption = selectOption;
+	}
 
+	public void refresh(){
+		setCourses(null);
+		getCourses();
 	}
 
 	public CourseDTO getLastCourse() {

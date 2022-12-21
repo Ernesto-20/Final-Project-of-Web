@@ -39,8 +39,7 @@ public class ManageSelectionStudentBean {
         selectedStudent = new StudentDTO();
         students = new ArrayList<>();
         studentsList = new ArrayList<>();
-        studentsList.add(new ArrayList<>());
-        studentsList.add(new ArrayList<>());
+//        Only two brigades
         studentsList.add(new ArrayList<>());
         studentsList.add(new ArrayList<>());
         currentIndex = 0;

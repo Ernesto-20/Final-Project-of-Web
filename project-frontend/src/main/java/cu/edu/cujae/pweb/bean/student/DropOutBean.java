@@ -49,11 +49,7 @@ public class DropOutBean {
 
 	public void dropStudents(Integer courseId, List<StudentDTO> selectedStudents) {
 		try {
-			System.out.println("Size:" + selectedStudents.size());
-
 			for (StudentDTO student : selectedStudents) {
-				System.out.println("Nombre:" + student.getFullName());
-				System.out.println("Dropout:" + dropout);
 
 				// Si el estudiante existe en la tabla de 'student_dropout' en el curso dado,
 				// entonces no crearlo
@@ -90,9 +86,7 @@ public class DropOutBean {
 
 	public void deleteStudentDropOut() {
 		try {
-			System.out.println("ANtes de borrar");
 			studentDropoutService.deleteStudentDropOut(this.selectedStudentDropout);
-			System.out.println("Despues de borrar");
 			this.selectedStudentDropout = new StudentDropOutNamedDTO();
 
 			// load datatable again with new values

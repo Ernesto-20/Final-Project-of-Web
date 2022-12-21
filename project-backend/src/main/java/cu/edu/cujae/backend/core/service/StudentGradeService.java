@@ -17,4 +17,6 @@ public interface StudentGradeService {
 	void insert(StudentGradeOnlyIdDTO studentGradeOnlyIdDTO)throws SQLException;
 
 	void updateGrade(StudentGradeOnlyIdDTO studentGradeOnlyIdDTO) throws SQLException;
+
+	List<StudentGradeOnlyIdDTO> getStudentGradesOnlyId() throws SQLException;
 }

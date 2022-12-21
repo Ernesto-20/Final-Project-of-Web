@@ -4,10 +4,7 @@ import cu.edu.cujae.pweb.dto.*;
 import cu.edu.cujae.pweb.service.CourseService;
 import cu.edu.cujae.pweb.service.InitCourseTransactionService;
 import cu.edu.cujae.pweb.service.StudentGradeService;
-import cu.edu.cujae.pweb.service.StudentGradeServiceImpl;
 import cu.edu.cujae.pweb.utils.JsfUtils;
-import cu.edu.cujae.pweb.utils.ValidateInput;
-import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -26,7 +23,7 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 public class ManageInitCourse {
-    private String actionLabel = "Siguiente";
+    private String actionLabel = null;
     private String disableStart = "true";
     private String colorStart = "rgb(161,156,156)";
 
@@ -70,7 +67,11 @@ public class ManageInitCourse {
         if (!manageSelectionStudentBean.isCorrect()) {
             //            Mostrar mensaje de error
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error_brigade_without_students");
-        } else{
+        }
+        else if (!isCorrectStudentPromotion()) {
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error_students_without_grades");
+        }
+        else{
             //            Obtener los datos.
             List<SubjectInCourseCompleteDTO> listSubjects = new ArrayList<>();
             manageSubjectInYearBean.getSubjectsInCourseList().forEach(subjectsInCourseByYear -> {
@@ -79,55 +80,49 @@ public class ManageInitCourse {
             });
             List<List<StudentDTO>> listStudents =  manageSelectionStudentBean.getStudentsList();
 
-            //            Llamar a servicion de unica transacción.
-            System.out.println("INICIO DE NUEVO CURSO");
+            //            Llamar a servicio de única transacción.
             InitCourseTransactionDTO initCourseTransactionDTO = new InitCourseTransactionDTO(listSubjects, listStudents);
             initCourseTransactionService.initCourse(initCourseTransactionDTO);
+
+            manageSubjectInYearBean.initialize();
+            manageSelectionStudentBean.initialize();
+
+            String url = "http://localhost:8085/project-frontend/init-course/welcome"; //url donde se redirige la pantalla
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.getExternalContext().redirect(url);
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_course_added");
         }
     }
 
     public String getViewSelected(){
-        if (isCorrectStudentPromotion()) {
-            manageSelectionStudentBean.refresh();
-            manageSubjectInYearBean.refresh();
+        manageSelectionStudentBean.refresh();
+        manageSubjectInYearBean.refresh();
 
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-            String url = request.getRequestURL().toString().substring(39);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String url = request.getRequestURL().toString().substring(39);
 
-            if (actionLabel.equals("Atras") && url.equals("init-course/selection-subject")) {
-                actionLabel = "Siguiente";
-                disableStart = "true";
-                colorStart = "rgb(161,156,156)";
-            }
-//            return "/pages/init-course/selection-subject.xhtml";
-            return "/pages/init-course/test-selection-subject.xhtml";
-        }
-        else {
-            //PrimeFaces.current().dialog().showMessageDynamic(
-                  //  new FacesMessage(FacesMessage.SEVERITY_WARN,"No se puede crear curso", "Faltan estudiantes por notas"));
-//            return "/pages/welcome/welcome.xhtml";
-
-//            Para que siempre entre
-//            return "/pages/init-course/selection-subject.xhtml";
-            return "/pages/init-course/test-selection-subject.xhtml";
+        if (getActionLabel().equals(JsfUtils.getStringValueFromBundle("label_back_button")) && url.equals("init-course/selection-subject")) {
+            actionLabel = JsfUtils.getStringValueFromBundle("label_next_button");
+            disableStart = "true";
+            colorStart = "rgb(161,156,156)";
         }
 
-
+        return "/pages/init-course/test-selection-subject.xhtml";
     }
 
     public void moveAction() throws IOException {
 
-        if(actionLabel.equals("Siguiente")) {
+        if(getActionLabel().equals(JsfUtils.getStringValueFromBundle("label_next_button"))) {
             if(manageSubjectInYearBean.isCorrect()) {
                 String url = "http://localhost:8085/project-frontend/init-course/selection-student"; //url donde se redirige la pantalla
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.getExternalContext().redirect(url);
 
-                this.actionLabel = "Atras";
+                this.actionLabel = JsfUtils.getStringValueFromBundle("label_back_button");
                 this.disableStart = "false";
                 this.colorStart = "rgb(13,213,120)";
             }else{
-                System.out.println("ERROR: AÑOS ASIGNATURAS");
+                JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error_year_without_subjects");
             }
 
         }else {
@@ -135,7 +130,7 @@ public class ManageInitCourse {
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.getExternalContext().redirect(url);
 
-            this.actionLabel = "Siguiente";
+            this.actionLabel = JsfUtils.getStringValueFromBundle("label_next_button");
             this.disableStart = "true";
             this.colorStart = "rgb(161,156,156)";
         }
@@ -158,7 +153,7 @@ public class ManageInitCourse {
     }
 
     public String getActionLabel() {
-        return actionLabel;
+        return actionLabel == null? JsfUtils.getStringValueFromBundle("label_next_button"): actionLabel;
     }
 
     public void setActionLabel(String actionLabel) {

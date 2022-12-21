@@ -6,20 +6,26 @@
 
     <ui:composition template="/pages/template/layout.xhtml">
         <ui:define name="title">
-		    Inicio
+			#{msgs.title_home}
 		</ui:define>
     	<ui:define name="layout">
     		<h:form>
 		    	<p:card style="width: 100%; margin-bottom: 2em">
 				    <f:facet name="title">
-				        Bievenidos al demo de pweb
+						#{msgs.label_welcome_to_app}
 				    </f:facet>
 				
-				    <p>Este demo servirá de guía para el desarrollo de los proyectos de curso de la asignatura. Poco a poco lo iremos actualizando con diversas funcionalidades y casos de estudio. </p>
+				    <p>#{msgs.label_app_uses} </p>
 				    <ul>
-				    	<li>Plantilla con Facelets </li>
-				    	<li>Login </li>
-				    	<li>Crud de usuario </li>
+				    	<li>#{msgs.label_app_use1} </li>
+				    	<li>#{msgs.label_app_use2} </li>
+				    	<li>#{msgs.label_app_use3} </li>
+						<li>#{msgs.label_app_use4} </li>
+						<li>#{msgs.label_app_use5} </li>
+						<li>#{msgs.label_app_use6} </li>
+						<li>#{msgs.label_app_use7} </li>
+						<li>#{msgs.label_app_use8} </li>
+						<li>#{msgs.label_app_use9} </li>
 				    </ul>
 				</p:card>
 			</h:form>

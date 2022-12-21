@@ -87,7 +87,7 @@ public class ManageInitCourse {
             manageSubjectInYearBean.initialize();
             manageSelectionStudentBean.initialize();
 
-            String url = "http://localhost:8085/project-frontend/init-course/welcome"; //url donde se redirige la pantalla
+            String url = "http://localhost:8085/project-frontend/welcome"; //url donde se redirige la pantalla
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.getExternalContext().redirect(url);
             JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_course_added");

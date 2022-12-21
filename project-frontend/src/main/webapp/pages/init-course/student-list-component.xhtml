@@ -6,10 +6,10 @@
     <p:toolbar>
         <p:toolbarGroup>
             <p:commandButton value="#{msgs.btn_studentList_new}" icon="pi pi-plus"
-                             actionListener="#{manageSelectionStudentBean.openNew}" update="form:panelView:0:j_idt61"
+                             actionListener="#{manageSelectionStudentBean.openNew}" update="form:panelView"
                              oncomplete="PF('manageStudentDialog').show()" styleClass="ui-button-success"
                              style="margin-right: .5rem">
-                <p:resetInput target="form:panelView:0:j_idt61" />
+                <p:resetInput target="form:panelView" />
             </p:commandButton>
         </p:toolbarGroup>
     </p:toolbar>

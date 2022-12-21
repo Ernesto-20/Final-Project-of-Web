@@ -8,6 +8,9 @@
         #{msgs.title_selection_subject}
     </ui:define>
     <ui:define name="selection-list-content">
+        <h:form style="display: flex; flex-direction: row-reverse; margin-right: -12px; margin-top:-10px;">
+            <p:commandButton value="#{msgs.btn_clean_data}" action="#{manageSubjectInYearBean.restore}" style="margin-right:20px;"></p:commandButton>
+        </h:form>
         <h:form id="formSelectionSubject">
             <p:panelGrid id="panelGridId" columns="3" class="p-grid">
                 <f:facet name="#{msgs.title_selection_subject}">

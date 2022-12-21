@@ -49,9 +49,9 @@ public class ManageSubjectInYearBean {
 
 
 	public ManageSubjectInYearBean() {
-		init();
+		initialize();
 	}
-	private void init() {
+	protected void initialize() {
 		selectedSubjectInCourse = new SubjectInCourseCompleteDTO();
 		subjectsInCourse = new ArrayList<>();
 		subjectsInCourseList = new ArrayList<>();
@@ -60,6 +60,12 @@ public class ManageSubjectInYearBean {
 		subjectsInCourseList.add(new ArrayList<>());
 		subjectsInCourseList.add(new ArrayList<>());
 		currentIndex = 0;
+	}
+
+	public void restore(){
+		initialize();
+		manageSubjectBean.setSubjects(null);
+		PrimeFaces.current().ajax().update("formSelectionSubject");
 	}
 
 	public boolean isCorrect(){
@@ -94,17 +100,11 @@ public class ManageSubjectInYearBean {
 	//Se ejecuta al dar clic en el button con el lapicito
 	public void openForEdit() {
 		PrimeFaces.current().ajax().update("formSubjectInCourse");
-//		List<RoleDto> roles = this.selectedUser.getRoles();
-//		this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
 	}
 	
 	//Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar al usuario
 	public void saveSubjectInCourse() {
-
-
-
 		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_edited");
-
 
         PrimeFaces.current().executeScript("PF('manageSubjectInCourseDialog').hide()");//Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
         PrimeFaces.current().ajax().update("formSelectionSubject:tabContent");// Este code es para refrescar el componente con id dt-users que se encuentra dentro del formulario con id form
@@ -122,23 +122,6 @@ public class ManageSubjectInYearBean {
 
 	public boolean hasSelectedSubjectsInCourse() {
 		return this.selectedSubjectsInCourse != null && !this.selectedSubjectsInCourse.isEmpty();
-	}
-
-	public void subjectRemove() {
-		List<SubjectDTO> subjectsToRemove = new ArrayList<SubjectDTO>();
-		for (SubjectInCourseCompleteDTO s:selectedSubjectsInCourse) {
-			boolean found = false;
-			for (int i=0; i < subjectsInCourse.size() && !found; i++) {
-				if(subjectsInCourse.get(i).getSubjectDTO().getId() == s.getSubjectDTO().getId()){
-					subjectsToRemove.add(s.getSubjectDTO());
-					subjectsInCourse.remove(i);
-					subjectsInCourseList.get(currentIndex).remove(i);
-					i--;
-				}
-			}
-		}
-		setSelectedSubjectsInCourse(new ArrayList<SubjectInCourseCompleteDTO>());
-		manageSubjectBean.subjectRemove(subjectsToRemove);
 	}
 
     public void subjectAssign(List<SubjectDTO> subjectsToAssign) {

@@ -23,7 +23,7 @@ public class UrlRewriteConfigurationProvider extends HttpConfigurationProvider {
                         .to("/pages/init-course/selection-student.jsf"))
                 .addRule(Join.path("/students").to("/pages/student/student-list.jsf"))
                 .addRule(Join.path("/assign-grades").to("/pages/studentGrade/studentGrade.jsf"))
-                .addRule(Join.path("/ranking").to("/pages/reports/ranking.jsf"));
+                .addRule(Join.path("/ranking").to("/pages/ranking/ranking.jsf"));
 
         // ej using params
         // .addRule(Join.path("/shop/{category}").to("/faces/viewCategory.jsf"));

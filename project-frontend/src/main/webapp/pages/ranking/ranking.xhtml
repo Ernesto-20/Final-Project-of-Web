@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template/layout.xhtml">
+    <ui:define name="title">
+        #{msgs.title_assign_student_grades}
+    </ui:define>
+    <ui:define name="layout">
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <h:outputText value="#{msgs.header_assign_student_grades}" />
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div style="border: 1px solid #DDDDDD;">
+                    <h:outputText value="#{msgs.subheader_assign_student_grades}" style="display: block; margin: 0.5rem;" />
+                    <div style="display: flex;">
+                        <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem;">
+                            <p:outputLabel for="course-select" value="#{msgs.course_select_label_assign_student_grades}" />
+                            <p:selectOneMenu id="course-select" value="#{manageRankingBean.courseSelectOption}">
+                                <p:ajax update="dt-students" process="@this" listener="#{manageRankingBean.onCourseOrYearChange}"/>
+                                <f:selectItems value="#{manageCourseBean.courses}" var="course" itemLabel="#{course.identifier}" itemValue="#{course.id}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem">
+                            <p:outputLabel for="year-select" value="#{msgs.year_select_label_assign_student_grades}" />
+                            <p:selectOneMenu id="year-select" value="#{manageRankingBean.yearSelectOption}">
+                                <p:ajax update=":form:dt-students" process="@this" listener="#{manageRankingBean.onCourseOrYearChange}"/>
+                                <f:selectItems value="#{manageYearBean.years}" var="year" itemLabel="#{year.id}" itemValue="#{year.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <p:dataTable id="dt-students" widgetVar="dtStudents" var="studentRanking"
+                                 value="#{manageRankingBean.studentsRanking}" reflow="true"
+                                 rows="10">
+                        <p:column headerText="#{msgs.subject_column_assign_student_grades}">
+                            <h:outputText value="#{studentRanking.studentName}" />
+                        </p:column>
+                        <p:column headerText="#{msgs.grade_column_assign_student_grades}">
+                            <h:outputText value="#{studentRanking.average}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

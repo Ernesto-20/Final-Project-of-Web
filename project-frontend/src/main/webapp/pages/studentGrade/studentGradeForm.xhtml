@@ -4,12 +4,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:dialog header="#{msgs.modal_header_subject_in_courses}" showEffect="fade" modal="true"
+    <p:dialog header="#{manageAssignStudentGradeBean.selectedStudentGrade.subject}" showEffect="fade" modal="true"
               widgetVar="manageStudentGradeDialog" responsive="true">
         <p:outputPanel id="manage-student-grade-content" class="ui-fluid">
                     <h3>#{manageAssignStudentGradeBean.selectedStudentGrade.subject}</h3>
                     <div class="p-field">
-                        <p:outputLabel for="@next">#{msgs.hours_amount_label_subject_in_course}</p:outputLabel>
+                        <p:outputLabel for="@next">#{msgs.edit_grade_label_assign_student_grades}</p:outputLabel>
                         <p:inputText id="idNum" required="true"
                                      value="#{manageAssignStudentGradeBean.selectedStudentGrade.gradeValue}"
                                      maxlength="3">

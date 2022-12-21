@@ -145,13 +145,13 @@ public class ManageAssignStudentGradeBean {
                     courseSelectOption,
                     Integer.parseInt(selectedStudentGrade.getGradeValue())
             ));
-            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_student_already_exist");
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "edited_message_assign_student_grades");
             PrimeFaces.current().executeScript("PF('manageStudentGradeDialog').hide()");
             PrimeFaces.current().ajax().update(":form");
         }
         else{
             System.out.println("Esta malo");
-            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_FATAL, "message_student_already_exist");
+            JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_FATAL, "error_message_assign_student_grades");
         }
     }
 

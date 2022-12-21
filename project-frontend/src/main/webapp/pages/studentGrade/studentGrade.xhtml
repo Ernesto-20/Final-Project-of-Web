@@ -6,43 +6,43 @@
 
     <ui:composition template="/pages/template/layout.xhtml">
         <ui:define name="title">
-            #{msgs.title_subject_in_courses}
+            #{msgs.title_assign_student_grades}
         </ui:define>
         <ui:define name="layout">
             <h:form id="form">
                 <div class="card crud-demo">
                     <p:toolbar>
                         <p:toolbarGroup>
-                            <h:outputText value="#{msgs.header_subject_in_courses}" />
+                            <h:outputText value="#{msgs.header_assign_student_grades}" />
                         </p:toolbarGroup>
                     </p:toolbar>
                     <div>
                         <div style="border: 1px solid #DDDDDD;">
-                            <h:outputText value="#{msgs.subheader_student_grades}" style="display: block; margin: 0.5rem;" />
+                            <h:outputText value="#{msgs.subheader_assign_student_grades}" style="display: block; margin: 0.5rem;" />
                             <div style="display: flex;">
                                 <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem;">
-                                    <p:outputLabel for="course-select" value="#{msgs.course_select_default_subject_in_courses}" />
+                                    <p:outputLabel for="course-select" value="#{msgs.course_select_label_assign_student_grades}" />
                                     <p:selectOneMenu id="course-select" value="#{manageAssignStudentGradeBean.courseSelectOption}">
                                         <p:ajax update="dt-students" process="@this" listener="#{manageAssignStudentGradeBean.onCourseOrYearChange}"/>
                                         <f:selectItems value="#{manageCourseBean.courses}" var="course" itemLabel="#{course.identifier}" itemValue="#{course.id}" />
                                     </p:selectOneMenu>
                                 </div>
                                 <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem">
-                                    <p:outputLabel for="year-select" value="#{msgs.year_select_default_subject_in_courses}" />
+                                    <p:outputLabel for="year-select" value="#{msgs.year_select_label_assign_student_grades}" />
                                     <p:selectOneMenu id="year-select" value="#{manageAssignStudentGradeBean.yearSelectOption}">
                                         <p:ajax update=":form:dt-students" process="@this" listener="#{manageAssignStudentGradeBean.onCourseOrYearChange}"/>
                                         <f:selectItems value="#{manageYearBean.years}" var="year" itemLabel="#{year.id}" itemValue="#{year.id}"/>
                                     </p:selectOneMenu>
                                 </div>
                                 <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem">
-                                    <p:outputLabel for="brigade-select" value="Grupo" />
+                                    <p:outputLabel for="brigade-select" value="#{msgs.brigade_select_label_assign_student_grades}" />
                                     <p:selectOneMenu id="brigade-select" value="#{manageAssignStudentGradeBean.brigadeSelectOption}">
                                         <p:ajax update="dt-students" process="@this" listener="#{manageAssignStudentGradeBean.onBrigadeChange}"/>
                                         <f:selectItems value="#{manageAssignStudentGradeBean.brigades}" var="brigade" itemLabel="#{brigade.name}" itemValue="#{brigade.id}"/>
                                     </p:selectOneMenu>
                                 </div>
                                 <div style="display: inline-flex; flex-direction: column; margin-left: 0.5rem">
-                                    <p:outputLabel for="student-select" value="Estudiante" />
+                                    <p:outputLabel for="student-select" value="#{msgs.student_select_label_assign_student_grades}" />
                                     <p:selectOneMenu id="student-select" value="#{manageAssignStudentGradeBean.studentSelectOption}">
                                         <p:ajax update="dt-students" process="@this" listener="#{manageAssignStudentGradeBean.onStudentChange}"/>
                                         <f:selectItems value="#{manageAssignStudentGradeBean.students}" var="student" itemLabel="#{student.fullName}" itemValue="#{student.id}"/>
@@ -52,10 +52,10 @@
                             <p:dataTable id="dt-students" widgetVar="dtStudents" var="studentGrade"
                                          value="#{manageAssignStudentGradeBean.studentGrades}" reflow="true"
                                          rows="10">
-                                <p:column headerText="Asignaturas">
+                                <p:column headerText="#{msgs.subject_column_assign_student_grades}">
                                     <h:outputText value="#{studentGrade.subject}" />
                                 </p:column>
-                                <p:column headerText="#{msgs.grade_column_student_grade}">
+                                <p:column headerText="#{msgs.grade_column_assign_student_grades}">
                                     <h:outputText value="#{studentGrade.gradeValue}" />
                                 </p:column>
                                 <p:column rendered="#{manageAssignStudentGradeBean.courseSelectOption eq manageCourseBean.lastCourse.id}" exportable="false">

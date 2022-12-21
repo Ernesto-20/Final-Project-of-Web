@@ -9,4 +9,6 @@ public interface StudentGradeService {
 
 	List<StudentGradeOnlyIdDTO> getStudentGradesByCourseId(Integer courseId);
 	List<StudentGradeDTO> getStudentGradesByYearId(Integer studentId, Integer yearId);
+	List<StudentGradeDTO> getStudentGradesAll();
+	void updateStudentGrade (StudentGradeOnlyIdDTO studentGrade);
 }

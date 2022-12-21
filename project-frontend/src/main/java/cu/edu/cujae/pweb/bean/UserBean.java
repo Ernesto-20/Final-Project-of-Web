@@ -25,8 +25,8 @@ import cu.edu.cujae.pweb.utils.JsfUtils;
 @ViewScoped
 public class UserBean {
 
-	private String username;
-	private String password;
+	private String username = "pweb";
+	private String password = "pweb";
 
 	@Autowired
 	private AuthService authService;

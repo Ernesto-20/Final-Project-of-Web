@@ -2,16 +2,16 @@ package cu.edu.cujae.pweb.dto;
 
 public class SubjectInCourseNamedDTO {
 
-    private String subjectId;
+    private int subjectId;
     private String subjectName;
-    private String courseId;
+    private int courseId;
     private String courseName;
-    private String yearId;
+    private int yearId;
     private int hoursLong;
 
     public SubjectInCourseNamedDTO(){ super(); }
 
-    public SubjectInCourseNamedDTO(String subjectId, String subjectName, String courseId, String courseName, String yearId, int hoursLong) {
+    public SubjectInCourseNamedDTO(int subjectId, String subjectName, int courseId, String courseName, int yearId, int hoursLong) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.courseId = courseId;
@@ -20,7 +20,7 @@ public class SubjectInCourseNamedDTO {
         this.hoursLong = hoursLong;
     }
 
-    public SubjectInCourseNamedDTO(String subjectId, String courseId, String yearId, int hoursLong) {
+    public SubjectInCourseNamedDTO(int subjectId, int courseId, int yearId, int hoursLong) {
         this.subjectId = subjectId;
         this.subjectName = null;
         this.courseId = courseId;
@@ -30,11 +30,11 @@ public class SubjectInCourseNamedDTO {
     }
 
     public SubjectInCourseNamedDTO(SubjectInCourseDTO dto){
-        this.subjectId = dto.getSubjectId();
+        this.subjectId = Integer.parseInt(dto.getSubjectId());
         this.subjectName = null;
-        this.courseId = dto.getCourseId();
+        this.courseId = Integer.parseInt(dto.getCourseId());
         this.courseName = null;
-        this.yearId = dto.getYearId();
+        this.yearId = Integer.parseInt(dto.getYearId());
         this.hoursLong = dto.getHoursLong();
     }
 
@@ -54,27 +54,27 @@ public class SubjectInCourseNamedDTO {
         this.courseName = courseName;
     }
 
-    public String getSubjectId() {
+    public int getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(String subjectId) {
+    public void setSubjectId(int subjectId) {
         this.subjectId = subjectId;
     }
 
-    public String getCourseId() {
+    public int getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 
-    public String getYearId() {
+    public int getYearId() {
         return yearId;
     }
 
-    public void setYearId(String yearId) {
+    public void setYearId(int yearId) {
         this.yearId = yearId;
     }
 

@@ -145,9 +145,9 @@ public class UserServiceImpl implements UserService{
 				      "SELECT * FROM xuser where username = ?");
 	
 			pstmt.setString(1, username);
-	
+
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			while(rs.next()){
 				user = new UserDTO(rs.getString("id")
 						,rs.getString("username")

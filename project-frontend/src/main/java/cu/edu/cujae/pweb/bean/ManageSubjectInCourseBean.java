@@ -20,6 +20,7 @@ import javax.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Component //Le indica a spring es un componete registrado
@@ -27,14 +28,13 @@ import java.util.UUID;
 @ViewScoped //Este es el alcance utilizado para trabajar con Ajax
 public class ManageSubjectInCourseBean {
 
-//	@ManagedProperty("#{manageCourseBean}")
-//	private ManageCourseBean manageCourseBean;
-
 	private SubjectInCourseDTO subjectInCourseDTO;
 	private SubjectInCourseDTO selectedSubjectInCourse;
 	private SubjectInCourseNamedDTO selectedSubjectInCourseNamed;
 	private List<SubjectInCourseDTO> subjectsInCourse;
 	private List<SubjectInCourseNamedDTO> subjectsInCourseNamed;
+	private int courseSelectOption = 1;
+	private int yearSelectOption = 1;
 
 	private List<YearDTO> years;
 
@@ -51,11 +51,6 @@ public class ManageSubjectInCourseBean {
 		
 	}
 
-//	public void setManageCourseBean(ManageCourseBean manageCourseBean) {
-//		this.manageCourseBean = manageCourseBean;
-//	}
-
-
 	//Se ejecuta al dar clic en el button Nuevo
 	public void openNew() {
         this.selectedSubjectInCourse = new SubjectInCourseDTO();
@@ -67,7 +62,17 @@ public class ManageSubjectInCourseBean {
 //		this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
 	}
 
-	public void onCourseChange(){
+	public List<SubjectInCourseNamedDTO> filterByCourseAndYear(int courseId, int yearId){
+		return subjectInCourseService.getSubjectsInCourseNamed()
+				.stream()
+				.filter(dto -> dto.getCourseId() == courseSelectOption && dto.getYearId() == yearSelectOption)
+				.collect(Collectors.toList());
+	}
+
+	public void onCourseOrYearChange() {
+		subjectsInCourseNamed = filterByCourseAndYear(courseSelectOption, yearSelectOption);
+
+		PrimeFaces.current().ajax().update("dataTable:dt-subjects");
 	}
 
 	public void openForEditNamed() {
@@ -91,9 +96,9 @@ public class ManageSubjectInCourseBean {
 
 	public void saveSubjectInCourseNamed(){
 		subjectInCourseService.updateSubjectInCourse(new SubjectInCourseDTO(
-				selectedSubjectInCourseNamed.getSubjectId(),
-				selectedSubjectInCourseNamed.getCourseId(),
-				selectedSubjectInCourseNamed.getYearId(),
+				String.valueOf(selectedSubjectInCourseNamed.getSubjectId()),
+				String.valueOf(selectedSubjectInCourseNamed.getCourseId()),
+				String.valueOf(selectedSubjectInCourseNamed.getYearId()),
 				selectedSubjectInCourseNamed.getHoursLong()
 		));
 		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "edited_message_subject_in_courses");
@@ -119,9 +124,9 @@ public class ManageSubjectInCourseBean {
 
 		this.subjectsInCourseNamed.remove(this.selectedSubjectInCourseNamed);
 		subjectInCourseService.deleteSubjectInCourse(
-				selectedSubjectInCourseNamed.getSubjectId(),
-				selectedSubjectInCourseNamed.getCourseId(),
-				selectedSubjectInCourseNamed.getYearId()
+				String.valueOf(selectedSubjectInCourseNamed.getSubjectId()),
+				String.valueOf(selectedSubjectInCourseNamed.getCourseId()),
+				String.valueOf(selectedSubjectInCourseNamed.getYearId())
 		);
 		JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "deleted_message_subject_in_courses");
 		PrimeFaces.current().executeScript("PF('manageSubjectDialog').hide()");//Este code permite cerrar el dialog cuyo id es manageUserDialog. Este identificador es el widgetVar
@@ -129,7 +134,6 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public SubjectInCourseDTO getSubjectInCourseDTO() {
-
 		return subjectInCourseDTO;
 	}
 
@@ -154,13 +158,12 @@ public class ManageSubjectInCourseBean {
 	}
 
 	public List<SubjectInCourseDTO> getSubjectsInCourse() {
-		subjectsInCourse = subjectsInCourse == null ? subjectInCourseService.getSubjectsInCourse() : subjectsInCourse;
 		return subjectsInCourse;
 	}
 
 	public List<SubjectInCourseNamedDTO> getSubjectsInCourseNamed() {
-		subjectsInCourseNamed = subjectsInCourseNamed == null ? subjectInCourseService.getSubjectsInCourseNamed() : subjectsInCourseNamed;
-		return subjectsInCourseNamed;
+//		Select options for course and year are 1 by default
+		return filterByCourseAndYear(courseSelectOption, yearSelectOption);
 	}
 
 	public void setSubjectsInCourse(List<SubjectInCourseDTO> subjectsInCourse) {
@@ -179,4 +182,19 @@ public class ManageSubjectInCourseBean {
 		this.years = years;
 	}
 
+	public int getCourseSelectOption() {
+		return courseSelectOption;
+	}
+
+	public void setCourseSelectOption(int courseSelectOption) {
+		this.courseSelectOption = courseSelectOption;
+	}
+
+	public int getYearSelectOption() {
+		return yearSelectOption;
+	}
+
+	public void setYearSelectOption(int yearSelectOption) {
+		this.yearSelectOption = yearSelectOption;
+	}
 }

@@ -46,7 +46,7 @@ public class ManageInitCourse {
     private CourseService courseService;
 
     public boolean isCorrectStudentPromotion(){
-        boolean isCorrectStudentPromotion = false;
+        boolean isCorrectStudentPromotion = true;
         List<CourseDTO> courses = courseService.getCourses();
         Integer courseId = courses.get(courses.size()-1).getId();
         List<StudentGradeOnlyIdDTO> studentsLastCourse = studentGradeService.getStudentGradesByCourseId(courseId);
@@ -55,7 +55,7 @@ public class ManageInitCourse {
                     studentsLastCourse.get(i).getGradeValue() != 3 &&
                     studentsLastCourse.get(i).getGradeValue() != 4 &&
                     studentsLastCourse.get(i).getGradeValue() != 5) {
-                isCorrectStudentPromotion = true;
+                isCorrectStudentPromotion = false;
             }
         }
         return isCorrectStudentPromotion;

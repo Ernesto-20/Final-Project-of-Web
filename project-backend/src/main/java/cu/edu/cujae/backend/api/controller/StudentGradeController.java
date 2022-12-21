@@ -3,6 +3,7 @@ package cu.edu.cujae.backend.api.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.StudentDTO;
 import cu.edu.cujae.backend.core.dto.StudentGradeOnlyIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,24 @@ public class StudentGradeController {
             throws SQLException {
         List<StudentGradeOnlyIdDTO> studentGrades = studentGradeService.getStudentGradesByCourseId(courseId);
         return ResponseEntity.ok(studentGrades);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<StudentGradeDTO>> getAllStudentGrade() throws SQLException{
+        List<StudentGradeDTO> studentGrades = studentGradeService.getStudentGrades();
+        return ResponseEntity.ok(studentGrades);
+    }
+
+//    @PutMapping("/")
+//    public ResponseEntity<String> update(@RequestBody StudentGradeOnlyIdDTO studentGrade) throws SQLException{
+//        studentGradeService.updateGrade(studentGrade);
+//        System.out.println(studentGrade.getGradeValue());
+//        return ResponseEntity.ok("StudentGrade updated");
+//    }
+
+    @PutMapping("")
+    public ResponseEntity<String> update(@RequestBody StudentGradeOnlyIdDTO studentGrade) throws SQLException {
+        studentGradeService.updateGrade(studentGrade);
+        return ResponseEntity.ok("StudentGrade updated");
     }
 }

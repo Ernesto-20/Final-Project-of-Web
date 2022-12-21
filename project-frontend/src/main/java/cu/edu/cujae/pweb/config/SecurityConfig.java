@@ -21,8 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  .anyRequest().authenticated();
 
                 // configurando el login
-                http
-                                .exceptionHandling().accessDeniedPage("/pages/errors/access-denied.jsf");
+                http.exceptionHandling().accessDeniedPage("/pages/errors/access-denied.jsf");
 
                 // logout, cuando se ejecute el logout va para el login
                 http.logout().logoutUrl("/logout").invalidateHttpSession(true)

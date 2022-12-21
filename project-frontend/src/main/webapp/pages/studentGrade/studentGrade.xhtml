@@ -58,7 +58,7 @@
                                 <p:column headerText="#{msgs.grade_column_student_grade}">
                                     <h:outputText value="#{studentGrade.gradeValue}" />
                                 </p:column>
-                                <p:column exportable="false">
+                                <p:column rendered="#{manageAssignStudentGradeBean.courseSelectOption eq manageCourseBean.lastCourse.id}" exportable="false">
                                     <p:commandButton icon="pi pi-pencil" action="#{manageAssignStudentGradeBean.openForEdit}"
                                                      update=":form:manage-student-grade-content"
                                                      oncomplete="PF('manageStudentGradeDialog').show()"

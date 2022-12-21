@@ -29,6 +29,7 @@ public class ManageCourseBean {
 	private String selectOption;
 	private CourseDTO courseDTO;
 	private CourseDTO selectedCourse;
+	private CourseDTO lastCourse;
 	private List<CourseDTO> courses;
 	
 	/* @Autowired es la manera para inyectar una dependencia/clase anotada con @service en spring
@@ -80,5 +81,16 @@ public class ManageCourseBean {
 	public void setSelectOption(String selectOption) {
 		this.selectOption = selectOption;
 
+	}
+
+	public CourseDTO getLastCourse() {
+		if(lastCourse == null)
+			lastCourse = getCourses().get(getCourses().size() - 1);
+
+		return lastCourse;
+	}
+
+	public void setLastCourse(CourseDTO lastCourse) {
+		this.lastCourse = lastCourse;
 	}
 }

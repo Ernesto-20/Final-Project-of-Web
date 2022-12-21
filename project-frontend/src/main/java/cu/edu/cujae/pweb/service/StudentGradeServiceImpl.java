@@ -69,4 +69,27 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		}
 		return studentGrades;
 	}
+
+	@Override
+	public List<StudentGradeDTO> getStudentGradesAll() {
+		List<StudentGradeDTO> studentGrades = new ArrayList<>();
+
+		try {
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+			ApiRestMapper<StudentGradeDTO> apiRestMapper = new ApiRestMapper<>();
+
+			String response = (String) restService.GET("/api/v1/studentgrades/all", params, String.class, CurrentUserUtils.getTokenBearer()).getBody();
+			studentGrades = apiRestMapper.mapList(response, StudentGradeDTO.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return studentGrades;
+	}
+
+	@Override
+	public void updateStudentGrade(StudentGradeOnlyIdDTO studentGrade) {
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		restService.PUT("/api/v1/studentgrades", params, studentGrade, String.class, CurrentUserUtils.getTokenBearer()).getBody();
+	}
 }

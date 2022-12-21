@@ -3,13 +3,11 @@ package cu.edu.cujae.backend.api.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import cu.edu.cujae.backend.core.dto.StudentDTO;
 import cu.edu.cujae.backend.core.dto.StudentGradeOnlyIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cu.edu.cujae.backend.core.dto.StudentGradeDTO;
 import cu.edu.cujae.backend.core.service.StudentGradeService;
@@ -39,5 +37,18 @@ public class StudentGradeController {
     public ResponseEntity<List<StudentGradeDTO>> getAllStudentGrade() throws SQLException{
         List<StudentGradeDTO> studentGrades = studentGradeService.getStudentGrades();
         return ResponseEntity.ok(studentGrades);
+    }
+
+//    @PutMapping("/")
+//    public ResponseEntity<String> update(@RequestBody StudentGradeOnlyIdDTO studentGrade) throws SQLException{
+//        studentGradeService.updateGrade(studentGrade);
+//        System.out.println(studentGrade.getGradeValue());
+//        return ResponseEntity.ok("StudentGrade updated");
+//    }
+
+    @PutMapping("")
+    public ResponseEntity<String> update(@RequestBody StudentGradeOnlyIdDTO studentGrade) throws SQLException {
+        studentGradeService.updateGrade(studentGrade);
+        return ResponseEntity.ok("StudentGrade updated");
     }
 }

@@ -5,13 +5,13 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:dialog header="#{msgs.modal_header_subject_in_courses}" showEffect="fade" modal="true"
-              widgetVar="manageSubjectDialog" responsive="true">
-        <p:outputPanel id="manage-subject-content" class="ui-fluid">
-                    <h3>#{manageSubjectInCourseBean.selectedSubjectInCourseNamed.subjectName}</h3>
+              widgetVar="manageStudentGradeDialog" responsive="true">
+        <p:outputPanel id="manage-student-grade-content" class="ui-fluid">
+                    <h3>#{manageAssignStudentGradeBean.selectedStudentGrade.subject}</h3>
                     <div class="p-field">
                         <p:outputLabel for="@next">#{msgs.hours_amount_label_subject_in_course}</p:outputLabel>
                         <p:inputText id="idNum" required="true"
-                                     value="#{manageSubjectInCourseBean.selectedSubjectInCourseNamed.hoursLong}"
+                                     value="#{manageAssignStudentGradeBean.selectedStudentGrade.gradeValue}"
                                      maxlength="3">
                             <p:keyFilter mask="num" />
                         </p:inputText>
@@ -20,10 +20,10 @@
         </p:outputPanel>
         <f:facet name="footer">
             <p:commandButton value="#{msgs.save_button_subject_in_courses}" icon="pi pi-check"
-                             actionListener="#{manageSubjectInCourseBean.saveSubjectInCourseNamed}"
-                             update="manage-subject-content" process="manage-subject-content @this" />
+                             actionListener="#{manageAssignStudentGradeBean.saveStudentGrade}"
+                             update="manage-student-grade-content" process="manage-student-grade-content @this" />
             <p:commandButton value="#{msgs.cancel_button_subject_in_courses}" icon="pi pi-times"
-                             onclick="PF('manageSubjectDialog').hide()" class="ui-button-secondary" />
+                             onclick="PF('manageStudentGradeDialog').hide()" class="ui-button-secondary" />
         </f:facet>
     </p:dialog>
 </ui:composition>

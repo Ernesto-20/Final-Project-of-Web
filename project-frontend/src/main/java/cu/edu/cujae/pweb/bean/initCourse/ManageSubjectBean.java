@@ -46,8 +46,6 @@ public class ManageSubjectBean {
 
 	// Se ejecuta al dar clic en el button con el lapicito
 	public void openForEdit() {
-		// List<RoleDto> roles = this.selectedUser.getRoles();
-		// this.selectedRoles = roles.stream().map(r -> r.getId()).toArray(Long[]::new);
 	}
 
 	// Se ejecuta al dar clic en el button dentro del dialog para salvar o registrar
@@ -72,8 +70,8 @@ public class ManageSubjectBean {
 			// cuyo id es manageUserDialog. Este
 			// identificador es el widgetVar
 			PrimeFaces.current().ajax().update("formSelectionSubject:dt-subjects");// Este code es para refrescar el componente con id
-			// dt-users que se encuentra dentro del formulario con
-			// id form
+			// dt-subjects que se encuentra dentro del formulario con
+			// id formSelectionSubject
 		}
 		else {
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_name_exist");
@@ -96,8 +94,8 @@ public class ManageSubjectBean {
 			this.selectedSubject = new SubjectDTO();
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_INFO, "message_subject_deleted");
 			PrimeFaces.current().ajax().update("formSelectionSubject:dt-subjects");// Este code es para refrescar el componente con id
-																	// dt-users que se encuentra dentro del formulario
-																	// con id form
+																	// dt-subjects que se encuentra dentro del formulario
+																	// con id formSelectionSubject
 		} catch (Exception e) {
 			JsfUtils.addMessageFromBundle(null, FacesMessage.SEVERITY_ERROR, "message_error");
 		}
@@ -118,10 +116,10 @@ public class ManageSubjectBean {
 	public String getDeleteButtonMessage() {
 		if (hasSelectedSubjects()) {
 			int size = this.selectedSubjects.size();
-			return size > 1 ? size + " subjects selected" : "1 subject selected";
+			return size > 1 ? size + " " + JsfUtils.getStringValueFromBundle("btn_subject_delete_many")
+					: JsfUtils.getStringValueFromBundle("btn_subject_delete_one");
 		}
-
-		return "Delete";
+		return JsfUtils.getStringValueFromBundle("btn_subject_delete");
 	}
 
 	public boolean hasSelectedSubjects() {
@@ -163,8 +161,14 @@ public class ManageSubjectBean {
 	}
 
 	public void subjectRemove(List<SubjectDTO> subjectsToRemove) {
-		subjectsToRemove.forEach(element-> {subjects.add(element);});
+		System.out.println("HERE remove");
+		System.out.println("size: "+ subjectsToRemove.size());
+		subjectsToRemove.forEach(element-> {
+			subjects.add(element);
+			System.out.println(element.getName());
+		});
 		PrimeFaces.current().ajax().update("formSelectionSubject");
+
 	}
 
 	public ManageSubjectInYearBean getManageSubjectInYearBean() {
@@ -204,7 +208,4 @@ public class ManageSubjectBean {
 		this.subjects = subjects;
 	}
 
-	public SubjectService getSubjectService() {
-		return subjectService;
-	}
 }

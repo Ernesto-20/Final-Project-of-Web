@@ -17,9 +17,11 @@
                             <ui:insert name="selection-list-title"></ui:insert>
                         </h3>
                     </div>
-                    <h:form style="margin: auto 0">
-                        <p:commandButton value="#{manageInitCourse.actionLabel}" action="#{manageInitCourse.moveAction}"></p:commandButton>
-                        <p:commandButton value="#{msgs.btn_subject_assign}" disabled="#{manageInitCourse.disableStart}" action="#{manageInitCourse.startCourse}" style="border-color: rgb(161,156,156);background-color: #{manageInitCourse.colorStart};margin-left: 20px; margin-right: 20px"></p:commandButton>
+                    <h:form id="init-course" style="margin: auto 0">
+                        <p:commandButton value="#{manageInitCourse.actionLabel}"
+                                         action="#{manageInitCourse.moveAction}"></p:commandButton>
+                        <p:commandButton value="#{msgs.btn_subject_start}" disabled="#{manageInitCourse.disableStart}"
+                                         action="#{manageInitCourse.startCourse}" style="border-color: rgb(161,156,156);background-color: #{manageInitCourse.colorStart};margin-left: 20px; margin-right: 20px"></p:commandButton>
                     </h:form>
                 </div>
             </f:facet>

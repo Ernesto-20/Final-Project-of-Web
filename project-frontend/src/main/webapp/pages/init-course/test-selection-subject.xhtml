@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" template="/pages/init-course/init-course-template.xhtml">
+
+    <ui:define name="selection-list-title">
+        #{msgs.title_selection_subject}
+    </ui:define>
+    <ui:define name="selection-list-content">
+
+        <h:form id="formSelectionSubject">
+
+            <div style="display:flex; background-color:none;">
+                <ui:include src="subject-list-component.xhtml"></ui:include>
+
+                <p:panelGrid columns="1" class="p-col-4" layout="grid" style="align-items: center; flex: 0.2; display:flex; align-items: center;">
+
+
+
+                    <p:commandButton id="assign-subjects-button" value="#{msgs.btn_subject_assign}"
+                                     icon="pi pi-arrow-right" iconPos="right"
+                                     actionListener="#{manageSubjectBean.subjectAssign}"
+                                     disabled="#{!manageSubjectBean.hasSelectedSubjects()}"
+                                     styleClass="ui-button-success" style="margin-right: .5rem; width: 100%;" process="@this">
+                    </p:commandButton>
+
+                    <p:commandButton id="remove-subjects-button" value="#{msgs.btn_subject_remove}"
+                                     icon="pi pi-arrow-left"
+                                     actionListener="#{manageSubjectInYearBean.subjectRemove}"
+                                     disabled="#{!manageSubjectInYearBean.hasSelectedSubjectsInCourse()}"
+                                     styleClass="ui-button-warning" style="margin-right: .5rem; width: 100%" process="@this"
+                                     >
+                    </p:commandButton>
+                </p:panelGrid>
+
+                <ui:include src="subject-in-year.xhtml"></ui:include>
+            </div>
+        </h:form>
+        <h:form id="formSubjectInCourse">
+            <ui:include src="subject-in-course-complete-form.xhtml"></ui:include>
+        </h:form>
+    </ui:define>
+</ui:composition>

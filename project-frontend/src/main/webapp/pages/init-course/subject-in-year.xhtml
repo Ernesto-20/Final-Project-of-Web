@@ -5,6 +5,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:panel class="crud-demo">
+            <div style="height: 99px; background-color: #F8F9FA; border: 1px solid #DEE2E6; border-radius: 4px;"></div>
             <p:tabView id="tabContent" value="#{manageSubjectInYearBean.subjectsInCourseList}" var="year" dynamic="true">
                 <p:ajax event="tabChange" listener="#{manageSubjectInYearBean.changeYear}" />
                 <p:tab title="#{msgs.tab_year}: #{manageSubjectInYearBean.index(year)+1}">

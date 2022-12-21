@@ -103,8 +103,6 @@ public class ManageAssignStudentGradeBean {
 
     public List<StudentGradeDTO> getStudentGrades() {
         if(studentGrades == null) {
-            studentGrades = filterStudentGrades();
-
             brigades = brigadeService.findByYearId(yearSelectOption);
             if(brigades.size() > 0)
                 brigadeSelectOption = brigades.get(0).getId();

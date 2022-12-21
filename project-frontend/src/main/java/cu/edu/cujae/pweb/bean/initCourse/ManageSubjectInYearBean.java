@@ -124,6 +124,24 @@ public class ManageSubjectInYearBean {
 		return this.selectedSubjectsInCourse != null && !this.selectedSubjectsInCourse.isEmpty();
 	}
 
+	public void subjectRemove() {
+		List<SubjectDTO> subjectsToRemove = new ArrayList<SubjectDTO>();
+		for (SubjectInCourseCompleteDTO s:selectedSubjectsInCourse) {
+			boolean found = false;
+			for (int i=0; i < subjectsInCourse.size() && !found; i++) {
+				if(subjectsInCourse.get(i).getSubjectDTO().getId() == s.getSubjectDTO().getId()){
+					subjectsToRemove.add(s.getSubjectDTO());
+					subjectsInCourse.remove(i);
+					subjectsInCourseList.get(currentIndex).remove(i);
+					i--;
+					found = true;
+				}
+			}
+		}
+		setSelectedSubjectsInCourse(new ArrayList<SubjectInCourseCompleteDTO>());
+		manageSubjectBean.subjectRemove(subjectsToRemove);
+	}
+
     public void subjectAssign(List<SubjectDTO> subjectsToAssign) {
 		List<CourseDTO> courses = courseService.getCourses();
 		CourseDTO courseDTO = courses.get(courses.size()-1);
